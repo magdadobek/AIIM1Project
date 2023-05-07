@@ -17,7 +17,7 @@ class UsersTableMigration extends Migration
             $table->id();
             $table->string('nickname');
             $table->string('index')->unique();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->char('account_type');
         });
