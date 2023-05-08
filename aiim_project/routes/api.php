@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RestApiController;
+use App\Http\Controllers\RestApiUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +21,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/welcome', [RestApiController::CLASS, 'showWelcome']);
+Route::get('/user/login', [RestApiUserController::class, 'LoginUser']);
+Route::post('/user/new',[RestApiUserController::class,'NewUser']);
+Route::delete('/user/delete/{id}', [RestApiUserController::class, 'DeleteUser']);
+Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUserAll']);
+Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);
+Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
