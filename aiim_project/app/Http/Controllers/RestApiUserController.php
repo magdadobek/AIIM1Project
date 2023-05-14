@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\UserRequest;
 
 
 class RestApiUserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['LoginUser','NewUser']]);
+    }
+
     //Wyszukiwanie użytkownika po id - logowanie / zmiana hasła
     public function FindUser($id){
         $message="Oto dane uzytkownika o id: $id";
@@ -25,31 +33,77 @@ class RestApiUserController extends Controller
         $success = false;
 
         $data = $request->validated();
-        $user = User::where('email', $data['email'])->first();
-        if($user != null && $user->email == $data['email'] && $user->password == $data['password']){
-            $message="Zalogowano";
-            $success = true;
+
+        $credentials = $request->only('email', 'password');
+
+        //sprawdzanie po email i password
+        $token = Auth::attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
         }
-            
-        return response()->json(['success'=>$success, 'message'=>$message]);
+
+        $user = Auth::user();    
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+    public function LogoutUser()
+    {
+        Auth::logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Wylogowano',
+        ]);
     }
 
     //Rejestracja nowego użytkownika
+    //każdy nowy użytkownik dostaje account type U - user
+    //zmiana account type do przedyskutowania
+    // G - guide
+    // A - admin
     public function NewUser(UserRequest $request)
     {
         $message="Dodano uzytkownika";
         $data = $request->validated();
 
-        $user = new User();
-        $user->nickname = $data['nickname'];
-        $user->index = $data['index'];
-        $user->email = $data['email'];
-        $user->password = $data['password'];
-        $user->account_type = $data['account_type'];
-        $user->save();
+        $user = User::create([
+            'nickname' => $request->nickname,
+            'email' => $request->email,
+            'index' => $request->index,
+            'password' => Hash::make($request->password), // <- zmienić na hash kiedy dojdzie do wyjscia
+            //'password' => $request->password,
+            'account_type' => 'U',
+        ]);
 
-        return response()->json(['data'=>$user, 'message'=>$message]);
+        //$token = Auth::login($user);
 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Dodano uzytkownika',
+            'user' => $user,
+        ]);
+    }
+
+    //unieważnia token uwierzytelniania użytkownika i generuje nowy token
+    public function refreshUser()
+    {
+        return response()->json([
+            'status' => 'success',
+            'user' => Auth::user(),
+            'authorisation' => [
+                'token' => Auth::refresh(),
+                'type' => 'bearer',
+            ]
+        ]);
     }
 
     //Zmiana danych użytkownika przez (docelowo) admina, można dodać jeżeli puste - nie zmieniaj (do dogadania)

@@ -24,7 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/welcome', [RestApiController::CLASS, 'showWelcome']);
 Route::get('/user/login', [RestApiUserController::class, 'LoginUser']);
+Route::get('/user/logout', [RestApiUserController::class, 'LogoutUser']);
 Route::post('/user/new',[RestApiUserController::class,'NewUser']);
+Route::post('/user/refresh',[RestApiUserController::class,'refreshUser']);
 Route::delete('/user/delete/{id}', [RestApiUserController::class, 'DeleteUser']);
 Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUserAll']);
 Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);

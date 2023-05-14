@@ -57,8 +57,7 @@ class UserRequest extends FormRequest
             'nickname'     => 'required|String|min:3|max:25',
             'index'        => 'required|String|min:5|max:6',
             'email'        => 'required|String|min:3',
-            'password'     => 'required|String|min:6',
-            'account_type' => 'required|String|min:1|max:1'
+            'password'     => 'required|String|min:6'
         ];
     }
 
@@ -101,8 +100,7 @@ class UserRequest extends FormRequest
             'nickname.required' => 'Field nickname is required',
             'index.required' => 'Field index is required',
             'email.required' => 'Field email is required',
-            'password.required' => 'Field password is required',
-            'account_type.required' => 'Field account_type is required'
+            'password.required' => 'Field password is required'
         ];
     }
 }
