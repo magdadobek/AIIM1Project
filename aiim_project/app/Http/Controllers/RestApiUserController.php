@@ -16,7 +16,12 @@ class RestApiUserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['LoginUser','NewUser']]);
+        //$this->middleware('auth:api', ['except' => ['LoginUser']]); // <- do ustawienia po skończeniu prze frontend logowania
+        $this->middleware('auth:api', ['except' => ['LoginUser','NewUser','FindUser','UpdateUserAll', 'UpdateUserPassword', 'DeleteUser']]);
+        //możliwość użycia funkcji bez podawania tokena bearer token zwracanej w api logowania, funkcje które wymagają to tylko:
+        //-LogoutUser
+        //-refreshUser
+        //będzie można zmienić po skończeniu testów aplikacji, lub dodaniu przez front logowania
     }
 
     //Wyszukiwanie użytkownika po id - logowanie / zmiana hasła
