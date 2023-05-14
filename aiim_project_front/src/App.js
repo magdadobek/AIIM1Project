@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-function App() {
+import Placeholder from './pages/Placeholder'
+import Register from './pages/Register';
+import MainNavigation from './components/ui/MainNavigation'
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <MainNavigation />
+      <Routes>
+        <Route path='/' exact element={<Placeholder title="Strona główna" />} />
+        <Route path='/szybkapomoc' element={<Placeholder title="Szybka pomoc" />} />
+        <Route path='/ogloszenia' element={<Placeholder title="Ogłoszenia" />} />
+        <Route path='/mapa' element={<Placeholder title="Mapa" />} />
+        <Route path='/kontakt' element={<Placeholder title="Kontakt" />} />
+        <Route path='/dokumenty' element={<Placeholder title="Dokumenty" />} />
+        <Route path='/kolanaukowe' element={<Placeholder title="Koła naukowe" />} />
+        <Route path='/logowanie' element={<Placeholder title="Logowanie" />} />
+        <Route path='/rejestracja' element={<Register />} />
+      </Routes>
+    </Router>
   );
 }
 
