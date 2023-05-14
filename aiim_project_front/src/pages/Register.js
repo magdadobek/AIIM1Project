@@ -2,16 +2,13 @@ import { useState } from "react";
 
 import RegistrationForm from "../components/auth/RegistrationForm";
 
-
-
 const Register = () => {
-    const  [hasRegistered, setHasRegistered]  = useState(false);
-    const  [hasSubmitted, setHasSubmitted] = useState(false);
+    const [hasRegistered, setHasRegistered] = useState(false);
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const onRegistrationComplete = (result) => {
         setHasSubmitted(true);
         setHasRegistered(result);
-        
     }
 
     return (

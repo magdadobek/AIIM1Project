@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
 const MainNavigation = () => {
-    return(
+    return (
         <header>
             <nav>
                 <ul>
