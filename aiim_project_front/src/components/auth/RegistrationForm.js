@@ -1,21 +1,28 @@
 const RegistrationForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target.nickname.value);
         const request = {
             nickname: e.target.nickname.value,
             index: e.target.index.value,
             email: e.target.email.value,
-            password: e.target.password.value,
-            account_type: "A",
+            password: e.target.password.value
         };
 
         const response = await fetch('http://localhost:8000/api/user/new/', {
             method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": "{{csrf_token()}}"
+            },
             body: JSON.stringify(request)
         });
-        console.log(response.ok);
-        props.onRegistration(response.ok);
+
+        const responseData = await response.json();
+        console.log(responseData);
+        props.onRegistration(responseData);
+
     }
     return (
         <>
@@ -25,7 +32,7 @@ const RegistrationForm = (props) => {
                     <input id="nickname" name="nickname" required />
                 </p>
                 <p>
-                    <label htmlFor="index">Indeks</label>
+                    <label htmlFor="index">Indeks studenta</label>
                     <input id="index" name="index" required />
                 </p>
                 <p>
