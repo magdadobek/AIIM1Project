@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Placeholder from './pages/Placeholder'
 import Register from './pages/Register';
+import Login from './pages/Login';
 import MainNavigation from './components/ui/MainNavigation'
 
 const App = () => {
@@ -16,8 +17,8 @@ const App = () => {
         <Route path='/kontakt' element={<Placeholder title="Kontakt" />} />
         <Route path='/dokumenty' element={<Placeholder title="Dokumenty" />} />
         <Route path='/kolanaukowe' element={<Placeholder title="Koła naukowe" />} />
-        <Route path='/logowanie' element={<Placeholder title="Logowanie" />} />
-        <Route path='/rejestracja' element={<Register />} />
+        <Route path='/logowanie' element={<Login/>} />
+        <Route path='/rejestracja' element={<Register/>} />
       </Routes>
     </Router>
   );

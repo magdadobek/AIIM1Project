@@ -25,7 +25,7 @@ const Register = () => {
             <RegistrationForm onRegistration={onRegistrationComplete} />
             {(hasSubmitted && hasRegistered) && message}
             {(hasSubmitted && !hasRegistered) && message.map((el) => <p>{el}</p>)}
-        </div >
+        </div>
     );
 }
  
