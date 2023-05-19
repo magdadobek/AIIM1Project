@@ -2,29 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NoticeBoard extends Model
+class Comments extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'notice_board';
+    protected $table = 'comments';
 
     protected $fillable = [
+        'id_notice',
         'id_user',
-        'date',
-        'title',
         'content',
-        'open',
-        'tags',
-    ];
-
-    protected $casts = [
-        'tags' => 'array',
+        'edited',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+    
+    public function noticeBoard()
+    {
+        return $this->belongsTo(NoticeBoard::class,'id_notice');
     }
 }
