@@ -1,21 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+    nickname: "",
+    index: "",
+    email: "",
+    password: "",
+    account_type: "",
+    isLoggedIn: false,
+    token: "",
+    tokenExpiration: ""
+}
 // dokończyć logikę
 export const userSlice = createSlice({
     name: "user",
-    initialState: {
-        nickname: "",
-        index: "",
-        email: "",
-        password: "",
-        account_type: ""
-    },
+    initialState: initialState,
     reducers: {
         login: (state, action) => {
-            state = action.payload;
+            state.isLoggedIn = true;
+            state.nickname = action.payload.nickname;
+            state.index = action.payload.index;
+            state.email = action.payload.email;
+            state.password = action.payload.password;
+            state.account_type = action.payload.account_type;
+            state.token = action.payload.token;
         },
         register: (state, action) => {
             state = action.payload;
+        },
+        logout: (state) => {
+            state = initialState;
         },
         getUser: (state, action) => {
             state = action.payload;
@@ -28,5 +41,7 @@ export const userSlice = createSlice({
         },
     }
 });
+
+export const userActions = userSlice.actions;
 
 export default userSlice.reducer;

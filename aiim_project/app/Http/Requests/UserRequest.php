@@ -25,11 +25,16 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return match($this->method()){
-            'POST' => $this->store(),
-            'PUT', 'PATCH' => $this->update(),
-            'DELETE' => $this->destroy(),
-            default => $this->view()
+        switch($this->method()){
+            case 'POST':
+                return $this->store();
+            case 'PUT':
+            case 'PATCH':
+                return $this->update();
+            case 'DELETE':
+                return $this->destroy();
+            default:
+                return $this->view();
         };
     }
 
