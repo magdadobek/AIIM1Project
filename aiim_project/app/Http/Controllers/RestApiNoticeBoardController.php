@@ -44,6 +44,21 @@ class RestApiNoticeBoardController extends Controller
             ]);
     }
 
+    public function findNoticeBoardById($id){
+        $post = NoticeBoard::find($id);
+
+        if($post != null){
+            $data = ["data"=>$post];
+        }
+        else{
+            $data = "brak ogloszen";
+        }
+
+        return response()->json([
+            'data' => $data,
+            ]);
+    }
+
 }
 
 
