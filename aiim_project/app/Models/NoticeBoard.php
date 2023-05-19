@@ -8,7 +8,7 @@ class NoticeBoard extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'Notice_board';
+    protected $table = 'notice_board';
 
     protected $fillable = [
         'id_user',

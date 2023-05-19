@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestApiController;
 use App\Http\Controllers\RestApiUserController;
+use App\Http\Controllers\RestApiNoticeBoardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,4 @@ Route::delete('/user/delete/{id}', [RestApiUserController::class, 'DeleteUser'])
 Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUserAll']);
 Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);
 Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
+Route::get('/noticeboard/findall', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
