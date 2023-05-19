@@ -10,7 +10,6 @@ class Guide extends Model
     protected $table = 'guides';
 
     protected $fillable = [
-        'id_guide',
         'id_user',
         'kierunek',
         'wydzial',
