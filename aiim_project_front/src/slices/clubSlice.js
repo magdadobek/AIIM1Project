@@ -16,7 +16,7 @@ export const clubSlice = createSlice({
         getClub: (state, action) => {
             state = action.payload;
         },
-        udpate: (state, action) => {
+        update: (state, action) => {
             state = action.payload;
         },
         delete: (state, action) => {

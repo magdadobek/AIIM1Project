@@ -15,8 +15,9 @@ export const documentSlice = createSlice({
         getDocument: (state, action) => {
             state = action.payload;
         },
-        udpate: (state, action) => {
+        update: (state, action) => {
             state = action.payload;
+            console.log(state)
         },
         delete: (state, action) => {
             state = action.payload;

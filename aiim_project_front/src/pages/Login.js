@@ -1,33 +1,53 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 import LoginForm from "../components/auth/LoginForm";
-//{(hasSubmitted && hasRegistered) && message}
-//{(hasSubmitted && !hasRegistered) && message.map((el) => <p>{el}</p>)}
+
 const Login = () => {
-  const [hasLoggedIn, setHasLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+  const nickname = useSelector(state => state.user.nickname);
+  console.log(nickname)
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    setMessage("Zalogowano jako " + nickname);
+  }, [nickname]);
 
   const onLogin = (responseData) => {
     setHasSubmitted(true);
     if (responseData.status === "success") {
-      setHasLoggedIn(true);
       setMessage("Zalogowano jako " + responseData.user.nickname);
+      localStorage.setItem('token', responseData.authorisation.token);
+      localStorage.setItem('user', JSON.stringify(responseData.user));
+      const payload = {
+        nickname: responseData.user.nickname,
+        index: responseData.user.index,
+        email: responseData.user.email,
+        password: responseData.user.password,
+        account_type: responseData.user.account_type,
+        isLoggedIn: true,
+        token: responseData.authorisation.token
+      }
+      dispatch({ type: "user/login", payload: payload });
+
+      //dodac czas wygasniecia tokena
     }
-    else if (responseData.message === "Unauthorized") {
+    else if (responseData.message === "Unauthorized" || responseData.message === "Validation errors") {
       setMessage("Niepoprawne dane logowania");
-    }
-    else if (responseData.message === "Validation errors") {
-      setMessage(Object.entries(responseData.data).map((e) => e[1]));
     }
     else setMessage(responseData.message);
   }
   return (
     <div>
       <h1>Logowanie</h1>
-      <LoginForm onLogin={onLogin} />
-      {(hasSubmitted && hasLoggedIn) && message}
-      {(hasSubmitted && !hasLoggedIn) && message.map((el) => <p>{el}</p>)}
+      {(!isLoggedIn) && <LoginForm onLogin={onLogin} />}
+      {(!isLoggedIn && hasSubmitted) && message}
+      {isLoggedIn && message}
     </div>
   )
 }
