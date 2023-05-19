@@ -28,7 +28,7 @@ const App = () => {
   }, [])
 
   return (
-  <div className="dark" class="h-screen bg-white dark:text-white dark:bg-black">
+  <div className="dark" class="h-screen bg-light_page dark:text-white dark:bg-dark_page">
     <Router>
       <MainNavigation />
       <Routes>
