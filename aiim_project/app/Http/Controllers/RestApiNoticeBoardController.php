@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NoticeBoard;
+use Illuminate\Support\Facades\DB;
 
 class RestApiNoticeBoardController extends Controller
 {
     //
 
-    public function getAllNoticeBoard(){
-        $posts = NoticeBoard::all();
+    public function getAllOpenNoticeBoard(){
+
+        $posts = DB::table('notice_board')->where('open','=', true)->get();
         if($posts != null){
             $data = ["data"=>$posts];
         }
