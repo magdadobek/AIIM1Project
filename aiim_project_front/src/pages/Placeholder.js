@@ -32,7 +32,7 @@ const Home = ({ title }) => {
         <div>
             <h1>{title}</h1>
             <p class="text-3xl font-bold underline">Tu będzie {title}</p>
-            <button className="bg-zolty dark:bg-zloty p-4 rounded-3xl m-5" onClick={handleThemeSwitch}>Dark Mode</button>
+            <button className="bg-yellow_umg dark:bg-gold_umg p-4 rounded-3xl m-5" onClick={handleThemeSwitch}>Dark Mode</button>
         </div>
     );
 }

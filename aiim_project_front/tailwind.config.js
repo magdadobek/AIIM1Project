@@ -12,11 +12,11 @@ module.exports = {
     theme: {
       extend: {
         colors: {
-          czarny: '#111E2B',              // ciemny-granat (strona szkoły)
-          zloty: '#A58553',               // złoty (strona szkoły)
-          szary: '#858E99',               // szary (strona szkoły)
-          zolty: '#FDC529',               // zółty (logo szkoły)
-          niebieski: '#6BABF4',           // jaskrawy błękit
+          black_umg: '#111E2B',        // ciemny-granat (strona szkoły)
+          gold_umg: '#A58553',         // złoty (strona szkoły)
+          gray_umg: '#858E99',         // szary (strona szkoły)
+          yellow_umg: '#FDC529',       // zółty (logo szkoły)
+          blue_umg: '#6BABF4',         // jaskrawy błękit
           light_page: '#CDD9F9',       // niebieskawy
           light_field: '#F5F1F1',      // szarawy
           light_component: '#FFFFFF',  // biały
