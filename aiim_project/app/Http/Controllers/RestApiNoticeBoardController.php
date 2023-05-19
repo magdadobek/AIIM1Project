@@ -12,7 +12,7 @@ class RestApiNoticeBoardController extends Controller
 
     public function getAllOpenNoticeBoard(){
 
-        $posts = DB::table('notice_board')->where('open','=', true)->get();
+        $posts = DB::table('notice_board')->where('open','=', true)->orderBy('date','DESC')->get();
         if($posts != null){
             $data = ["data"=>$posts];
         }

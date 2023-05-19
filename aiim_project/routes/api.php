@@ -32,4 +32,4 @@ Route::delete('/user/delete/{id}', [RestApiUserController::class, 'DeleteUser'])
 Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUserAll']);
 Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);
 Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
-Route::get('/noticeboard/findall', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
+Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
