@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/welcome', [RestApiController::CLASS, 'showWelcome']);
+
 Route::get('/user/login', [RestApiUserController::class, 'LoginUser']);
 Route::get('/user/logout', [RestApiUserController::class, 'LogoutUser']);
 Route::post('/user/new',[RestApiUserController::class,'NewUser']);
@@ -32,5 +33,7 @@ Route::delete('/user/delete/{id}', [RestApiUserController::class, 'DeleteUser'])
 Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUserAll']);
 Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);
 Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
+
 Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
 Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getAllClosedNoticeBoard']);
+Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'findNoticeBoardById']);
