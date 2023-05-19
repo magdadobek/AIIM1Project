@@ -26,6 +26,24 @@ class RestApiNoticeBoardController extends Controller
             'data' => $data,
             ]);
     }
+
+    public function getAllClosedNoticeBoard(){
+
+        $posts = DB::table('notice_board')->where('open','=', false)->orderBy('date','DESC')->get();
+        if($posts != null){
+            $data = ["data"=>$posts];
+        }
+        else
+        {
+            $data = "brak ogloszen";
+        }
+
+
+        return response()->json([
+            'data' => $data,
+            ]);
+    }
+
 }
 
 

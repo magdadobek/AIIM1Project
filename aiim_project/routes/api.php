@@ -33,3 +33,4 @@ Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUser
 Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);
 Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
 Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
+Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getAllClosedNoticeBoard']);
