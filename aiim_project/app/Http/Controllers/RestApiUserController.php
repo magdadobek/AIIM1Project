@@ -84,7 +84,7 @@ class RestApiUserController extends Controller
             'nickname' => $request->nickname,
             'email' => $request->email,
             'index' => $request->index,
-            'password' => Hash::make($request->password), // <- zmienić na hash kiedy dojdzie do wyjscia
+            'password' => Hash::make($request->password),
             //'password' => $request->password,
             'account_type' => 'U',
         ]);
@@ -120,7 +120,7 @@ class RestApiUserController extends Controller
             $user->nickname = $data['nickname'];
             $user->index = $data['index'];
             $user->email = $data['email'];
-            $user->password = $data['password'];
+            $user->password = Hash::make($data['password']);
             $user->account_type = $data['account_type'];
             $user->save();
             return response()->json(['data' => $user, 'message'=>$message]);
@@ -134,7 +134,7 @@ class RestApiUserController extends Controller
         $data = $request->validated(); // <- do edycji validacja, pozwalająca na zmiane pojedyńczych danych
         $user = User::find($id);
         if($user != null){
-            $user->password = $data['password'];
+            $user->password = Hash::make($data['password']);
             $user->save();
             return response()->json(['data' => $user, 'message'=>$message]);
         } else
