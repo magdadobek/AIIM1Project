@@ -74,7 +74,11 @@ class UserRequest extends FormRequest
     public function update()
     {
         return [
-            'password'     => 'required|String|min:6'
+            'nickname'     => 'String|min:3|max:25',
+            'index'        => 'String|min:5|max:6',
+            'email'        => 'String|min:3',
+            'password'     => 'required|String|min:6',
+            'account_type' => 'String|max:1'
         ];
     }
 
