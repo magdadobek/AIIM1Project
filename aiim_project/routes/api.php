@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/welcome', [RestApiController::CLASS, 'showWelcome']);
+Route::get('/welcome', [RestApiController::class, 'showWelcome']);
 
 Route::get('/user/login', [RestApiUserController::class, 'LoginUser']);
 Route::get('/user/logout', [RestApiUserController::class, 'LogoutUser']);
