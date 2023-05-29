@@ -28,6 +28,7 @@ const App = () => {
   }, [])
 
   return (
+  <div className="dark" class="h-screen bg-light_page dark:text-white dark:bg-dark_page">
     <Router>
       <MainNavigation />
       <Routes>
@@ -44,6 +45,7 @@ const App = () => {
         <Route path='/wyloguj' element={<Logout />} />
       </Routes>
     </Router>
+  </div>
   );
 }
 
