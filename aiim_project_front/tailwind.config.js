@@ -16,13 +16,14 @@ module.exports = {
           gold_umg: '#A58553',         // złoty (strona szkoły)
           gray_umg: '#858E99',         // szary (strona szkoły)
           yellow_umg: '#FDC529',       // zółty (logo szkoły)
+          dark_yellow_umg: '#E1B12A',       // przyciemniony zółty
           blue_umg: '#6BABF4',         // jaskrawy błękit
           light_page: '#CDD9F9',       // niebieskawy
           light_field: '#F5F1F1',      // szarawy
           light_component: '#FFFFFF',  // biały
-          light_menu: '#111E2B',       // granatowy (logo szkoły)
-          dark_page: '#283542',        // ciemny
-          dark_field: '#232A37',       // ciemniejszy
+          light_menu: '#022F63',       // granatowy (logo szkoły)
+          dark_page: '#232A37',        // ciemny
+          dark_field: '#283542',       // ciemniejszy
           dark_component: '#111E2B',   // najciemniejszy
         }
       },
