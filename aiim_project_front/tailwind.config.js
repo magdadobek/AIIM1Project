@@ -23,7 +23,7 @@ module.exports = {
           light_component: '#FFFFFF',  // biały
           light_menu: '#022F63',       // granatowy (logo szkoły)
           dark_page: '#232A37',        // ciemny
-          dark_field: '#283542',       // ciemniejszy
+          dark_field: '#4B5B6B',       // ciemniejszy
           dark_component: '#111E2B',   // najciemniejszy
         }
       },
