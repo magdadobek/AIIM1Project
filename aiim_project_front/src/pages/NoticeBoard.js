@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import Notice from "../components/noticeboard/Notice";
+import NoticeList from "../components/noticeboard/NoticeList";
 
-const Noticeboard = () => {
+
+const NoticeBoard = () => {
     const [noticeList, setNoticeList] = useState([]);
 
     const getNotices = async () => {
@@ -38,22 +40,15 @@ const Noticeboard = () => {
     return (
         <div className="bg-light_component dark:bg-dark_component text-light_menu dark:text-white justify-center p-6 rounded-3xl m-5 w-min shadow-lg">
             <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Tablica ogłoszeń</p>
-            <div className="flex flex-col justify-center items-center">
-                {!noticeList &&
-                    <p className="text-xl font-bold m-5 dark:text-dark_field">Brak ogłoszeń</p>
-                }
-                {noticeList && noticeList.map((notice) => (
-                    <Notice key={notice.id} title={notice.title} content={notice.content} date={notice.date} />
-                ))}
-            </div>
+            <NoticeList noticeList={noticeList} />
             <div className="flex justify-between py-2 w-64">
-                <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg">
+                <Link to="/ogloszenia/nowe" className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg">
                     Dodaj ogłoszenie
-                </button>
+                </Link>
             </div>
         </div>
 
     )
 }
 
-export default Noticeboard;
+export default NoticeBoard;
