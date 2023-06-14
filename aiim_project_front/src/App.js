@@ -6,6 +6,9 @@ import Placeholder from './pages/Placeholder'
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
+import NoticeBoard from './pages/NoticeBoard';
+import NoticePage from './pages/NoticePage';
+import NewNotice from './pages/NewNotice';
 import MainNavigation from './components/ui/MainNavigation'
 
 const App = () => {
@@ -28,13 +31,15 @@ const App = () => {
   }, [])
 
   return (
-  <div className="dark" class="h-screen bg-light_page dark:text-white dark:bg-dark_page grid grid-row-2 gap-4 place-content-center">
+  <div className="h-screen bg-light_page dark:text-white dark:bg-dark_page grid grid-row-2 gap-4 place-content-center">
     <Router>
       <MainNavigation />
       <Routes>
         <Route path='/' exact element={<Placeholder title="Strona główna" />} />
         <Route path='/szybkapomoc' element={<Placeholder title="Szybka pomoc" />} />
-        <Route path='/ogloszenia' element={<Placeholder title="Ogłoszenia" />} />
+        <Route path='/ogloszenia' element={<NoticeBoard />}/>
+        <Route path='/ogloszenia/:noticeId' element={<NoticePage />}/>
+        <Route path='/ogloszenia/nowe' element={<NewNotice />}/>
         <Route path='/mapa' element={<Placeholder title="Mapa" />} />
         <Route path='/kontakt' element={<Placeholder title="Kontakt" />} />
         <Route path='/dokumenty' element={<Placeholder title="Dokumenty" />} />
