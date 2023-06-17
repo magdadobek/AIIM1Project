@@ -10,7 +10,8 @@ const initialState = {
     token: "",
     tokenExpiration: ""
 }
-// dokończyć logikę
+
+
 export const userSlice = createSlice({
     name: "user",
     initialState: initialState,

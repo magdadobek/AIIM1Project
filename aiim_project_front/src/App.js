@@ -29,6 +29,7 @@ const App = () => {
       dispatch({ type: "user/login", payload: payload });
     }
   }, [])
+  
 
   return (
   <div className="h-screen bg-light_page dark:text-white dark:bg-dark_page grid grid-row-2 gap-4 place-content-center">
