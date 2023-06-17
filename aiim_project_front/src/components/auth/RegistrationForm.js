@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const RegistrationForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,29 +27,35 @@ const RegistrationForm = (props) => {
 
     }
     return (
-        <>
-            <form method="post" onSubmit={handleSubmit}>
-                <p>
-                    <label htmlFor="nickname">Nazwa użytkownika</label>
-                    <input id="nickname" name="nickname" required />
+        <div className="bg-light_component dark:bg-dark_component text-light_menu dark:text-white justify-center p-6 rounded-3xl m-5 w-min shadow-lg">
+            <form method="post" className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
+                <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Rejestracja</p>
+                <p className="flex-col py-1">
+                    <label htmlFor="nickname" className="text-xl font-bold m-5 dark:text-dark_field">Nazwa użytkownika</label>
+                    <input id="nickname" name="nickname" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
                 </p>
-                <p>
-                    <label htmlFor="index">Indeks studenta</label>
-                    <input id="index" name="index" required />
+                <p className="flex-col py-1">
+                    <label htmlFor="index" className="text-xl font-bold m-5 dark:text-dark_field">Indeks studenta</label>
+                    <input id="index" name="index" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
                 </p>
-                <p>
-                    <label htmlFor="email">Email</label>
-                    <input id="email" type="email" name="email" required />
+                <p className="flex-col py-1">
+                    <label htmlFor="email" className="text-xl font-bold m-5 dark:text-dark_field">Email</label>
+                    <input id="email" type="email" name="email" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
                 </p>
-                <p>
-                    <label htmlFor="password">Hasło</label>
-                    <input id="password" type="password" name="password" required />
+                <p className="flex-col py-1">
+                    <label htmlFor="password" className="text-xl font-bold m-5 dark:text-dark_field">Hasło</label>
+                    <input id="password" type="password" name="password" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
                 </p>
-                <button>
-                    Zarejestruj się
-                </button>
+                <div className="flex justify-between py-2 w-72">
+                    <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg">
+                        Zarejestruj się
+                    </button>
+                    <Link to="/logowanie" className="text-light_menu border-light_menu border-2 hover:border-dark_yellow_umg hover:text-dark_yellow_umg dark:border-dark_field dark:text-dark_field dark:hover:border-dark_yellow_umg dark:hover:text-dark_yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md ">
+                        Mam już konto
+                    </Link>
+                </div>
             </form>
-        </>
+        </div>
     );
 }
 
