@@ -6,7 +6,7 @@ const Content = ({children}) => {
         <br/>
         <br/>
         <br/>
-        <div className="p-4 md:p-8 space-y-80 md:space-y-8 bg-dark_component rounded-lg">
+        <div className="p-4 md:p-8 space-y-80 md:space-y-8 bg-dark_component rounded-3xl mx-8">
             {children}
         </div>
         </>
