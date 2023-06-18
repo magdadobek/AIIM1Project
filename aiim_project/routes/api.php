@@ -37,3 +37,4 @@ Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
 Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
 Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getAllClosedNoticeBoard']);
 Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'findNoticeBoardById']);
+Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
