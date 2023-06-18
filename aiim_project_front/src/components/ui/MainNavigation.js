@@ -5,11 +5,16 @@ import UserMenu from './UserMenu';
 
 const MainNavigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const nickname = useSelector(state => state.user.nickname);
 
     const handleMenuToggle = () => {
         setIsMenuOpen(prevState => !prevState);
+    };
+
+    const handleUserMenuToggle = () => {
+        setIsUserMenuOpen((prevState) => !prevState);
     };
 
     return (
@@ -35,10 +40,9 @@ const MainNavigation = () => {
                                 d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    
+
                     <div className={`${isMenuOpen ? 'block' : 'hidden'} absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white mt-16 z-10 p-2`}>
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            <br />
                             <div>
                                 <NavLink to="/">Strona główna</NavLink>
                             </div>
@@ -59,11 +63,12 @@ const MainNavigation = () => {
                             </div>
                             <div><NavLink to="/kolanaukowe">Koła naukowe</NavLink></div>
                         </div>
-                        <UserMenu isLoggedIn={isLoggedIn} nickname={nickname} />
                     </div>
 
                     <div>
-                        <p className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 m-2">Logo</p>
+                        <NavLink to="https://umg.edu.pl/" target="_blank" rel="noopener noreferrer">
+                            <img src={require('../../assets/umgLogo.png')} alt="UMG Logo" className="w-12 h-12" />
+                        </NavLink>
                     </div>
 
                 </div>
@@ -71,8 +76,17 @@ const MainNavigation = () => {
                     <div>
                         <input id="search" type="search" name="search" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-72 m-2" placeholder="Wyszukiwarka" />
                     </div>
-                    <div>
-                        <p className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 m-2">User</p>
+                    <div className="flex justify-end relative">
+                        <button
+                            className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 m-2"
+                            onClick={handleUserMenuToggle}>
+                            {isLoggedIn === true ? nickname : "User"}
+                        </button>
+                        {isUserMenuOpen && (
+                            <div className="absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white mt-16 z-10 p-2">
+                                <UserMenu isLoggedIn={isLoggedIn} nickname={nickname} />
+                            </div>
+                        )}
                     </div>
                 </div>
             </nav>
