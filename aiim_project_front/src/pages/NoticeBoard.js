@@ -38,7 +38,7 @@ const NoticeBoard = () => {
     }, []);
 
     return (
-        <div className="bg-light_component dark:bg-dark_component text-light_menu dark:text-white justify-center p-6 rounded-3xl m-5 w-min shadow-lg">
+        <div>
             <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Tablica ogłoszeń</p>
             <NoticeList noticeList={noticeList} />
             <div className="flex justify-between py-2 w-64">

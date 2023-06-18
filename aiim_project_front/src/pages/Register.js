@@ -30,7 +30,6 @@ const Register = () => {
 
     return (
         <div>
-            <h1>Rejestracja</h1>
             {!isLoggedIn && <RegistrationForm onRegistration={onRegistrationComplete} />}
             {(hasSubmitted && hasRegistered) && message}
             {(hasSubmitted && !hasRegistered) && message.map((el) => <p>{el}</p>)}

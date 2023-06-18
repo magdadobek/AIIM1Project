@@ -10,6 +10,7 @@ import NoticeBoard from './pages/NoticeBoard';
 import NoticePage from './pages/NoticePage';
 import NewNotice from './pages/NewNotice';
 import MainNavigation from './components/ui/MainNavigation'
+import Content from './components/ui/Content';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,9 +33,10 @@ const App = () => {
   
 
   return (
-  <div className="h-screen bg-light_page dark:text-white dark:bg-dark_page grid grid-row-2 gap-4 place-content-center">
+  <div className="flex flex-col min-h-screen bg-light_page dark:text-white dark:bg-dark_page ">
     <Router>
       <MainNavigation />
+      <Content>
       <Routes>
         <Route path='/' exact element={<Placeholder title="Strona główna" />} />
         <Route path='/szybkapomoc' element={<Placeholder title="Szybka pomoc" />} />
@@ -50,6 +52,7 @@ const App = () => {
         <Route path='/profil' element={<Placeholder title="Profil" />} />
         <Route path='/wyloguj' element={<Logout />} />
       </Routes>
+      </Content>
     </Router>
   </div>
   );

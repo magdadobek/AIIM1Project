@@ -1,16 +1,9 @@
-const Content = ({children}) => {
-    // poprawić style, dodać margines (nie umiem w tailwind)
-    return ( 
-        <>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <div className="p-4 md:p-8 space-y-80 md:space-y-8 bg-light_component dark:bg-dark_component rounded-3xl mx-8">
+const Content = ({ children }) => {
+    return (
+        <div className="flex-1 p-4 m-6 md:p-8 space-y-80 md:space-y-8 bg-light_component dark:bg-dark_component rounded-3xl w-[800px] mx-auto max-w-full">
             {children}
         </div>
-        </>
     );
 }
- 
+
 export default Content;
