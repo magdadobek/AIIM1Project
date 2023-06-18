@@ -9,18 +9,18 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
 
     useEffect(() => {
         let theme = localStorage.getItem("preferedTheme");
-        if(!theme) {
+        if (!theme) {
             theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             localStorage.setItem("preferedTheme", theme);
         }
         if (theme === "dark") {
-          document.documentElement.classList.add("dark"); //
-          setModeText("Light Mode")
+            document.documentElement.classList.add("dark"); //
+            setModeText("Light Mode")
         } else {
-          document.documentElement.classList.remove("dark");
-          setModeText("Dark Mode")
+            document.documentElement.classList.remove("dark");
+            setModeText("Dark Mode")
         }
-      }, [theme]);
+    }, [theme]);
 
 
     const handleLogout = () => {
@@ -41,29 +41,31 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
         <>
             {!isLoggedIn && (
                 <>
-                    <li>
+                    <div>
                         <NavLink to="/rejestracja">Rejestracja</NavLink>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <NavLink to="/logowanie">Logowanie</NavLink>
-                    </li>
+                    </div>
                 </>
             )}
             {isLoggedIn && (
                 <>
-                    <li>
+                    <div>
                         <NavLink to="/profil">Profil ({nickname})</NavLink>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <NavLink to="/wyloguj" onClick={handleLogout}>
                             Wyloguj
                         </NavLink>
-                    </li>
+                    </div>
                 </>
             )}
 
             <div>
-                <button className="bg-yellow_umg dark:bg-gold_umg p-4 rounded-3xl m-5" onClick={handleThemeSwitch}>{modeText}</button>
+                <button className="bg-yellow_umg dark:bg-gold_umg p-2 rounded-3xl m-2 text-sm w-40" onClick={handleThemeSwitch}>
+                    {modeText}
+                </button>
             </div>
         </>
     );
