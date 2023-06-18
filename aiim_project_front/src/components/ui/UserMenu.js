@@ -8,12 +8,13 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(theme === ""){
-            setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        let theme = localStorage.getItem("preferedTheme");
+        if(!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            localStorage.setItem("preferedTheme", theme);
         }
-
         if (theme === "dark") {
-          document.documentElement.classList.add("dark");
+          document.documentElement.classList.add("dark"); //
           setModeText("Light Mode")
         } else {
           document.documentElement.classList.remove("dark");
@@ -32,6 +33,8 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
 
     const handleThemeSwitch = () => {
         setTheme(theme === "dark" ? "light" : "dark");
+        localStorage.setItem("preferedTheme", theme === "dark" ? "light" : "dark");
+
     }
 
     return (
