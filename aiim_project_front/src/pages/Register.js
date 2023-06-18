@@ -8,7 +8,7 @@ const Register = () => {
 
     const [hasRegistered, setHasRegistered] = useState(false);
     const [hasSubmitted, setHasSubmitted] = useState(false);
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState();
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -32,7 +32,7 @@ const Register = () => {
         <div>
             {!isLoggedIn && <RegistrationForm onRegistration={onRegistrationComplete} />}
             {(hasSubmitted && hasRegistered) && message}
-            {(hasSubmitted && !hasRegistered) && message.map((el) => <p>{el}</p>)}
+            {(hasSubmitted && !hasRegistered) && Array.isArray(message) ? message.map((el) => <p>{el}</p>) : <p>{message}</p>}
             {isLoggedIn && message}
         </div>
     );
