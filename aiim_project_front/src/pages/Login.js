@@ -44,7 +44,6 @@ const Login = () => {
   }
   return (
     <div>
-      <h1>Logowanie</h1>
       {(!isLoggedIn) && <LoginForm onLogin={onLogin} />}
       {(!isLoggedIn && hasSubmitted) && message}
       {isLoggedIn && message}
