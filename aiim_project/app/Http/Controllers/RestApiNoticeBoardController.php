@@ -59,6 +59,21 @@ class RestApiNoticeBoardController extends Controller
             ]);
     }
 
+    public function deleteNoticeBoardPost($id){
+
+     $post = NoticeBoard::find($id);
+
+    if ($post === null) {
+        $data = "brak ogłoszeń";
+    } else {
+        $post->delete();
+        $data =  "Rekord został pomyślnie usunięty";
+    }
+
+    return response()->json([
+        'data' => $data,
+    ]);
+    }
 }
 
 
