@@ -19,12 +19,12 @@ const MainNavigation = () => {
 
     return (
         <header className={`z-10 ${isMenuOpen ? '' : ''}`}>
-            <nav className='flex justify-between bg-light_component dark:bg-dark_component text-light_menu dark:text-white p-3 shadow-lg'>
+            <nav className='flex justify-between bg-light_component dark:bg-dark_component text-light_menu dark:text-white items-center p-1 shadow-lg sm:text-lg'>
                 <div className="flex justify-start">
                     <button
                         onClick={handleMenuToggle}
                         type="button"
-                        className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        className="p-2 m-2 text-light_menu hover:text-white hover:bg-light_menu focus:text-white focus:bg-light_menu dark:text-white dark:hover:bg-yellow_umg dark:hover:text-dark_component dark:focus:text-dark_component dark:focus:bg-yellow_umg rounded-xl duration-200"
                         aria-expanded={isMenuOpen ? 'true' : 'false'}>
                         <svg
                             className="h-8 w-8"
@@ -41,49 +41,51 @@ const MainNavigation = () => {
                         </svg>
                     </button>
 
-                    <div className={`${isMenuOpen ? 'block' : 'hidden'} absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white mt-16 z-10 p-2`}>
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            <div>
+                    <div className={`${isMenuOpen ? 'block' : 'hidden'} absolute bg-white dark:bg-dark_component text-light_menu dark:text-white shadow-lg rounded-b-xl mt-16 z-10`}>
+                        <div className="pt-2 pb-2 sm:px-1 font-bold">
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/">Strona główna</NavLink>
                             </div>
-                            <div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/szybkapomoc">Szybka pomoc</NavLink>
                             </div>
-                            <div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/ogloszenia">Ogłoszenia</NavLink>
                             </div>
-                            <div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/mapa">Mapa</NavLink>
                             </div>
-                            <div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/kontakt">Kontakt</NavLink>
                             </div>
-                            <div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/dokumenty">Dokumenty</NavLink>
                             </div>
-                            <div><NavLink to="/kolanaukowe">Koła naukowe</NavLink></div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
+                                <NavLink to="/kolanaukowe">Koła naukowe</NavLink>
+                            </div>
                         </div>
                     </div>
 
-                    <div>
+                    <div className='max-sm:hidden'>
                         <NavLink to="https://umg.edu.pl/" target="_blank" rel="noopener noreferrer">
-                            <img src={require('../../assets/umgLogo.png')} alt="UMG Logo" className="w-12 h-12" />
+                            <img src={require('../../assets/umgLogo.png')} alt="UMG Logo" className="dark:bg-dark_field rounded-full w-16 h-16" />
                         </NavLink>
                     </div>
 
                 </div>
                 <div className="flex justify-end">
                     <div>
-                        <input id="search" type="search" name="search" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-72 m-2" placeholder="Wyszukiwarka" />
+                        <input id="search" type="search" name="search" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-auto sm:w-72 m-2" placeholder="Wyszukiwarka..." />
                     </div>
-                    <div className="flex justify-end relative">
+                    <div className="flex justify-end relative font-bold">
                         <button
-                            className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 m-2"
+                            className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg rounded-full shadow-md text-base px-2 py-1 duration-200"
                             onClick={handleUserMenuToggle}>
                             {isLoggedIn === true ? nickname : "User"}
                         </button>
                         {isUserMenuOpen && (
-                            <div className="absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white mt-16 z-10 p-2">
+                            <div className="absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white shadow-lg rounded-b-xl mt-14 z-10 p-2">
                                 <UserMenu isLoggedIn={isLoggedIn} nickname={nickname} />
                             </div>
                         )}

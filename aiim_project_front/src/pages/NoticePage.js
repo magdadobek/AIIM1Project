@@ -26,7 +26,7 @@ const NoticePage = (props) => {
     }, []);
 
     return (
-        <div>
+        <div className="">
             <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{notice.title}</p>
             <div className="flex flex-col justify-center items-center">
                 <p className="text-base m-5 dark:text-dark_field">Dodano przez {notice.id_user} dnia {notice.date}</p>
