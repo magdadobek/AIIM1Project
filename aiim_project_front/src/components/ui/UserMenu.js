@@ -9,10 +9,6 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
 
     useEffect(() => {
         let theme = localStorage.getItem("preferedTheme");
-        if (!theme) {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            localStorage.setItem("preferedTheme", theme);
-        }
         if (theme === "dark") {
             document.documentElement.classList.add("dark"); //
             setModeText("Light Mode")
@@ -32,9 +28,9 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
     };
 
     const handleThemeSwitch = () => {
+        let theme = localStorage.getItem("preferedTheme");
         setTheme(theme === "dark" ? "light" : "dark");
         localStorage.setItem("preferedTheme", theme === "dark" ? "light" : "dark");
-
     }
 
     return (

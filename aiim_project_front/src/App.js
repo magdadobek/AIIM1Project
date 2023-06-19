@@ -12,6 +12,7 @@ import NewNotice from './pages/NewNotice';
 import MainNavigation from './components/ui/MainNavigation'
 import Content from './components/ui/Content';
 
+
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,13 +31,25 @@ const App = () => {
       dispatch({ type: "user/login", payload: payload });
     }
   }, [])
-  
 
+  useEffect(() => {
+    let theme = localStorage.getItem("preferedTheme");
+    if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        localStorage.setItem("preferedTheme", theme);
+    }
+    if (theme === "dark") {
+        document.documentElement.classList.add("dark"); 
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
+}, []);
+  
   return (
   <div className="flex flex-col min-h-screen bg-light_page dark:text-white dark:bg-dark_page ">
     <Router>
       <MainNavigation />
-      <div class="flex items-center justify-center flex-grow">
+      <div className="flex items-center justify-center flex-grow">
         <Content>
           <Routes>
             <Route path='/' exact element={<Placeholder title="Strona główna" />} />
