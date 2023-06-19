@@ -9,10 +9,6 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
 
     useEffect(() => {
         let theme = localStorage.getItem("preferedTheme");
-        if (!theme) {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            localStorage.setItem("preferedTheme", theme);
-        }
         if (theme === "dark") {
             document.documentElement.classList.add("dark"); //
             setModeText("Light Mode")
@@ -32,19 +28,19 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
     };
 
     const handleThemeSwitch = () => {
+        let theme = localStorage.getItem("preferedTheme");
         setTheme(theme === "dark" ? "light" : "dark");
         localStorage.setItem("preferedTheme", theme === "dark" ? "light" : "dark");
-
     }
 
     return (
         <>
             {!isLoggedIn && (
                 <>
-                    <div>
+                    <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                         <NavLink to="/rejestracja">Rejestracja</NavLink>
                     </div>
-                    <div>
+                    <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                         <NavLink to="/logowanie">Logowanie</NavLink>
                     </div>
                 </>
@@ -63,7 +59,7 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
             )}
 
             <div>
-                <button className="bg-yellow_umg dark:bg-gold_umg p-2 rounded-3xl m-2 text-sm w-40" onClick={handleThemeSwitch}>
+                <button className="text-white bg-light_menu hover:bg-dark_yellow_umg dark:bg-white hover:dark:bg-yellow_umg dark:text-dark_component shadow-sm shadow-gold_umg p-2 rounded-3xl m-2 text-sm w-24 duration-200" onClick={handleThemeSwitch}>
                     {modeText}
                 </button>
             </div>
