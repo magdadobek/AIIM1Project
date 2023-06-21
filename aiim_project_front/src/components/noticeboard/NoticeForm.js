@@ -4,12 +4,23 @@ const NoticeForm = (props) => {
         const request = {
             title: e.target.title.value,
             content: e.target.content.value,
-            tags: e.target.tags.value
+            tags: JSON.stringify(e.target.tags.value),
+            token: localStorage.getItem('token')
         };
-        console.log(request);
 
-        //const responseData = await response.json();
-        //props.onSubmit(responseData);
+        const response = await fetch('http://localhost:8000/api/noticeboard/new/', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": "{{csrf_token()}}"
+            },
+            body: JSON.stringify(request)
+        });
+
+        const responseData = await response.json();
+        props.onSubmit(responseData);
 
     }
     return (
