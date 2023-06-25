@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestApiController;
 use App\Http\Controllers\RestApiUserController;
 use App\Http\Controllers\RestApiNoticeBoardController;
+use App\Http\Controllers\RestApiCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,5 @@ Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAll
 Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getAllClosedNoticeBoard']);
 Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'findNoticeBoardById']);
 Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
+
+Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
