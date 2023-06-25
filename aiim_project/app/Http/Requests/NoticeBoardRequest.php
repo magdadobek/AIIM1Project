@@ -26,11 +26,9 @@ class NoticeBoardRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_user' => 'required',
-            'date' => 'required|date',
+            'token' => 'required',
             'title' => 'required|min:3',
             'content' => 'required|min:3',
-            'open' => 'required|boolean',
             'tags' => 'required|json',
         ];
     }
@@ -49,11 +47,8 @@ class NoticeBoardRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_user.required' => 'Field id_user is required',
-            'date.required' => 'Field date is required',
+            'token.required' => 'Token is required',
             'title.required' => 'Field title is required',
-            'content.required' => 'Field content is required',
-            'open.required' => 'Field open is required',
             'content.required' => 'Field content is required',
             'tags.required' => 'Field tags is required',
         ];

@@ -4,9 +4,11 @@ import { useDispatch } from "react-redux";
 
 import NoticeForm from "../components/noticeboard/NoticeForm";
 
+import { useNavigate } from "react-router-dom";
+
 const NewNotice = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -14,14 +16,25 @@ const NewNotice = () => {
 
   const onSubmit = (responseData) => {
     setHasSubmitted(true);
-    //dodac logike dodawania ogloszenia jak backend zrobi odpowiedni endpoint
+    if (responseData.status === "success") {
+      setMessage("Dodano ogłoszenie");
+      navigate("/ogloszenia");
+    }
+    else setMessage(responseData.message)
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div>
+        {message}
+      </div>
+    )
   }
 
   return (
     <div>
       {(isLoggedIn) && <NoticeForm onSubmit={onSubmit} />}
       {(isLoggedIn && hasSubmitted) && message}
-      {!isLoggedIn && message}
     </div>
   )
 }
