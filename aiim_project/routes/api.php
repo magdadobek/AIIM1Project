@@ -38,6 +38,6 @@ Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
 Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
 Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getAllClosedNoticeBoard']);
 Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'findNoticeBoardById']);
+Route::delete('/noticeboard/delete/{id}', [RestApiNoticeBoardController::class, 'deleteNoticeBoardPost']);
 Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
-
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
