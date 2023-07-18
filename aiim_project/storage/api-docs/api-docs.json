@@ -93,11 +93,71 @@
                 }
             }
         },
+        "/api/noticeboard/new": {
+            "post": {
+                "tags": [
+                    "Notice Board"
+                ],
+                "summary": "New notice",
+                "description": "Add new notice to noticeboard",
+                "requestBody": {
+                    "required": true,
+                    "description": "Info required for new notice",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token",
+                                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwMSIsImlhdCI6MTYyMzE3NTg2OH0.6iXrx8AqgylhU8tQzegVxFbdPLuIztfCwo0RUdZoM9E"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-18"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+
+                                    },
+                                    "open": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "format": "json",
+                                        "example": "[\"important\", \"new\"]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    },
+                    "404": {
+                        "description": "Not ound"
+                    }
+                }
+            }
+        },
         "/api/noticeboard/delete/{id}": {
             "delete": {
-                "tags": ["Notice Board"],
-                "summary": "Delete noticeboard with specific ID",
-                "description": "Delete noticeboard with specific ID",
+                "tags": [
+                    "Notice Board"
+                ],
+                "summary": "Delete notice with specific ID",
+                "description": "Delete notice with specific ID",
                 "parameters": [
                     {
                         "name": "id",
@@ -323,7 +383,9 @@
             "post": {
                 "summary": "New comment",
                 "description": "Add new comment to notice",
-                "tags": ["Comments"],
+                "tags": [
+                    "Comments"
+                ],
                 "requestBody": {
                     "required": true,
                     "description": "Comments info",
