@@ -1,0 +1,195 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API do projektu AIiM",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/noticeboard/allOpen": {
+            "get": {
+                "tags": [
+                    "Notice Board"
+                ],
+                "summary": "All open notices",
+                "description": "Get all open notices",
+                "responses": {
+                    "404": {
+                        "description": "No open notices",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak ogloszen"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/noticeboard/allClosed": {
+            "get": {
+                "tags": [
+                    "Notice Board"
+                ],
+                "summary": "All closed notices",
+                "description": "Get all closed notices",
+                "responses": {
+                    "404": {
+                        "description": "No closed notices",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak ogloszen"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "properties": {
+                    "nickname": {
+                        "description": "Nazwa użytkownika",
+                        "type": "string",
+                        "format": "text"
+                    },
+                    "index": {
+                        "description": "Numer indeksu",
+                        "type": "number",
+                        "format": "5-digit number"
+                    },
+                    "email": {
+                        "description": "Adres email",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "Hasło użytkownika",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "account_type": {
+                        "description": "Typ konta: (A)dmin, (U)ser,(G)ość",
+                        "type": "string",
+                        "format": "A| U | G"
+                    }
+                },
+                "type": "object"
+            },
+            "Comments": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "ID komentarza ",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_notice": {
+                        "description": "ID ogłoszenia, do jakiego odnosi się komentarz",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                    "description": "ID użytkownika - autora komentarza",
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date(YYYY-MM-DD)"
+                  },
+                  "content": {
+                    "type": "string",
+                    "format": "text"
+                  },
+                  "edited": {
+                    "type": "boolean",
+                    "format": "true|false"
+                  }
+                }
+              },
+              "Guides": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "id_user": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "kierunek": {
+                    "type": "string",
+                    "format": "text"
+                  },
+                  "wydzial": {
+                    "type": "string",
+                    "format": "text"
+                  },
+                  "semestr": {
+                    "type": "integer",
+                    "format": "int"
+                  }
+                }
+              },
+              "Notice Board": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "id_user": {
+                    "type": "integer",
+                    "format": "int"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "title": {
+                    "type": "string",
+                    "format": "varchar(255)"
+                  },
+                  "content": {
+                    "type": "string",
+                    "format": "varchar(255)"
+                  },
+                  "open": {
+                    "type": "boolean",
+                    "format": "true | false"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+        }
+    }
+}
