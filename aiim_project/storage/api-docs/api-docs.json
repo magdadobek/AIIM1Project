@@ -110,8 +110,7 @@
                                 "properties": {
                                     "token": {
                                         "type": "string",
-                                        "format": "token",
-                                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwMSIsImlhdCI6MTYyMzE3NTg2OH0.6iXrx8AqgylhU8tQzegVxFbdPLuIztfCwo0RUdZoM9E"
+                                        "format": "token"
                                     },
                                     "date": {
                                         "type": "string",
@@ -122,7 +121,7 @@
                                         "type": "string"
                                     },
                                     "content": {
-
+                                        "type": "string"
                                     },
                                     "open": {
                                         "type": "boolean",
