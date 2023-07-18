@@ -64,6 +64,308 @@
                     }
                 }
             }
+        },
+        "/api/noticeboard/find/{id}": {
+            "get": {
+                "summary": "Notice with specific ID",
+                "description": "Return notice which has specific ID",
+                "tags": [
+                    "Notice Board"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID ogłoszenia które chcemy znaleźć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Brak ogłoszenia o takim ID"
+                    }
+                }
+            }
+        },
+        "/api/noticeboard/delete/{id}": {
+            "delete": {
+                "tags": ["Notice Board"],
+                "summary": "Delete noticeboard with specific ID",
+                "description": "Delete noticeboard with specific ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID ogłoszenia które chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/user/find/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Find user by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID użytkownika którego chcemy znaleźć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/user/new": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "requestBody": {
+                    "description": "User information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nickname": {
+                                        "type": "string",
+                                        "example": "student"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "index": {
+                                        "type": "string",
+                                        "minLength": 5,
+                                        "maxLength": 5,
+                                        "example": "12345"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/user/update/all/{id}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update data of user found by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID użytkownika, dla którego aktualizujemy hasło",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nickname": {
+                                        "type": "string",
+                                        "example": "student"
+                                    },
+                                    "index": {
+                                        "type": "string",
+                                        "minLength": 5,
+                                        "maxLength": 5,
+                                        "example": "12345"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/user/update/password/{id}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update password to user found by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID użytkownika, dla którego aktualizujemy hasło",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/user/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete a user by ID",
+                "description": "Deletes a user based on the provided ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usunięto uzytkownika o podanym id"
+                    }
+                }
+            }
+        },
+        "/api/comments/new": {
+            "post": {
+                "summary": "New comment",
+                "description": "Add new comment to notice",
+                "tags": ["Comments"],
+                "requestBody": {
+                    "required": true,
+                    "description": "Comments info",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_notice": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "id_user": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-10"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "minLength": 5,
+                                        "maxLength": 3,
+                                        "example": "Test comment"
+                                    },
+                                    "edited": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -93,7 +395,7 @@
                     "account_type": {
                         "description": "Typ konta: (A)dmin, (U)ser,(G)ość",
                         "type": "string",
-                        "format": "A| U | G"
+                        "format": "A | U | G"
                     }
                 },
                 "type": "object"
@@ -102,7 +404,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "description": "ID komentarza ",
+                        "description": "ID komentarza",
                         "type": "integer",
                         "format": "int64"
                     },
@@ -112,84 +414,88 @@
                         "format": "int64"
                     },
                     "id_user": {
-                    "description": "ID użytkownika - autora komentarza",
-                    "type": "integer",
-                    "format": "int64"
-                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date(YYYY-MM-DD)"
-                  },
-                  "content": {
-                    "type": "string",
-                    "format": "text"
-                  },
-                  "edited": {
-                    "type": "boolean",
-                    "format": "true|false"
-                  }
-                }
-              },
-              "Guides": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer",
-                    "format": "int64"
-                  },
-                  "id_user": {
-                    "type": "integer",
-                    "format": "int64"
-                  },
-                  "kierunek": {
-                    "type": "string",
-                    "format": "text"
-                  },
-                  "wydzial": {
-                    "type": "string",
-                    "format": "text"
-                  },
-                  "semestr": {
-                    "type": "integer",
-                    "format": "int"
-                  }
-                }
-              },
-              "Notice Board": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer",
-                    "format": "int64"
-                  },
-                  "id_user": {
-                    "type": "integer",
-                    "format": "int"
-                  },
-                  "date": {
-                    "type": "string",
-                    "format": "date"
-                  },
-                  "title": {
-                    "type": "string",
-                    "format": "varchar(255)"
-                  },
-                  "content": {
-                    "type": "string",
-                    "format": "varchar(255)"
-                  },
-                  "open": {
-                    "type": "boolean",
-                    "format": "true | false"
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
+                        "description": "ID użytkownika - autora komentarza",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date(YYYY-MM-DD)"
+                    },
+                    "content": {
+                        "type": "string",
+                        "format": "text"
+                    },
+                    "edited": {
+                        "type": "boolean",
+                        "format": "true|false"
                     }
-                  }
                 }
-              }
+            },
+            "Guides": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "kierunek": {
+                        "type": "string",
+                        "format": "text"
+                    },
+                    "wydzial": {
+                        "type": "string",
+                        "format": "text"
+                    },
+                    "semestr": {
+                        "type": "integer",
+                        "format": "int"
+                    }
+                }
+            },
+            "Notice Board": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                        "type": "integer",
+                        "format": "int"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "title": {
+                        "type": "string",
+                        "format": "varchar(255)"
+                    },
+                    "content": {
+                        "type": "string",
+                        "format": "varchar(255)"
+                    },
+                    "open": {
+                        "type": "boolean",
+                        "format": "true | false"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "life_length": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            }
         }
     }
 }
