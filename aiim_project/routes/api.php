@@ -40,4 +40,5 @@ Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getA
 Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'findNoticeBoardById']);
 Route::delete('/noticeboard/delete/{id}', [RestApiNoticeBoardController::class, 'deleteNoticeBoardPost']);
 Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
+Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateNoticeBoard']);
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
