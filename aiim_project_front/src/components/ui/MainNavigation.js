@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import UserMenu from './UserMenu';
+import SearchBar from './SearchBar';
 
 const MainNavigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [search, setSearch] = useState('');
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const nickname = useSelector(state => state.user.nickname);
 
@@ -16,6 +18,11 @@ const MainNavigation = () => {
     const handleUserMenuToggle = () => {
         setIsUserMenuOpen((prevState) => !prevState);
     };
+
+    const handleSearchInput = (value) => {
+        setSearch(value); 
+    }
+    
 
     return (
         <header className={`z-10 ${isMenuOpen ? '' : ''}`}>
@@ -76,7 +83,7 @@ const MainNavigation = () => {
                 </div>
                 <div className="flex justify-end">
                     <div>
-                        <input id="search" type="search" name="search" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-auto sm:w-72 m-2" placeholder="Wyszukiwarka..." />
+                       <SearchBar onSearch={handleSearchInput}/>
                     </div>
                     <div className="flex justify-end relative font-bold">
                         <button
