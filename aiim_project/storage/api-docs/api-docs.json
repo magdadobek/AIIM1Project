@@ -13,6 +13,9 @@
                 "summary": "All open notices",
                 "description": "Get all open notices",
                 "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
                     "404": {
                         "description": "No open notices",
                         "content": {
@@ -28,9 +31,6 @@
                                 }
                             }
                         }
-                    },
-                    "200": {
-                        "description": "Success"
                     }
                 }
             }
@@ -98,6 +98,9 @@
                 "tags": [
                     "Notice Board"
                 ],
+                "security": [{
+                    "bearerAuth": []
+                }],
                 "summary": "New notice",
                 "description": "Add new notice to noticeboard",
                 "requestBody": {
@@ -430,6 +433,14 @@
         }
     },
     "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Authorize as admin to edit, add and delete users"
+            }
+        },
         "schemas": {
             "User": {
                 "properties": {
