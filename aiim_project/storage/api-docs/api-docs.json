@@ -132,7 +132,7 @@
                                     },
                                     "tags": {
                                         "type": "array",
-                                        "format": "json",
+                                        "format": "application/json",
                                         "example": "[\"important\", \"new\"]"
                                     }
                                 }
@@ -411,8 +411,7 @@
                                     },
                                     "content": {
                                         "type": "string",
-                                        "minLength": 5,
-                                        "maxLength": 3,
+                                        "minLength": 3,
                                         "example": "Test comment"
                                     },
                                     "edited": {
@@ -426,7 +425,74 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "example": {
+                                    "message": "Dodano komentarz",
+                                    "data": "Treść nowego komentarza"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/comments/{id}": {
+            "patch": {
+                "summary": "Edit comment with specific ID",
+                "description": "",
+                "tags": ["Comments"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Info required for new notice",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                               "type": "object",
+                               "properties": {
+                                "comment": {
+                                    "type": "string",
+                                    "minLength": 3,
+                                    "example": "Test comment"
+                                    }
+                               }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comment has been updated succesfully",
+                        "content": {
+                            "application/json":{
+                                "example": {
+                                    "message":  "Komentarz został zaktualizowany"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comment coundn't be found",
+                        "content": {
+                            "application/json":{
+                                "example": {
+                                    "message": "Komentarz nie istnieje!"
+                                }
+                            }
+                        }
                     }
                 }
             }
