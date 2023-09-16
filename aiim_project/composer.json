@@ -47,7 +47,10 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "start-front": "cd ../aiim_project_front/ && npm start",
+        "start-back": "php artisan serve",
+        "connect-ssh": "ssh -L 5432:localhost:5432 s47461@foka.umg.edu.pl"
     },
     "extra": {
         "laravel": {
