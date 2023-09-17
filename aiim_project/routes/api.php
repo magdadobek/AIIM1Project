@@ -6,6 +6,7 @@ use App\Http\Controllers\RestApiController;
 use App\Http\Controllers\RestApiUserController;
 use App\Http\Controllers\RestApiNoticeBoardController;
 use App\Http\Controllers\RestApiCommentController;
+use App\Http\Controllers\RestApiQnAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,5 @@ Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNotic
 Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateNoticeBoard']);
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
 Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
+
+Route::get('qna',[RestApiQnAController::class, 'getAllQuestions']);
