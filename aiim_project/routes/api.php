@@ -6,6 +6,7 @@ use App\Http\Controllers\RestApiController;
 use App\Http\Controllers\RestApiUserController;
 use App\Http\Controllers\RestApiNoticeBoardController;
 use App\Http\Controllers\RestApiCommentController;
+use App\Http\Controllers\RestApiQnACommentController;
 use App\Http\Controllers\RestApiQnAController;
 
 /*
@@ -47,6 +48,9 @@ Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComm
 
 
 Route::get('qna',[RestApiQnAController::class, 'getAllQuestions']);
+
+Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
+
 
 Route::get('qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
 
