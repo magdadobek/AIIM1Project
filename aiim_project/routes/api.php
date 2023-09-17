@@ -46,15 +46,9 @@ Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateN
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
 Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
 
-
-Route::get('qna',[RestApiQnAController::class, 'getAllQuestions']);
-
-Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
-
-
-Route::get('qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
-
-Route::patch('qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
+Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
+Route::patch('/qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
 
+Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
