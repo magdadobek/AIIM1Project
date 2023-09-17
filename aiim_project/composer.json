@@ -50,7 +50,9 @@
         ],
         "start-front": "cd ../aiim_project_front/ && npm start",
         "start-back": "php artisan serve",
-        "connect-ssh": "ssh -L 5432:localhost:5432 s47461@foka.umg.edu.pl"
+        "connect-ssh": "ssh -L 5432:localhost:5432 s47461@foka.umg.edu.pl",
+        "migrate": "php artisan migrate",
+        "seed": "php artisan serve"
     },
     "extra": {
         "laravel": {
