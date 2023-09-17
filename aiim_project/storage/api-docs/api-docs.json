@@ -10,11 +10,27 @@
                 "tags": [
                     "Notice Board"
                 ],
-                "summary": "All open notices",
-                "description": "Get all open notices",
+                "summary": "Wszystkie otwarte ogłoszenia",
+                "description": "Pobiera wszystkie otwarte ogłoszenia",
                 "responses": {
+                    "200": {
+                        "description": "Sukces!",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": "11",
+                                    "id_user": 23,
+                                    "date": "2023-06-21",
+                                    "title": "testset settse",
+                                    "content": "xdfxd gdgddgffgd",
+                                    "open": true,
+                                    "tags": "\"{}\""
+                                }
+                            }
+                        }
+                    },
                     "404": {
-                        "description": "No open notices",
+                        "description": "Brak otwartych ogłoszeń",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -28,9 +44,6 @@
                                 }
                             }
                         }
-                    },
-                    "200": {
-                        "description": "Success"
                     }
                 }
             }
@@ -40,11 +53,27 @@
                 "tags": [
                     "Notice Board"
                 ],
-                "summary": "All closed notices",
-                "description": "Get all closed notices",
+                "summary": "Wszystkie zamknięte ogłoszenia",
+                "description": "Pobiera wszystkie zamknięte ogłoszenia",
                 "responses": {
+                    "200": {
+                        "description": "Sukces!",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 4,
+                                    "id_user": 1,
+                                    "date": "2023-05-19",
+                                    "title": "Test2",
+                                    "content": "To jest zamkniete ogloszenie testowe",
+                                    "open": false,
+                                    "tags": "{\"test\":\"test2\"}"
+                                }
+                            }
+                        }
+                    },
                     "404": {
-                        "description": "No closed notices",
+                        "description": "Brak zamkniętych ogłoszeń",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -58,17 +87,14 @@
                                 }
                             }
                         }
-                    },
-                    "200": {
-                        "description": "Success"
                     }
                 }
             }
         },
         "/api/noticeboard/find/{id}": {
             "get": {
-                "summary": "Notice with specific ID",
-                "description": "Return notice which has specific ID",
+                "summary": "Ogłoszenie o podanym ID",
+                "description": "Pobiera ogłoszenie o podanym ID",
                 "tags": [
                     "Notice Board"
                 ],
@@ -85,10 +111,39 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Sukces!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "id": "",
+                                        "id_user": "",
+                                        "date": "YYYY-MM-DD",
+                                        "title": "",
+                                        "content": "",
+                                        "open": true,
+                                        "tags": ""
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Brak ogłoszenia o takim ID"
+                        "description": "Brak ogłoszenia o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak ogloszen"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -98,11 +153,16 @@
                 "tags": [
                     "Notice Board"
                 ],
-                "summary": "New notice",
-                "description": "Add new notice to noticeboard",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Nowe ogłoszenie",
+                "description": "Dodaje nowe ogłoszenie do tablicy",
                 "requestBody": {
                     "required": true,
-                    "description": "Info required for new notice",
+                    "description": "Informacje potrzebne do nowego ogłoszenia",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -129,7 +189,7 @@
                                     },
                                     "tags": {
                                         "type": "array",
-                                        "format": "json",
+                                        "format": "application/json",
                                         "example": "[\"important\", \"new\"]"
                                     }
                                 }
@@ -139,13 +199,36 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
-                    },
-                    "404": {
-                        "description": "Not ound"
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak ogloszen"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -155,8 +238,8 @@
                 "tags": [
                     "Notice Board"
                 ],
-                "summary": "Delete notice with specific ID",
-                "description": "Delete notice with specific ID",
+                "summary": "Usuwa ogłoszenie o podanym ID",
+                "description": "Usuwa ogłoszenie o podanym ID",
                 "parameters": [
                     {
                         "name": "id",
@@ -171,7 +254,171 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Rekord został pomyślnie usunięty"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak ogloszen"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/noticeboard/{id}": {
+            "patch": {
+                "summary": "Aktualizacja ogłoszenia o podanym ID",
+                "description": "Aktualizacja ogłoszenia o podanym ID",
+                "tags": [
+                    "Notice Board"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID ogłoszenia które chcemy zaktualizować",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Informacje potrzebne do aktualizacji ogłoszenia",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-18"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "open": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "format": "application/json",
+                                        "example": "[\"important\", \"new\"]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Post został zaktualizowany"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Brak autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie jesteś twórcą tego posta!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak posta o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Post nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Brak walidacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "success": false,
+                                        "message": "Validation errors",
+                                        "errors": {
+                                            "token": [
+                                                "Token is required"
+                                            ],
+                                            "title": [
+                                                "Field title is required"
+                                            ],
+                                            "content": [
+                                                "Field content is required"
+                                            ],
+                                            "tags": [
+                                                "Field tags is required"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -181,7 +428,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Find user by ID",
+                "summary": "Znajdź użytkownika po ID",
                 "parameters": [
                     {
                         "name": "id",
@@ -196,7 +443,47 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Oto dane uzytkownika o id: $id"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -206,9 +493,9 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Add new user",
+                "summary": "Dodanie nowego użytkownika",
                 "requestBody": {
-                    "description": "User information",
+                    "description": "Informacje o użytkowniku",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -240,10 +527,36 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak ogloszen"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "500": {
-                        "description": "Internal Server Error"
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nieprawidłowe dane!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -253,7 +566,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Update data of user found by ID",
+                "summary": "Aktualizacja danych użytkownika o podanym ID",
                 "parameters": [
                     {
                         "name": "id",
@@ -299,10 +612,63 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Zaktualizowano dane użytkownika o id: $id"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "500": {
-                        "description": "Internal Server Error"
+                    "400": {
+                        "description": "Zła walidacja",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nieprawidłowe dane!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -312,7 +678,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Update password to user found by ID",
+                "summary": "Aktualizacja hasła użytkownika o podanym ID",
                 "parameters": [
                     {
                         "name": "id",
@@ -326,7 +692,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "User information",
+                    "description": "Informacje o użytkowniku",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -344,10 +710,63 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Zaktualizowano dane użytkownika o id: $id"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "500": {
-                        "description": "Internal Server Error"
+                    "400": {
+                        "description": "Zła walidacja",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nieprawidłowe dane"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -357,13 +776,13 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Delete a user by ID",
-                "description": "Deletes a user based on the provided ID.",
+                "summary": "Usunięcie uzytkownika o podanym ID",
+                "description": "Usuwa użytkownika o podanym ID",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the user to delete",
+                        "description": "ID użytkownika, którego chcemy usunąć",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -373,21 +792,61 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Usunięto uzytkownika o podanym id"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usunięto uzytkownika o id: $id"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
         "/api/comments/new": {
             "post": {
-                "summary": "New comment",
-                "description": "Add new comment to notice",
+                "summary": "Nowy komentarz",
+                "description": "Dodanie nowego komentarza do ogłoszenia",
                 "tags": [
                     "Comments"
                 ],
                 "requestBody": {
                     "required": true,
-                    "description": "Comments info",
+                    "description": "Komentarz i jego metadane",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -408,8 +867,7 @@
                                     },
                                     "content": {
                                         "type": "string",
-                                        "minLength": 5,
-                                        "maxLength": 3,
+                                        "minLength": 3,
                                         "example": "Test comment"
                                     },
                                     "edited": {
@@ -423,13 +881,118 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Dodano komentarz",
+                                    "data": {
+                                        "data": {
+                                            "type": "object",
+                                            "format": "Comments",
+                                            "example": {
+                                                "id_notice": "",
+                                                "id_user": "",
+                                                "date": "YYYY-MM-DD",
+                                                "content": "",
+                                                "edited": true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Zła walidacja",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nieprawidłowe dane"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/comments/{id}": {
+            "patch": {
+                "summary": "Aktualizacja komentarza o podanym ID",
+                "description": "Aktualizacja komentarza o podanym ID",
+                "tags": [
+                    "Comments"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Info required for new notice",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "comment": {
+                                        "type": "string",
+                                        "minLength": 3,
+                                        "example": "Test comment"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz został zaktualizowany"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak komentarza",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz nie istnieje!"
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     },
     "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Authorize as admin to edit, add and delete users"
+            }
+        },
         "schemas": {
             "User": {
                 "properties": {
