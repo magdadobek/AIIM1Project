@@ -46,3 +46,5 @@ Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
 Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
 
 Route::get('qna',[RestApiQnAController::class, 'getAllQuestions']);
+Route
+::patch('qna/{id}',[RestApiQnAController::class, 'editQuestion']);
