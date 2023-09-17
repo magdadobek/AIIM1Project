@@ -47,6 +47,10 @@ Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComm
 
 
 Route::get('qna',[RestApiQnAController::class, 'getAllQuestions']);
+
+Route::get('qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
+
 Route::patch('qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
 Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
+

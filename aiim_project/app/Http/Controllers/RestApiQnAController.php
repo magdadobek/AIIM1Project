@@ -40,6 +40,26 @@ class RestApiQnAController extends Controller
         }
     }
 
+    public function getSingleQuestion($questionID) {
+        $question = QnA::find($questionID);
+
+        if($question !== null) {
+            return response()
+                ->json([
+                    "message" => "Oto dane odnośnie pytania o id: $questionID",
+                    "data" => $question
+                ])
+                ->setStatusCode(200);
+        }
+        else {
+            return response()
+                ->json([
+                    "message" => "Nie znaleziono pytania o podanym ID",
+                    "data" => ''
+                ])
+                ->setStatusCode(404);
+        }
+  
     public function editQuestion(QnARequest $request, $questionID)
     {
         $validatedRequest = $request->validated();
