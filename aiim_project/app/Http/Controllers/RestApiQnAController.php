@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\QnA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,23 @@ class RestApiQnAController extends Controller
         else {
             return response()
                 ->json(['data' => 'brak pytan'])
-                ->status(404);
+                ->setStatusCode(404);
+        }
+    }
+
+    public function deleteQuestion(int $questionId){
+        $questionToDelete = QnA::find($questionId);
+
+        if ($questionToDelete === null) {
+            return response()
+                ->json(["message" => "Pytanie z podanym ID nie istnieje"])
+                ->setStatusCode(404);
+        }
+        else {
+            $questionToDelete->delete();
+            return response()
+                ->json(["message" => "Pytanie zostało usunięte pomyślnie!"])
+                ->setStatusCode(200);
         }
     }
 }
