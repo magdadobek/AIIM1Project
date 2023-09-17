@@ -20,7 +20,9 @@ class RestApiQnACommentController extends Controller
         }
 
         if ($comment->id_user != auth()->user()->id) {
-            return response()->json(['message' => 'Nie jesteś twórcą tego komentarza'], 403);
+            return response()
+            ->json(['message' => 'Nie jesteś twórcą tego komentarza'])
+            ->setStatusCode(403);
         }
         $comment->content = $validatedComment['content'];
         $comment->save();
