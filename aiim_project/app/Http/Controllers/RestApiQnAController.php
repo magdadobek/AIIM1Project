@@ -59,7 +59,8 @@ class RestApiQnAController extends Controller
                 ])
                 ->setStatusCode(404);
         }
-  
+    }
+
     public function editQuestion(QnARequest $request, $questionID)
     {
         $validatedRequest = $request->validated();
