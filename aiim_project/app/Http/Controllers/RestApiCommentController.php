@@ -29,4 +29,18 @@ class RestApiCommentController extends Controller
             ]
         );
     }
+
+    public function editActiveComment(CommentRequest $commentRequest, int $id) {
+        $validatedComment = $commentRequest->validated();
+
+        $comment = Comments::find($id);
+
+        if(!$comment) {
+            return response()->json(['message' => 'Komentarz nie istnieje!'],404);
+        }
+        $comment->content = $validatedComment['content'];
+        $comment->save();
+
+        return response()->json(['message' => 'Komentarz został zaktualizowany'],200);
+    }
 }

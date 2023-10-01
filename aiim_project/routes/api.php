@@ -6,6 +6,8 @@ use App\Http\Controllers\RestApiController;
 use App\Http\Controllers\RestApiUserController;
 use App\Http\Controllers\RestApiNoticeBoardController;
 use App\Http\Controllers\RestApiCommentController;
+use App\Http\Controllers\RestApiQnACommentController;
+use App\Http\Controllers\RestApiQnAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +42,13 @@ Route::get('/noticeboard/allClosed', [RestApiNoticeBoardController::class, 'getA
 Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'findNoticeBoardById']);
 Route::delete('/noticeboard/delete/{id}', [RestApiNoticeBoardController::class, 'deleteNoticeBoardPost']);
 Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
+Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateNoticeBoard']);
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
+Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
+
+Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
+Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
+Route::patch('/qna/{id}',[RestApiQnAController::class, 'editQuestion']);
+Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
+
+Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);

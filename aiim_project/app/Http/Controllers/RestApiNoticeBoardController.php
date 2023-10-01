@@ -63,7 +63,7 @@ class RestApiNoticeBoardController extends Controller
     public function addNewNoticeBoard(NoticeBoardRequest $request)
     {
         $data = $request->validated();
-        
+
         $token = $data['token'];
         try {
             $decodedToken = JWTAuth::parseToken($token)->authenticate();
@@ -75,7 +75,7 @@ class RestApiNoticeBoardController extends Controller
         }
         $noticeBoard = new NoticeBoard();
 
-        $noticeBoard->id_user = $decodedToken->id;  
+        $noticeBoard->id_user = $decodedToken->id;
         $noticeBoard->date = date('Y-m-d');
         $noticeBoard->title = $data['title'];
         $noticeBoard->content = $data['content'];
@@ -94,17 +94,39 @@ class RestApiNoticeBoardController extends Controller
     {
 
         $post = NoticeBoard::find($id);
-   
+
        if ($post === null) {
            $data = "brak ogłoszeń";
        } else {
            $post->delete();
            $data =  "Rekord został pomyślnie usunięty";
        }
-   
+
        return response()->json([
            'data' => $data,
        ]);
+       }
+
+       public function updateNoticeBoard(NoticeBoardRequest $request, $id)
+       {
+           $validatedData = $request->validated();
+
+           $noticeBoard = NoticeBoard::find($id);
+
+           if (!$noticeBoard) {
+               return response()->json(['message' => 'Post nie istnieje'], 404);
+           }
+
+           if ($noticeBoard->id_user != auth()->user()->id) {
+               return response()->json(['message' => 'Nie jesteś twórcą tego posta'], 403);
+           }
+
+           $noticeBoard->title = $validatedData['title'];
+           $noticeBoard->content = $validatedData['content'];
+           $noticeBoard->tags = $validatedData['tags'];
+           $noticeBoard->save();
+
+           return response()->json(['message' => 'Post został zaktualizowany'], 200);
        }
 
 
