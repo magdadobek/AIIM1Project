@@ -982,6 +982,274 @@
                     }
                 }
             }
+        },
+        "/api/qna": {
+            "get": {
+                "tags": [
+                    "QnA"
+                ],
+                "summary": "Wszystkie pytania",
+                "description": "Pobiera wszystkie pytania",
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": "",
+                                    "id_user": "",
+                                    "date": "YYYY-MM-DD",
+                                    "question_title": "Pytanie1",
+                                    "question_content": "Tresc pytania nr 1",
+                                    "open": true,
+                                    "tags": "\"{}\""
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytań",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak pytań"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/qna/{id}": {
+            "get": {
+                "summary": "Znajdź pytanie o podanym ID",
+                "description": "Pobiera pytanie o podanym ID",
+                "tags": [
+                    "QnA"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pytania które chcemy znaleźć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Oto dane pytania o id: $id"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "",
+                                                "id_user": "",
+                                                "date": "YYYY-MM-DD",
+                                                "question_title": "Pytanie1",
+                                                "question_content": "Tresc pytania nr X",
+                                                "open": true,
+                                                "tags": "\"{}\""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytania o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie znaleziono pytania o podanym ID"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Aktualizacja pytania o podanym ID",
+                "description": "Aktualizuje pytanie o podanym ID",
+                "tags": [
+                    "QnA"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pytania które chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Informacje potrzebne do nowego pytania",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-18"
+                                    },
+                                    "question_title": {
+                                        "type": "string"
+                                    },
+                                    "question_content": {
+                                        "type": "string"
+                                    },
+                                    "open": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "format": "application/json",
+                                        "example": "[\"important\", \"new\"]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie zostało usunięte pomyślnie!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytania o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie z podanym ID nie istnieje"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Usunięcie pytanie o podanym ID",
+                "description": "Usuwa pytanie o podanym ID",
+                "tags": [
+                    "QnA"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pytania które chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie zostało usunięte pomyślnie!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytania o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie z podanym ID nie istnieje"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1111,12 +1379,49 @@
                     "tags": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "json"
                         }
                     },
                     "life_length": {
                         "type": "integer",
                         "format": "int32"
+                    }
+                }
+            },
+            "QnA": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                        "type": "integer",
+                        "format": "int"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "question_title": {
+                        "type": "string",
+                        "format": "varchar(255)"
+                    },
+                    "question_content": {
+                        "type": "string",
+                        "format": "varchar(255)"
+                    },
+                    "open": {
+                        "type": "boolean",
+                        "format": "true | false"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "json"
+                        }
                     }
                 }
             }
