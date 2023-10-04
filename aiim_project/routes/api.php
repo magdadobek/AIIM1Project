@@ -55,3 +55,6 @@ Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
 Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
 
 Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseChat']);
+Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat']);
+
+

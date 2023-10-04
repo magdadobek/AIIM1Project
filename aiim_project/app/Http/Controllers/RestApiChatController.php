@@ -49,4 +49,18 @@ class RestApiChatController extends Controller
     
         }
     }
+
+    public function closeChat($chatId){
+        $chat = Chat::find($chatId);
+
+        if (!$chat) {
+            return response()->json(['message' => 'Czat nie istnieje'], 404);
+        }
+
+        $chat->open = false;
+        $chat->save();
+
+        return response()->json(['message' => 'Czat został zamknięty'], 200);
+    }
+
 }
