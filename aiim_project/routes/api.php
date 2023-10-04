@@ -8,6 +8,7 @@ use App\Http\Controllers\RestApiNoticeBoardController;
 use App\Http\Controllers\RestApiCommentController;
 use App\Http\Controllers\RestApiQnACommentController;
 use App\Http\Controllers\RestApiQnAController;
+use App\Http\Controllers\RestApiChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,5 @@ Route::patch('/qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
 
 Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
+
+Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseChat']);
