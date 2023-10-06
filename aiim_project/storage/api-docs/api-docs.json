@@ -1424,6 +1424,41 @@
                         }
                     }
                 }
+            },
+            "QnA Comments": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "ID komentarza",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_question": {
+                        "description": "ID pytania, do jakiego odnosi się komentarz",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                        "description": "ID użytkownika - autora komentarza",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "date": {
+                        "description": "Data edycji komentarza",
+                        "type": "string",
+                        "format": "date(YYYY-MM-DD)"
+                    },
+                    "content": {
+                        "description": "Zawartość komentarza",
+                        "type": "string",
+                        "format": "text"
+                    },
+                    "edited": {
+                        "description": "Czy komentarz był edytowany",
+                        "type": "boolean",
+                        "format": "true|false"
+                    }
+                }
             }
         }
     }
