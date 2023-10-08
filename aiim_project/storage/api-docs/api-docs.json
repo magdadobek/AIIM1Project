@@ -1250,6 +1250,67 @@
                     }
                 }
             }
+        },
+        "/api/qna/comments/{id}": {
+            "patch": {
+                "summary": "Aktualizacja komentarza o podanym ID",
+                "description": "Aktualizacja komentarza o podanym ID",
+                "tags": [
+                    "QnA Comments"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID komentarza, który chcemy zaktualizować",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Dane potrzebne do aktualizacji komentarza",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "comment": {
+                                        "type": "string",
+                                        "minLength": 3,
+                                        "example": "Test comment"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz został zaktualizowany"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak komentarza",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz nie istnieje!"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
