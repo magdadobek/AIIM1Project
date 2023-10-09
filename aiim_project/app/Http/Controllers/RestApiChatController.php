@@ -8,6 +8,7 @@ use App\Notifications\CloseChatNotification;
 use Illuminate\Http\Request;
 use App\Models\Chat;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class RestApiChatController extends Controller
 {
@@ -61,6 +62,23 @@ class RestApiChatController extends Controller
         $chat->save();
 
         return response()->json(['message' => 'Czat został zamknięty'], 200);
+    }
+
+    public function deleteChat($id){
+        $chatToRemove = Chat::find($id);
+
+        if (!$chatToRemove) {
+            return response()->json(['message' => 'Czat nie istnieje'], 404);
+        }
+
+        if ($chatToRemove->open != false) {
+            return response()->json(['message' => 'Czat dalej jest otwarty'], 404);
+        }
+
+        DB::table('messages')->where('id_chat', '=', $id)->delete();
+        DB::table('chats')->where('id', '=', $id)->delete();
+
+        return response()->json(['message' => 'Czat został usunięty'], 200);
     }
 
 }
