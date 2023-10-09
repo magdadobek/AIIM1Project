@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QnACommentRequest;
 use App\Models\QnAComments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RestApiQnACommentController extends Controller
 {
@@ -30,13 +31,5 @@ class RestApiQnACommentController extends Controller
         return response()
             ->json(['message' => 'Komentarz został zaktualizowany'])
             ->setStatusCode(200);
-    }
-
-    public function getCommentsFromSingleQnAQuestion($id)
-    {
-        $posts = DB::table('qna_comments')->where('id_question', '=', $id)->orderBy('date', 'DESC')->get();
-        return response()->json([
-            'data' => $posts,
-        ]);
     }
 }
