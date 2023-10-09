@@ -18,10 +18,6 @@ class Chat extends Model
         'open'
     ];
 
-    protected $casts = [
-        'messages' => 'array',
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');

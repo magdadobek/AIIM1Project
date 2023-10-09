@@ -26,7 +26,6 @@ class CreateChatsTable extends Migration
             $table->date('created_at');
             $table->date('edited_at');
             $table->boolean('open')->default(true);
-            $table->string('messages')->toArray();
         });
     }
 
