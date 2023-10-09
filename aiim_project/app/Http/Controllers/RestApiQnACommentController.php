@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QnACommentRequest;
 use App\Models\QnAComments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RestApiQnACommentController extends Controller
 {

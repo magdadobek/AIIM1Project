@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NoticeBoardRequest;
 use Illuminate\Http\Request;
 use App\Models\NoticeBoard;
-use App\Models\Comments;
 use Illuminate\Support\Facades\DB;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
@@ -110,7 +109,7 @@ class RestApiNoticeBoardController extends Controller
 
     public function updateNoticeBoard(NoticeBoardRequest $request, $id)
     {
-       $validatedData = $request->validated();
+        $validatedData = $request->validated();
 
         $noticeBoard = NoticeBoard::find($id);
 
@@ -119,7 +118,7 @@ class RestApiNoticeBoardController extends Controller
         }
 
         if ($noticeBoard->id_user != auth()->user()->id) {
-            return response()->json(['message' => 'Nie jesteś twórcą tego posta'], 403);
+           return response()->json(['message' => 'Nie jesteś twórcą tego posta'], 403);
         }
 
         $noticeBoard->title = $validatedData['title'];
@@ -137,5 +136,4 @@ class RestApiNoticeBoardController extends Controller
             'data' => $posts,
         ]);
     }
-
 }
