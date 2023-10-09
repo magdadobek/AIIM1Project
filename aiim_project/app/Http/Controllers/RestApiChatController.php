@@ -64,6 +64,16 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Czat został zamknięty'], 200);
     }
 
+    public function checkIfChatHasGuide($chatId, $clickerId){
+
+        if(Chat::find($chatId)->id_guide == null || Chat::find($chatId)->id_guide == $clickerId){
+            openChat($clickerId, $chatId);
+        }
+        else{
+            return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 200);
+        }
+    }
+
     public function deleteChat($id){
         $chatToRemove = Chat::find($id);
 
