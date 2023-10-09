@@ -105,29 +105,35 @@ class RestApiNoticeBoardController extends Controller
        return response()->json([
            'data' => $data,
        ]);
-       }
+    }
 
-       public function updateNoticeBoard(NoticeBoardRequest $request, $id)
-       {
-           $validatedData = $request->validated();
+    public function updateNoticeBoard(NoticeBoardRequest $request, $id)
+    {
+        $validatedData = $request->validated();
 
-           $noticeBoard = NoticeBoard::find($id);
+        $noticeBoard = NoticeBoard::find($id);
 
-           if (!$noticeBoard) {
-               return response()->json(['message' => 'Post nie istnieje'], 404);
-           }
+        if (!$noticeBoard) {
+            return response()->json(['message' => 'Post nie istnieje'], 404);
+        }
 
-           if ($noticeBoard->id_user != auth()->user()->id) {
-               return response()->json(['message' => 'Nie jesteś twórcą tego posta'], 403);
-           }
+        if ($noticeBoard->id_user != auth()->user()->id) {
+           return response()->json(['message' => 'Nie jesteś twórcą tego posta'], 403);
+        }
 
-           $noticeBoard->title = $validatedData['title'];
-           $noticeBoard->content = $validatedData['content'];
-           $noticeBoard->tags = $validatedData['tags'];
-           $noticeBoard->save();
+        $noticeBoard->title = $validatedData['title'];
+        $noticeBoard->content = $validatedData['content'];
+        $noticeBoard->tags = $validatedData['tags'];
+        $noticeBoard->save();
 
-           return response()->json(['message' => 'Post został zaktualizowany'], 200);
-       }
+        return response()->json(['message' => 'Post został zaktualizowany'], 200);
+    }
 
-
+    public function getAllComments($id)
+    {
+        $posts = DB::table('comments')->where('id_notice', '=', $id)->orderBy('date', 'DESC')->get();
+        return response()->json([
+            'data' => $posts,
+        ]);
+    }
 }
