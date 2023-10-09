@@ -43,7 +43,7 @@ class RestApiChatController extends Controller
             }
             
             $questioner->notify(new CloseChatNotification());
-            $guide->notify(new CloseChatNotification);
+            $guide->notify(new CloseChatNotification());
 
             return response()->setStatusCode(200);
     

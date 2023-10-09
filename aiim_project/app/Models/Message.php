@@ -4,26 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Chat extends Model
+class Message extends Model
 {
+
     public $timestamps = false;
 
-    protected $table = 'chats';
+    protected $table = 'notice_board';
 
     protected $fillable = [
         'id_user',
-        'id_guide',
-        'created_at',
-        'edited_at',
-        'open'
+        'type_user',
+        'id_chat',
+        'content',
+        'send_at',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
     }
-    public function guide()
+
+    public function chat()
     {
-        return $this->belongsTo(Guide::class, 'id_guide');
+        return $this->belongsTo(Chat::class, 'id_chat');
     }
 }
