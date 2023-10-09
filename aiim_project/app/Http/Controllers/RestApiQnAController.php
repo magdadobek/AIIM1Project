@@ -88,4 +88,12 @@ class RestApiQnAController extends Controller
             ->json(['message' => 'Pytanie zostało zaktualizowane!'])
             ->setStatusCode(200);
     }
+    
+    public function getCommentsFromSingleQnAQuestion($id)
+    {
+        $posts = DB::table('qna_comments')->where('id_question', '=', $id)->orderBy('date', 'DESC')->get();
+        return response()->json([
+            'data' => $posts,
+        ]);
+    }
 }

@@ -52,10 +52,9 @@ Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
 Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
 Route::patch('/qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
+Route::get('/qna/showComments/{id}', [RestApiQnAController::class, 'getCommentsFromSingleQnAQuestion']);
 
 Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
 
 Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseChat']);
 Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat']);
-
-
