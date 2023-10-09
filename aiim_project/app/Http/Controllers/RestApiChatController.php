@@ -63,4 +63,14 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Czat został zamknięty'], 200);
     }
 
+    public function checkIfChatHasGuide($id)
+    {
+        if((Chat::find($id)->id_guide == null) /*or jeśli id_guide odpowiada id zalogowanego teraz guide'a*/){
+            openChat($id);
+        }
+        else{
+            return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 200);
+        }
+    }
+
 }

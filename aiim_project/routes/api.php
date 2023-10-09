@@ -57,5 +57,6 @@ Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editAct
 
 Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseChat']);
 Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat']);
+Route::get('/chats/checkIfChatHasGuide/{id}',[RestApiChatController::class,'checkIfChatHasGuide']);
 
 
