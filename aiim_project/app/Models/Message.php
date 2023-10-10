@@ -9,7 +9,7 @@ class Message extends Model
 
     public $timestamps = false;
 
-    protected $table = 'notice_board';
+    protected $table = 'messages';
 
     protected $fillable = [
         'id_user',
