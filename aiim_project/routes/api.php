@@ -60,4 +60,4 @@ Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseCha
 Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat']);
 Route::get('/chats/checkIfChatHasGuide/{chatId}/{clickerId}',[RestApiChatController::class,'checkIfChatHasGuide']);
 Route::delete('/chats/{id}', [RestApiChatController::class, 'deleteChat']);
-
+Route::post('/chats/openChat',[RestApiChatController::class,'openChat']);

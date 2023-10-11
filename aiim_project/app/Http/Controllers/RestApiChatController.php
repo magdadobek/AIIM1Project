@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Guide;
 use App\Models\User;
 use App\Notifications\CloseChatNotification;
+use App\Notifications\OpenChatNotification;
 use Illuminate\Http\Request;
+use App\Http\Requests\ChatRequest;
 use App\Models\Chat;
+use App\Models\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -91,4 +94,52 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Czat został usunięty'], 200);
     }
 
+    public function openChat(ChatRequest $request){
+
+        $validatedData = $request->validated();
+
+        $chat = new Chat();
+
+        $date = date('Y-m-d H:i:s');
+ 
+        $chat->id_user = $validatedData['id_user'];
+        $chat->edited_at = $date;
+        $chat->created_at = $date;
+        $chat->open = true;
+        $chat->id_guide = null;
+
+        $chat->save();
+
+        $chatID = $chat->id;
+
+        $message = new Message();
+        $message->id_user = $validatedData['id_user'];
+        $message->type_user = 'U';
+        $message->id_chat = $chatID;
+        $message->content = $request->message;
+        $message->send_at = $date;
+
+        $message->save();
+
+        /*
+
+        //Wszyscy wolontariusze dostają powiadomienie, pole informujące o aktywności?
+        $guides = Guide::all();
+        foreach ($guides as $guide) {
+            $guide->notify(new OpenChatNotification);
+        }
+
+        //Call to undefined method App\Models\Guide::notify()
+        
+        */
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => "Utworzono chat",
+                'data' => $chat
+            ]
+        );
+
+    }
 }
