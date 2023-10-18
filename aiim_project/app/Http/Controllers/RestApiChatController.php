@@ -94,7 +94,7 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Czat został usunięty'], 200);
     }
 
-    public function openChat(ChatRequest $request){
+    public function createChat(ChatRequest $request){
 
         $validatedData = $request->validated();
 
