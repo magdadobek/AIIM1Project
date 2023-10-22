@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import NoticeList from "../components/noticeboard/NoticeList";
+import NoticeList from "../../components/notice-and-questions-board/NoticeList";
 
 
 const NoticeBoard = () => {

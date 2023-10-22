@@ -6,11 +6,14 @@ import Placeholder from './pages/Placeholder'
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
-import NoticeBoard from './pages/NoticeBoard';
-import NoticePage from './pages/NoticePage';
-import NewNotice from './pages/NewNotice';
+import NoticeBoard from './pages/notice/NoticeBoard';
+import NoticePage from './pages/notice/NoticePage';
+import NewNotice from './pages/notice/NewNotice';
 import MainNavigation from './components/ui/MainNavigation'
 import Content from './components/ui/Content';
+import QuestionBoard from './pages/questions/QuestionBoard';
+import QuestionPage from './pages/questions/QuestionPage';
+import NewQuestion from './pages/questions/NewQuestion';
 
 
 const App = () => {
@@ -57,6 +60,9 @@ const App = () => {
             <Route path='/notices' element={<NoticeBoard />}/>
             <Route path='/notices/:noticeId' element={<NoticePage />}/>
             <Route path='/notices/new' element={<NewNotice />}/>
+            <Route path='/questions' element={<QuestionBoard />}/>
+            <Route path='/questions/:questionId' element={<QuestionPage />}/>
+            <Route path='/questions/new' element={<NewQuestion />}/>
             <Route path='/map' element={<Placeholder title="Mapa" />} />
             <Route path='/contact' element={<Placeholder title="Kontakt" />} />
             <Route path='/documents' element={<Placeholder title="Dokumenty" />} />
