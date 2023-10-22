@@ -53,18 +53,18 @@ const App = () => {
         <Content>
           <Routes>
             <Route path='/' exact element={<Placeholder title="Strona główna" />} />
-            <Route path='/szybkapomoc' element={<Placeholder title="Szybka pomoc" />} />
-            <Route path='/ogloszenia' element={<NoticeBoard />}/>
-            <Route path='/ogloszenia/:noticeId' element={<NoticePage />}/>
-            <Route path='/ogloszenia/nowe' element={<NewNotice />}/>
-            <Route path='/mapa' element={<Placeholder title="Mapa" />} />
-            <Route path='/kontakt' element={<Placeholder title="Kontakt" />} />
-            <Route path='/dokumenty' element={<Placeholder title="Dokumenty" />} />
-            <Route path='/kolanaukowe' element={<Placeholder title="Koła naukowe" />} />
-            <Route path='/logowanie' element={<Login />} />
-            <Route path='/rejestracja' element={<Register />} />
+            <Route path='/help' element={<Placeholder title="Szybka pomoc" />} />
+            <Route path='/notices' element={<NoticeBoard />}/>
+            <Route path='/notices/:noticeId' element={<NoticePage />}/>
+            <Route path='/notices/new' element={<NewNotice />}/>
+            <Route path='/map' element={<Placeholder title="Mapa" />} />
+            <Route path='/contact' element={<Placeholder title="Kontakt" />} />
+            <Route path='/documents' element={<Placeholder title="Dokumenty" />} />
+            <Route path='/circles' element={<Placeholder title="Koła naukowe" />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/registration' element={<Register />} />
             <Route path='/profil' element={<Placeholder title="Profil" />} />
-            <Route path='/wyloguj' element={<Logout />} />
+            <Route path='/logout' element={<Logout />} />
           </Routes>
         </Content>
       </div>

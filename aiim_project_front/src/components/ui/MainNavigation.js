@@ -54,22 +54,25 @@ const MainNavigation = () => {
                                 <NavLink to="/">Strona główna</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/szybkapomoc">Szybka pomoc</NavLink>
+                                <NavLink to="/help">Szybka pomoc</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/ogloszenia">Ogłoszenia</NavLink>
+                                <NavLink to="/notices">Ogłoszenia</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/mapa">Mapa</NavLink>
+                                <NavLink to="/questions">Najczęstrze pytania</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/kontakt">Kontakt</NavLink>
+                                <NavLink to="/map">Mapa</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/dokumenty">Dokumenty</NavLink>
+                                <NavLink to="/contact">Kontakt</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/kolanaukowe">Koła naukowe</NavLink>
+                                <NavLink to="/documents">Dokumenty</NavLink>
+                            </div>
+                            <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
+                                <NavLink to="/circles">Koła naukowe</NavLink>
                             </div>
                         </div>
                     </div>

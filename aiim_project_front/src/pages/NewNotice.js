@@ -18,7 +18,7 @@ const NewNotice = () => {
     setHasSubmitted(true);
     if (responseData.status === "success") {
       setMessage("Dodano ogłoszenie");
-      navigate("/ogloszenia");
+      navigate("/notices");
     }
     else setMessage(responseData.message)
   }

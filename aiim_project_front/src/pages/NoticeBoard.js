@@ -73,7 +73,11 @@ const NoticeBoard = () => {
                 <div className="flex flex-1 justify-end">
                     <Link
                         to="/ogloszenia/nowe"
-                        className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg"
+                        className="text-light_menu 
+                        dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 
+                        hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg 
+                        dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg 
+                        font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg"
                     >
                         Dodaj ogłoszenie
                     </Link>

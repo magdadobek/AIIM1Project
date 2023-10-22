@@ -48,10 +48,11 @@ export default SearchBar;
 
 const linksData = [
     { textContent: 'Strona główna', url: '/' },
-    { textContent: 'Szybka pomoc', url: '/szybkapomoc' },
-    { textContent: 'Ogłoszenia', url: '/ogloszenia' },
-    { textContent: 'Mapa', url: '/mapa' },
-    { textContent: 'Kontakt', url: '/kontakt' },
-    { textContent: 'Dokumenty', url: '/dokumenty' },
-    { textContent: 'Koła Naukowe', url: '/kolanaukowe' },
+    { textContent: 'Szybka pomoc', url: '/help' },
+    { textContent: 'Ogłoszenia', url: '/notices' },
+    { textContent: 'Najczęstrze pytania', url: '/questions' },
+    { textContent: 'Mapa', url: '/map' },
+    { textContent: 'Kontakt', url: '/contact' },
+    { textContent: 'Dokumenty', url: '/documents' },
+    { textContent: 'Koła Naukowe', url: '/circles' },
 ];
