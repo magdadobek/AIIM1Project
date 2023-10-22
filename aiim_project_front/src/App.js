@@ -9,6 +9,9 @@ import Logout from './pages/Logout';
 import NoticeBoard from './pages/NoticeBoard';
 import NoticePage from './pages/NoticePage';
 import NewNotice from './pages/NewNotice';
+import QuestionBoard from './pages/QuestionBoard';
+import QuestionPage from './pages/QuestionPage';
+import NewQuestion from './pages/NewQuestion';
 import MainNavigation from './components/ui/MainNavigation'
 import Content from './components/ui/Content';
 
@@ -57,6 +60,9 @@ const App = () => {
             <Route path='/ogloszenia' element={<NoticeBoard />}/>
             <Route path='/ogloszenia/:noticeId' element={<NoticePage />}/>
             <Route path='/ogloszenia/nowe' element={<NewNotice />}/>
+            <Route path='/pytiodp' element={<QuestionBoard />}/>
+            <Route path='/pytiodp/:noticeId' element={<QuestionPage />}/>
+            <Route path='/pytiodp/nowe' element={<NewQuestion />}/>
             <Route path='/mapa' element={<Placeholder title="Mapa" />} />
             <Route path='/kontakt' element={<Placeholder title="Kontakt" />} />
             <Route path='/dokumenty' element={<Placeholder title="Dokumenty" />} />
