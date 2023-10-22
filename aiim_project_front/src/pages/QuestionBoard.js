@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import QuestionList from "../components/questionboard/QuestionList";
 
 
+
 const QuestionBoard = () => {
     const [questions, setQuestions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
