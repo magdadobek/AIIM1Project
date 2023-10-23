@@ -61,6 +61,39 @@ class RestApiQnAController extends Controller
         }
     }
 
+    public function addNewQuestion(QnARequest $request)
+    {
+        $data = $request->validated();
+
+        // Jak gość?
+
+        $token = $data['token'];
+
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+        $qna = new QnA();
+
+        $qna->id_user = $decodedToken->id;
+        $qna->date = date('Y-m-d');
+        $qna->question_title = $data['question_title'];
+        $qna->question_content = $data['question_content'];
+        $qna->open = true;
+        $qna->tags = $data['tags'];
+        $qna->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Dodano zapytanie',
+            'data' => $qna
+        ], 200);
+    }
+
     public function editQuestion(QnARequest $request, $questionID)
     {
         $validatedRequest = $request->validated();
