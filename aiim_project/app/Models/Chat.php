@@ -26,4 +26,9 @@ class Chat extends Model
     {
         return $this->belongsTo(Guide::class, 'id_guide');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'id_chat');
+    }
 }

@@ -62,3 +62,5 @@ Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat'
 Route::get('/chats/checkIfChatHasGuide/{chatId}/{clickerId}',[RestApiChatController::class,'checkIfChatHasGuide']);
 Route::delete('/chats/{id}', [RestApiChatController::class, 'deleteChat']);
 Route::post('/chats/createChat',[RestApiChatController::class,'createChat']);
+Route::get('/chats/{chatId}/messages', [RestApiChatController::class, 'getChatMessages']);
+
