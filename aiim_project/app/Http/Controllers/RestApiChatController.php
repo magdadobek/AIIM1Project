@@ -142,4 +142,27 @@ class RestApiChatController extends Controller
         );
 
     }
+
+    public function getChatMessages($chatId)
+    {
+        $chat = Chat::with(['messages.user'])
+            ->find($chatId);
+    
+        if (!$chat) {
+            return response()->json(['message' => 'Czat nie istnieje'], 404);
+        }
+    
+        $messages = $chat->messages->sortBy('send_at')->map(function ($message) {
+            return [
+                'id_user' => $message->user->id,
+                'sender_type' => $message->sender_type,
+                'content' => $message->content,
+                'send_at' => $message->send_at,
+                'nickname' => $message->user->nickname,
+            ];
+        });
+    
+        return response()->json(['data' => $messages->values()], 200);
+    }
+    
 }
