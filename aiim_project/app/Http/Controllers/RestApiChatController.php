@@ -182,7 +182,7 @@ class RestApiChatController extends Controller
             ], 401);
         }
     
-        $userId = $decodedToken->id; // Pobierz ID użytkownika z tokenu
+        $userId = $decodedToken->id; 
         $user = User::find($userId);
 
         if (!$user) {
@@ -207,10 +207,13 @@ class RestApiChatController extends Controller
         $message->id_user = $userId;
         $message->id_chat = $chatId;
         $message->content = $messageContent;
-        $message->send_at = date('Y-m-d');
+        $message->send_at = now();
         $message->sender_type = $accountType;
     
         $message->save();
+
+        $chat->to_close = false;
+        $chat->save();
     
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
