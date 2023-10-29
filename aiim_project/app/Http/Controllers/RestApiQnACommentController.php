@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class RestApiQnACommentController extends Controller
 {
+
+    public function getCommentsFromSingleQnAQuestion($id)
+    {
+        $posts = DB::table('qna_comments')->where('id_question', '=', $id)->orderBy('date', 'DESC')->get();
+        return response()->json([
+            'data' => $posts,
+        ]);
+    }
+
     public function editActiveComment(QnACommentRequest $commentRequest, int $id) {
         $validatedComment = $commentRequest->validated();
 

@@ -53,8 +53,8 @@ Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
 Route::post('/qna/new',[RestApiQnAController::class,'addNewQuestion']);
 Route::patch('/qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
-Route::get('/qna/showComments/{id}', [RestApiQnAController::class, 'getCommentsFromSingleQnAQuestion']);
 
+Route::get('/qna/showComments/{id}', [RestApiQnACommentController::class, 'getCommentsFromSingleQnAQuestion']);
 Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
 
 Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseChat']);
