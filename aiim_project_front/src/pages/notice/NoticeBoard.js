@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import NoticeList from "../components/noticeboard/NoticeList";
+import NoticeList from "../../components/notice-and-questions-board/NoticeList";
 
 
 const NoticeBoard = () => {
@@ -72,8 +72,12 @@ const NoticeBoard = () => {
                 <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Tablica ogłoszeń</p>
                 <div className="flex flex-1 justify-end">
                     <Link
-                        to="/ogloszenia/nowe"
-                        className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg"
+                        to="/notices/new"
+                        className="text-light_menu 
+                        dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 
+                        hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg 
+                        dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg 
+                        font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg"
                     >
                         Dodaj ogłoszenie
                     </Link>
