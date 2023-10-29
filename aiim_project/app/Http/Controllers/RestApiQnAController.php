@@ -6,6 +6,7 @@ use App\Http\Requests\QnARequest;
 use App\Models\QnA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiQnAController extends Controller
 {
@@ -122,11 +123,4 @@ class RestApiQnAController extends Controller
             ->setStatusCode(200);
     }
     
-    public function getCommentsFromSingleQnAQuestion($id)
-    {
-        $posts = DB::table('qna_comments')->where('id_question', '=', $id)->orderBy('date', 'DESC')->get();
-        return response()->json([
-            'data' => $posts,
-        ]);
-    }
 }
