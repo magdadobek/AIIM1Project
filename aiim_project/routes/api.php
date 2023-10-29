@@ -50,6 +50,7 @@ Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComm
 
 Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
 Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
+Route::post('/qna/new',[RestApiQnAController::class,'addNewQuestion']);
 Route::patch('/qna/{id}',[RestApiQnAController::class, 'editQuestion']);
 Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
 Route::get('/qna/showComments/{id}', [RestApiQnAController::class, 'getCommentsFromSingleQnAQuestion']);
@@ -61,3 +62,5 @@ Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat'
 Route::get('/chats/checkIfChatHasGuide/{chatId}/{clickerId}',[RestApiChatController::class,'checkIfChatHasGuide']);
 Route::delete('/chats/{id}', [RestApiChatController::class, 'deleteChat']);
 Route::post('/chats/createChat',[RestApiChatController::class,'createChat']);
+Route::get('/chats/{chatId}/messages', [RestApiChatController::class, 'getChatMessages']);
+

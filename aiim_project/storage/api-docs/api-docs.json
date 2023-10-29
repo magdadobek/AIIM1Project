@@ -1026,6 +1026,91 @@
                 }
             }
         },
+        "/api/qna/new": {
+            "post": {
+                "tags": [
+                    "QnA"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Nowe zapytanie",
+                "description": "Dodaje nowe zapytanie do qna",
+                "requestBody": {
+                    "required": true,
+                    "description": "Informacje potrzebne do nowego ogłoszenia",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-18"
+                                    },
+                                    "question_title": {
+                                        "type": "string"
+                                    },
+                                    "question_content": {
+                                        "type": "string"
+                                    },
+                                    "open": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "format": "application/json",
+                                        "example": "[\"important\", \"new\"]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak zapytań"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/qna/{id}": {
             "get": {
                 "summary": "Znajdź pytanie o podanym ID",
