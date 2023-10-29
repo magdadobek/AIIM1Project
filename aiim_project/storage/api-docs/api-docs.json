@@ -1336,6 +1336,60 @@
                 }
             }
         },
+        "/api/qna/showComments/{id}": {
+            "get": {
+                "summary": "Wyświetlenie komentarzy posta o danym ID",
+                "description": "Wyświetlenie komentarzy posta o danym ID",
+                "tags": [
+                    "QnA Comments"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID posta, z pod którego chcemy komentarze",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": "",
+                                    "id_question": "",
+                                    "id_user": "",
+                                    "date": "YYYY-MM-DD",
+                                    "content": "*Komentarz*",
+                                    "edited": true
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak komentarzy do Q&A o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/qna/comments/{id}": {
             "patch": {
                 "summary": "Aktualizacja komentarza o podanym ID",
