@@ -27,7 +27,7 @@ const QuestionBoard = () => {
 
             const responseData = await response.json();
 
-            const fetchedQuestions = responseData.data.data.map((question) => {
+            const fetchedQuestions = responseData.data.map((question) => {
                 return {
                     id: question.id,
                     title: question.question_title,

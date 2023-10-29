@@ -2,13 +2,13 @@ const QuestionForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const request = {
-            title: e.target.question_title.value,
-            content: e.target.question_content.value,
+            question_title: e.target.question_title.value,
+            question_content: e.target.question_content.value,
             tags: JSON.stringify(e.target.tags.value),
             token: localStorage.getItem('token')
         };
 
-        const response = await fetch('http://localhost:8000/api/noticeboard/new/', {
+        const response = await fetch('http://localhost:8000/api/qna/new', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -29,15 +29,18 @@ const QuestionForm = (props) => {
                 <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Nowe pytanie</p>
                 <p className="flex-col py-1">
                     <label htmlFor="question_title" className="text-xl font-bold m-5 dark:text-dark_field">Tytuł</label>
-                    <input id="question_title" name="question_title" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
+                    <input id="question_title" name="question_title" className="bg-light_field dark:bg-dark_field
+                     border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
                 </p>
                 <p className="flex-col py-1">
                     <label htmlFor="question_content" className="text-xl font-bold m-5 dark:text-dark_field">Treść</label>
-                    <textarea id="question_content" name="question_content" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80 h-40" required />
+                    <textarea id="question_content" name="question_content" className="bg-light_field dark:bg-dark_field
+                     border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80 h-40" required />
                 </p>
                 <p className="flex-col py-1">
                     <label htmlFor="tags" className="text-xl font-bold m-5 dark:text-dark_field">Tagi</label>
-                    <input id="tags" name="tags" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
+                    <input id="tags" name="tags" className="bg-light_field dark:bg-dark_field border-light_menu
+                     dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-80" required />
                 </p>
                 <div className="flex justify-between py-2 w-72">
                     <button className="text-light_menu dark:text-dark_component border-yellow_umg 

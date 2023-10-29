@@ -30,7 +30,7 @@ const QuestionPage = (props) => {
                 throw new Error('Nie znaleziono pytania o podanym id');
             }
 
-            setQuestion(responseData.data.data);
+            setQuestion(responseData.data);
             setIsLoading(false);
         }
         fetchQuestion().catch((error) => {
@@ -57,10 +57,10 @@ const QuestionPage = (props) => {
 
     return (
         <div className="w-[800px] h-[700px]">
-            <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{question.title}</p>
+            <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{question.question_title}</p>
             <div className="flex flex-col justify-center items-center">
                 <p className="text-base m-5 dark:text-dark_field">Dodano przez {question.id_user} dnia {question.date}</p>
-                <p className="text-base m-5 dark:text-dark_field">{question.content}</p>
+                <p className="text-base m-5 dark:text-dark_field">{question.question_content}</p>
                 <p className="text-base m-5 dark:text-dark_field">Tagi: Test, test</p>
                 <p className="text-base m-5 dark:text-dark_field">Komentarze:</p>
                 <div className="flex flex-col justify-center items-center">
