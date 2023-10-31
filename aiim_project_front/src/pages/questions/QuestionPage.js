@@ -55,9 +55,20 @@ const QuestionPage = (props) => {
         );
     }
 
+    const handleBackToListPage = () =>{
+        window.location.href = '/notices';
+    }
+
     return (
         <div className="w-[800px] h-[700px]">
             <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{question.question_title}</p>
+            <button
+                className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg
+                 focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg 
+                 rounded-full shadow-md text-base px-2 py-1 duration-200"
+                onClick={handleBackToListPage}>
+                Back
+            </button>
             <div className="flex flex-col justify-center items-center">
                 <p className="text-base m-5 dark:text-dark_field">Dodano przez {question.id_user} dnia {question.date}</p>
                 <p className="text-base m-5 dark:text-dark_field">{question.question_content}</p>
