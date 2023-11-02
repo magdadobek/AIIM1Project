@@ -29,7 +29,7 @@ class QnARequest extends FormRequest
             'token' => 'required',
             'question_title' => 'required|min:3',
             'question_content' => 'required|min:3',
-            'tags' => 'json',
+            'tags' => 'required|array|min:1',
         ];
     }
 
@@ -51,7 +51,9 @@ class QnARequest extends FormRequest
             'question_title.min' => 'Field title must have at least 3 characters',
             'question_content.required' => 'Field content is required',
             'question_content.min' => 'Field content must have at least 3 characters',
-            'tags.json' => 'Field tags must contain valid JSON string',
+            'tags.required' => 'Tags are required',
+            'tags.array' => 'Field tags must be an array',
+            'tags.min' => 'There must be at least 1 tag in array'
         ];
     }
 }

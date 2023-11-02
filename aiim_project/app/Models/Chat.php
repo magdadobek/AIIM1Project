@@ -15,7 +15,9 @@ class Chat extends Model
         'id_guide',
         'created_at',
         'edited_at',
-        'open'
+        'open',
+        'closed_at',
+        'to_close'
     ];
 
     public function user()
