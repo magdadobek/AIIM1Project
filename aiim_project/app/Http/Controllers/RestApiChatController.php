@@ -12,6 +12,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiChatController extends Controller
 {
@@ -164,5 +165,59 @@ class RestApiChatController extends Controller
     
         return response()->json(['data' => $messages->values()], 200);
     }
+
+    public function sendMessageToChat(Request $request)
+    {
+        $data = $request;
+        $chatId = $data['chat_id'];
+        $messageContent = $data['content'];
+    
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+    
+        $userId = $decodedToken->id; 
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['message' => 'Użytkownik nie istnieje'], 404);
+        }
+    
+        $accountType = $user->account_type;
+        
+        $chat = Chat::where('id', $chatId)
+            ->where(function ($query) use ($userId) {
+                $query->where('id_user', $userId)
+                    ->orWhere('id_guide', $userId);
+            })
+            ->where('open', true)
+            ->first();
+    
+        if (!$chat) {
+            return response()->json(['message' => 'Nie możesz wysłać wiadomości w tym czacie'], 403);
+        }
+    
+        $message = new Message();
+        $message->id_user = $userId;
+        $message->id_chat = $chatId;
+        $message->content = $messageContent;
+        $message->send_at = now();
+        $message->sender_type = $accountType;
+    
+        $message->save();
+
+        $chat->to_close = false;
+        $chat->save();
+    
+        return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
+    }
+    
+
     
 }
