@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QnARequest;
 use App\Models\QnA;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
@@ -90,7 +91,7 @@ class RestApiQnAController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Dodano zapytanie',
+            'message' => 'Dodano nowe pytanie',
             'data' => $qna
         ], 200);
     }

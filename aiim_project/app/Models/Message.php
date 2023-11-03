@@ -13,7 +13,7 @@ class Message extends Model
 
     protected $fillable = [
         'id_user',
-        'type_user',
+        'sender_type',
         'id_chat',
         'content',
         'send_at',

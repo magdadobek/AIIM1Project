@@ -29,7 +29,7 @@ class NoticeBoardRequest extends FormRequest
             'token' => 'required',
             'title' => 'required|min:3',
             'content' => 'required|min:3',
-            'tags' => 'required|json',
+            'tags' => 'required|array|min:1',
         ];
     }
 
@@ -51,6 +51,8 @@ class NoticeBoardRequest extends FormRequest
             'title.required' => 'Field title is required',
             'content.required' => 'Field content is required',
             'tags.required' => 'Field tags is required',
+            'tags.array' => 'Field tags must be an array',
+            'tags.min' => 'There must be at least 1 tag in array'
         ];
     }
 }
