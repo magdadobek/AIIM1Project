@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { FaArrowLeft } from 'react-icons/fa';
 
 const NoticePage = (props) => {
     const [notice, setNotice] = useState([]);
@@ -72,9 +73,10 @@ const NoticePage = (props) => {
                     <button
                         className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg
                       focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg 
-                        rounded-full shadow-md text-base px-2 py-1 duration-200"
-                        onClick={handleBackToListPage}>
-                        Back
+                        rounded-full shadow-md text-base px-2 py-1 duration-200 h-10"
+                        onClick={handleBackToListPage}
+                    >
+                        <FaArrowLeft/>
                     </button>
                 </div>
             </div>
