@@ -61,13 +61,18 @@ const NoticePage = (props) => {
 
     return (
         <div className="w-[800px] h-[700px]">
-            <div className="w-full ">
-                <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{notice.title}</p>
-                <div >
+            <div className="flex justify-between">
+                <div className="w-1/4">
+
+                </div>
+                <div className="w-2/4 items-center">
+                    <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{notice.title}</p>
+                </div>
+                <div className="w-1/4 mt-4 flex justify-end">
                     <button
                         className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg
-                 focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg 
-                 rounded-full shadow-md text-base px-2 py-1 duration-200"
+                      focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg 
+                        rounded-full shadow-md text-base px-2 py-1 duration-200"
                         onClick={handleBackToListPage}>
                         Back
                     </button>
