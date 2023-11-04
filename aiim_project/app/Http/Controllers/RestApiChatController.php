@@ -112,7 +112,7 @@ class RestApiChatController extends Controller
 
         $message = new Message();
         $message->id_user = $validatedData['id_user'];
-        $message->type_user = 'U';
+        $message->sender_type = 'U';
         $message->id_chat = $chatID;
         $message->content = $request->message;
         $message->send_at = $date;
