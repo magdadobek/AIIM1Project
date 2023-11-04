@@ -217,6 +217,17 @@ class RestApiChatController extends Controller
     
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
+
+    // Punkt 2 z pseudocykliczności
+    private function closeAllOldChats(){
+        $chats = Chat::all();
+        foreach ($chats as $chat) {
+            $daysSinceLastEdit = $this->getDiffInDaysFromNow($chat->edited_at);
+            if ($daysSinceLastEdit >= 10 && $chat->to_close) {
+                $this->closeChat($chat->id);
+            }
+        }
+    }
     
 
     
