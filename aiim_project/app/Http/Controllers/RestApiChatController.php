@@ -71,10 +71,10 @@ class RestApiChatController extends Controller
     public function checkIfChatHasGuide($chatId, $clickerId){
 
         if(Chat::find($chatId)->id_guide == null || Chat::find($chatId)->id_guide == $clickerId){
-            openChat($clickerId, $chatId);
+            openChatFirstTime($clickerId, $chatId);
         }
         else{
-            return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 200);
+            return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 404);
         }
     }
 
