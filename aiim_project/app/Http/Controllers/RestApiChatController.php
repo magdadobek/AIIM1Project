@@ -229,6 +229,16 @@ class RestApiChatController extends Controller
         }
     }
     
-
+    // Punkt 3 z pseudocykliczności
+    private function setOldChatsToClose(){
+        $chats = Chat::all();
+        foreach ($chats as $chat) {
+            $daysSinceLastEdit = $this->getDiffInDaysFromNow($chat->edited_at);
+            if ($daysSinceLastEdit >= 7 && !$chat->to_close) {
+                $chat->to_close = true;
+                $this->askToCloseChat($chat->id);
+            }
+        }
+    }
     
 }
