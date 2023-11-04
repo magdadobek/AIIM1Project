@@ -218,6 +218,13 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
 
+    private function getDiffInDaysFromNow($date) {
+        $current_date = Carbon::now();
+        $editDate = Carbon::parse(date('Y-m-d', strtotime($date))); 
+        $diffDays = $editDate->diffInDays($current_date);
+        return $diffDays;
+    }
+
     // Punkt 2 z pseudocykliczności
     private function closeAllOldChats(){
         $chats = Chat::all();
