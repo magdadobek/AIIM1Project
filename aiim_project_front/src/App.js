@@ -8,6 +8,8 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import NoticeBoard from './pages/notice/NoticeBoard';
 import NoticePage from './pages/notice/NoticePage';
+import ChatBoard from './pages/chats/ChatBoard';
+import ChatPage from './pages/chats/ChatPage';
 import NewNotice from './pages/notice/NewNotice';
 import MainNavigation from './components/ui/MainNavigation'
 import Content from './components/ui/Content';
@@ -24,6 +26,7 @@ const App = () => {
     if (token && user) {
       const payload = {
         nickname: user.nickname,
+        id: user.id,
         index: user.index,
         email: user.email,
         password: user.password,
@@ -56,7 +59,8 @@ const App = () => {
         <Content>
           <Routes>
             <Route path='/' exact element={<Placeholder title="Strona główna" />} />
-            <Route path='/help' element={<Placeholder title="Szybka pomoc" />} />
+            <Route path='/chats' element={<ChatBoard />} />
+            <Route path='/chats/:chatId' element={<ChatPage />}/>
             <Route path='/notices' element={<NoticeBoard />}/>
             <Route path='/notices/:noticeId' element={<NoticePage />}/>
             <Route path='/notices/new' element={<NewNotice />}/>

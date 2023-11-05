@@ -54,7 +54,7 @@ const MainNavigation = () => {
                                 <NavLink to="/">Strona główna</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/help">Szybka pomoc</NavLink>
+                                <NavLink to="/chats">Szybka pomoc</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/notices">Ogłoszenia</NavLink>
