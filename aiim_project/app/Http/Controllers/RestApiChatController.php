@@ -17,6 +17,8 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiChatController extends Controller
 {
+
+    // funkcja wymaga poprawki (3 punkt na zdjęciu pseudocykliczności na dc backu)
     public function askToCloseChat(int $chatID){
         $chatToClose = Chat::find($chatID);
 
@@ -40,13 +42,17 @@ class RestApiChatController extends Controller
                     ->setStatusCode(404);
             }
             
-            $guide = Guide::find($chatToClose->id_guide);
+            // do ustalenia czy guide też może zamknąć czat
+            // $guide = Guide::find($chatToClose->id_guide);
     
             if ($guide == null) {
                 return response()
                     ->json(['message' => 'Wolontariusz nie istnieje!'])
                     ->setStatusCode(404);
             }
+            
+            $questioner->notify(new CloseChatNotification());
+            $guide->notify(new CloseChatNotification());
 
             Notification::send($questioner, new CloseChatNotification($questioner->id));
             Notification::send($guide, new CloseChatNotification($guide->id));
@@ -65,36 +71,37 @@ class RestApiChatController extends Controller
         }
 
         $chat->open = false;
+        $chat->closed_at = Carbon::now();
         $chat->save();
 
         return response()->json(['message' => 'Czat został zamknięty'], 200);
     }
 
+
+// do tej funkcji będzie trzeba wrócić, jak zostanie rozwiązana funkcjonalność powiadomień
+/*
     public function checkIfChatHasGuide($chatId, $clickerId){
 
         if(Chat::find($chatId)->id_guide == null || Chat::find($chatId)->id_guide == $clickerId){
-            openChat($clickerId, $chatId);
+            openChatFirstTime($clickerId, $chatId);
         }
         else{
-            return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 200);
+            return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 404);
         }
     }
+    */
 
-    public function deleteChat($id){
-        $chatToRemove = Chat::find($id);
+    public function deleteClosedChats(){
+        $thresholdDate = Carbon::now()->subDays(3);
 
-        if (!$chatToRemove) {
-            return response()->json(['message' => 'Czat nie istnieje'], 404);
+        $chatsToRemove = Chat::where('closed_at', '<', $thresholdDate)->get();
+
+        foreach ($chatsToRemove as $chat) {
+            DB::table('messages')->where('id_chat', '=', $chat->id)->delete();
+            DB::table('chats')->where('id', '=', $chat->id)->delete();
         }
 
-        if ($chatToRemove->open != false) {
-            return response()->json(['message' => 'Czat dalej jest otwarty'], 404);
-        }
-
-        DB::table('messages')->where('id_chat', '=', $id)->delete();
-        DB::table('chats')->where('id', '=', $id)->delete();
-
-        return response()->json(['message' => 'Czat został usunięty'], 200);
+        return response()->json(['message' => 'Usunięto wszystkie czaty i ich wiadomości zamknięte dłużej niż 3 dni temu.']);
     }
 
     public function createChat(ChatRequest $request){
@@ -114,6 +121,8 @@ class RestApiChatController extends Controller
         $chat->created_at = $date;
         $chat->open = true;
         $chat->id_guide = null;
+        $chat->closed_at = null;
+        $chat->to_close = false;
 
         $chat->save();
 
@@ -121,7 +130,7 @@ class RestApiChatController extends Controller
 
         $message = new Message();
         $message->id_user = $validatedData['id_user'];
-        $message->type_user = 'U';
+        $message->sender_type = 'U';
         $message->id_chat = $chatID;
         $message->content = $request->message;
         $message->send_at = $date;
@@ -139,12 +148,17 @@ class RestApiChatController extends Controller
         //Call to undefined method App\Models\Guide::notify()
         
         */
+        
+        deleteClosedChats();
+
+
 
         return response()->json(
             [
                 'status' => 'success',
                 'message' => "Utworzono chat",
-                'data' => $chat
+                'data_chat' => $chat,
+                'data_message' => $message,
             ]
         );
 
@@ -253,5 +267,4 @@ class RestApiChatController extends Controller
             }
         }
     }
-    
 }

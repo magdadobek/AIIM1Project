@@ -1450,6 +1450,239 @@
                     }
                 }
             }
+        },
+        "/api/noticeboard/showComments/{id}": {
+            "get": {
+                "description": "Wyswietla komentarze pod konkretnym noticeboard",
+                "summary": "Komentarze pod konkretnym noticeboard",
+                "tags": [
+                    "Notice Board"
+                ],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in": "path",
+                        "description": "ID noticeboarda, którego komentarze wyświetlamy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wyświetlamy komentarze pod tym postem"
+                    },
+                    "404": {
+                        "description": "Nie ma jeszcze żadnych komentarzy!"
+                    }
+                }
+            }
+        },
+        "/api/chats/askToClose/{id}": {
+            "get": {
+                "description": "Wysłanie powiadomienia z przypomnieniem o zamknięciu chatu",
+                "summary": "Wysłanie powiadomienia z przypomnieniem o zamknięciu chatu",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"chatId",
+                        "in": "path",
+                        "description": "ID chatu, którego chcemy zamknąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Powiadomienia poprawnie wysłane"
+                    },
+                    "404": {
+                        "description": "Wolontariusz lub Użytkownik nie istnieje"
+                    }
+                }
+            }
+        },
+        "/api/chats/closeChat/{id}": {
+            "patch": {
+                "description": "Zamknięcie chatu",
+                "summary": "Zamknięcie chatu",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"chatId",
+                        "in": "path",
+                        "description": "ID chatu, który zamykamy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chat został zamknięty"
+                    },
+                    "404": {
+                        "description": "Chat nie istnieje"
+                    }
+                }
+            }
+        },
+        "/api/chats/createChat": {
+            "post": {
+                "summary": "Nowy chat",
+                "description": "Dodanie nowego zapytania i utworzenie chatu",
+                "tags": [
+                    "Chats"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Chat i Message i metadane",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                    "type": "object",
+                                    "properties": {
+                                        "id_user": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2023-07-10"
+                                        },
+                                        "edited_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2023-07-10"
+                                        },
+                                        "open": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "id_guide": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                    },
+                                    {
+                                    "type": "object",
+                                    "properties": {
+                                        "id_chat": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "id_user": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "sender_type": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "example": "U"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "minLength": 10,
+                                            "example": "Gdzie jest stołówka?"
+                                        },
+                                        "send_at": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "2023-07-10"
+                                        }
+                                    }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Dodano pytanie",
+                                    "data": {
+                                        "data": {
+                                            "type": "object",
+                                            "format": "Message",
+                                            "example": {
+                                                "id_chat": "",
+                                                "id_user": "",
+                                                "user_type": "",
+                                                "content": "",
+                                                "date": "YYYY-MM-DD"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Zła walidacja",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nieprawidłowe dane"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/chats/{chatId}/messages": {
+            "get": {
+                "description": "Wyswietla komentarze w konkretnym chacie",
+                "summary": "Komentarze w chacie",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in": "path",
+                        "description": "ID chatu, którego wiadomości wyświetlamy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wyświetlamy wiadomości w tym chacie"
+                    },
+                    "404": {
+                        "description": "Chat nie istnieje!"
+                    }
+                }
+            }
         }
     },
     "components": {
