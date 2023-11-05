@@ -62,4 +62,5 @@ Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat'
 Route::post('/chats/createChat',[RestApiChatController::class,'createChat']);
 Route::get('/chats/{chatId}/messages', [RestApiChatController::class, 'getChatMessages']);
 Route::post('/chats/sendMessage', [RestApiChatController::class, 'sendMessageToChat']);
+Route::get('/chats/showChats', [RestApiChatController::class, 'showChats']);
 

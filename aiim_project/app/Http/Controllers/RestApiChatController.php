@@ -228,5 +228,54 @@ class RestApiChatController extends Controller
     
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
+
+    public function showChats(Request $request)
+    {
+        $data = $request;
+
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $userId=$decodedToken->id;
+        $user = User::find($userId);
+
+        if(!$user) {
+            return response()->json(['message' => 'Użytkownik nie istnieje'], 404);
+        }
+
+        $accountType = $user->account_type;
+        switch ($accountType) {
+            case 'G':
+            case 'A':
+                $chats = Chat::where(function ($query) use ($userId) {
+                    $query->where('id_user', $userId)
+                        ->orWhere('id_guide', $userId);
+                })->get();
+                break;
+    
+            case 'U':
+                $chats = Chat::where('id_user', $userId)->get();
+                break;
+    
+            default:
+                return response()->json(['message' => 'Użytkownik niepoprawny'], 404);
+        };
+
+        if($chats->isEmpty()){
+            return response()->json(['message' => 'Nie masz żadnych chatów do wyświetlenia', 204]);
+        }
+        else{
+            $chats = $chats->sortBy('edited_at');
+            return response()->json(['data' => $chats->values()], 200);
+        }
+        
+    }
     
 }
