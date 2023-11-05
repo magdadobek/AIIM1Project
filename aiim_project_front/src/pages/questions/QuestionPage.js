@@ -61,7 +61,7 @@ const QuestionPage = (props) => {
             <div className="flex flex-col justify-center items-center">
                 <p className="text-base m-5 dark:text-dark_field">Dodano przez {question.id_user} dnia {question.date}</p>
                 <p className="text-base m-5 dark:text-dark_field">{question.question_content}</p>
-                <p className="text-base m-5 dark:text-dark_field">Tagi: Test, test</p>
+                <p className="text-base m-5 dark:text-dark_field">Tagi: {question.tags}</p>
                 <p className="text-base m-5 dark:text-dark_field">Komentarze:</p>
                 <div className="flex flex-col justify-center items-center">
                     <p className="text-base m-1 dark:text-dark_field">Komentarz 1</p>
