@@ -12,6 +12,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiChatController extends Controller
@@ -46,11 +47,12 @@ class RestApiChatController extends Controller
                     ->json(['message' => 'Wolontariusz nie istnieje!'])
                     ->setStatusCode(404);
             }
-            
-            $questioner->notify(new CloseChatNotification());
-            $guide->notify(new CloseChatNotification());
 
-            return response()->setStatusCode(200);
+            Notification::send($questioner, new CloseChatNotification($questioner->id));
+            Notification::send($guide, new CloseChatNotification($guide->id));
+            return response()
+                ->json(['message'=> 'Powiadomienia zostały wysłane pomyślnie!'])
+                ->setStatusCode(200);
     
         }
     }
