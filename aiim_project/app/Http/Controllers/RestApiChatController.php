@@ -229,4 +229,39 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
     
+
+    public function deleteChatMessage(Request $request)
+{
+    $data = $request;
+    $chatId = $data['chat_id'];
+    $messageId = $data['message_id'];
+
+    $token = $data['token'];
+    try {
+        $decodedToken = JWTAuth::parseToken($token)->authenticate();
+    } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+        ], 401);
+    }
+
+    $userId = $decodedToken->id;
+
+    $message = Message::where('id', $messageId)
+        ->where('id_user', $userId)
+        ->where('id_chat', $chatId)
+        ->first();
+
+    if (!$message) {
+        return response()->json(['message' => 'Nie możesz usunąć tej wiadomości'], 403);
+    }
+
+    $message->content = 'wiadomość została usunięta';
+    $message->save();
+
+    return response()->json(['message' => 'Wiadomość została usunięta'], 200);
+}
+
+
 }
