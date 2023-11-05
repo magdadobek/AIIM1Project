@@ -78,21 +78,17 @@ class RestApiChatController extends Controller
         }
     }
 
-    public function deleteChat($id){
-        $chatToRemove = Chat::find($id);
+    public function deleteClosedChats(){
+        $thresholdDate = Carbon::now()->subDays(3);
 
-        if (!$chatToRemove) {
-            return response()->json(['message' => 'Czat nie istnieje'], 404);
+        $chatsToRemove = Chat::where('closed_at', '<', $thresholdDate)->get();
+
+        foreach ($chatsToRemove as $chat) {
+            DB::table('messages')->where('id_chat', '=', $chat->id)->delete();
+            DB::table('chats')->where('id', '=', $chat->id)->delete();
         }
 
-        if ($chatToRemove->open != false) {
-            return response()->json(['message' => 'Czat dalej jest otwarty'], 404);
-        }
-
-        DB::table('messages')->where('id_chat', '=', $id)->delete();
-        DB::table('chats')->where('id', '=', $id)->delete();
-
-        return response()->json(['message' => 'Czat został usunięty'], 200);
+        return response()->json(['message' => 'Usunięto wszystkie czaty i ich wiadomości zamknięte dłużej niż 3 dni temu.']);
     }
 
     public function createChat(ChatRequest $request){
@@ -108,6 +104,7 @@ class RestApiChatController extends Controller
         $chat->created_at = $date;
         $chat->open = true;
         $chat->id_guide = null;
+        $chat->closed_at = null;
 
         $chat->save();
 
@@ -115,7 +112,7 @@ class RestApiChatController extends Controller
 
         $message = new Message();
         $message->id_user = $validatedData['id_user'];
-        $message->user_type = 'U';
+        $message->sender_type = 'U';
         $message->id_chat = $chatID;
         $message->content = $request->message;
         $message->send_at = $date;
@@ -133,6 +130,10 @@ class RestApiChatController extends Controller
         //Call to undefined method App\Models\Guide::notify()
         
         */
+        
+        deleteClosedChats();
+
+
 
         return response()->json(
             [
