@@ -101,6 +101,10 @@ class RestApiChatController extends Controller
 
         $validatedData = $request->validated();
 
+        // Wywołanie funkcji z pseudocykliczności
+        $this->setOldChatsToClose();
+        $this->closeAllOldChats();
+
         $chat = new Chat();
 
         $date = date('Y-m-d H:i:s');
