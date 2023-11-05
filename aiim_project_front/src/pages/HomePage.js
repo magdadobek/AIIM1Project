@@ -13,25 +13,25 @@ export const HomePage = () => {
     console.log(storedTheme);
     return (
         <>
-            <div className="w-[800px] h-[500px]">
-                <div className="grid grid-cols-2 gap-4">
+            <div className="p-5 m-2">
+                <div className="grid gap-4 lg:gap-10 xl:gap-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                     <LinkBox
                         imageUrl={storedTheme === "dark" ? we_dark : we}
                         linkUrl="https://we.umg.edu.pl/"
                         text = "Wydział Elektryczny"
                     />
                     <LinkBox
-                        imageUrl={/*darkMode ? wm_dark : */wm}
+                        imageUrl={storedTheme === "dark" ? wm_dark : wm}
                         linkUrl="https://wm.umg.edu.pl/"
                         text = "Wydział Mechaniczny"
                     />
                     <LinkBox
-                        imageUrl={/*darkMode ? wn_dark : */wn}
+                        imageUrl={storedTheme === "dark" ? wn_dark : wn}
                         linkUrl="https://wn.umg.edu.pl/"
                         text = "Wydział Nawigacyjny"
                     />
                     <LinkBox
-                        imageUrl={/*darkMode ? wznj_dark : */wznj}
+                        imageUrl={storedTheme === "dark" ? wznj_dark : wznj}
                         linkUrl="https://wznj.umg.edu.pl/"
                         text = "Wydział Zarządzania"
                     />
