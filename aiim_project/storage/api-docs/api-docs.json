@@ -1480,45 +1480,6 @@
                 }
             }
         },
-        "/api/chats/checkIfChatHasGuide/{chatId}/{clickerId}": {
-            "get": {
-                "description": "Sprawdza czy można otworzyć ten chat z powiadomienia",
-                "summary": "Sprawdza czy można otworzyć ten chat z powiadomienia",
-                "tags": [
-                    "Chats"
-                ],
-                "parameters": [
-                    {
-                        "name":"chatId",
-                        "in": "path",
-                        "description": "ID chatu, na który chcemy odpowiedzieć",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0
-                        }
-                    },
-                    {
-                        "name":"clickerId",
-                        "in": "path",
-                        "description": "ID clickera (guida), który próbuje otworzyć chat",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Otwieramy chat z zapytaniem"
-                    },
-                    "404": {
-                        "description": "Czat jest już obsługiwany przez innego wolontariusza"
-                    }
-                }
-            }
-        },
         "/api/chats/askToClose/{id}": {
             "get": {
                 "description": "Wysłanie powiadomienia z przypomnieniem o zamknięciu chatu",
@@ -1577,35 +1538,6 @@
                 }
             }
         },
-        "/api/chats/{id}": {
-            "delete": {
-                "description": "Usunięcie chatu",
-                "summary": "Usunięcie chatu",
-                "tags": [
-                    "Chats"
-                ],
-                "parameters": [
-                    {
-                        "name":"chatId",
-                        "in": "path",
-                        "description": "ID chatu, który usuwamy",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Chat został usunięty"
-                    },
-                    "404": {
-                        "description": "Chat nie istnieje lub nie jest zamknięty"
-                    }
-                }
-            }
-        },
         "/api/chats/createChat": {
             "post": {
                 "summary": "Nowy chat",
@@ -1658,7 +1590,7 @@
                                             "type": "integer",
                                             "format": "int32"
                                         },
-                                        "user_type": {
+                                        "sender_type": {
                                             "type": "string",
                                             "minLength": 1,
                                             "example": "U"

@@ -16,6 +16,8 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiChatController extends Controller
 {
+
+    // funkcja wymaga poprawki (3 punkt na zdjęciu pseudocykliczności na dc backu)
     public function askToCloseChat(int $chatID){
         $chatToClose = Chat::find($chatID);
 
@@ -39,16 +41,17 @@ class RestApiChatController extends Controller
                     ->setStatusCode(404);
             }
             
-            $guide = Guide::find($chatToClose->id_guide);
+            // do ustalenia czy guide też może zamknąć czat
+            // $guide = Guide::find($chatToClose->id_guide);
     
-            if ($guide == null) {
-                return response()
-                    ->json(['message' => 'Wolontariusz nie istnieje!'])
-                    ->setStatusCode(404);
-            }
+            // if ($guide == null) {
+            //     return response()
+            //         ->json(['message' => 'Wolontariusz nie istnieje!'])
+            //         ->setStatusCode(404);
+            // }
             
             $questioner->notify(new CloseChatNotification());
-            $guide->notify(new CloseChatNotification());
+            // $guide->notify(new CloseChatNotification());
 
             return response()->setStatusCode(200);
     
@@ -63,11 +66,15 @@ class RestApiChatController extends Controller
         }
 
         $chat->open = false;
+        $chat->closed_at = Carbon::now();
         $chat->save();
 
         return response()->json(['message' => 'Czat został zamknięty'], 200);
     }
 
+
+// do tej funkcji będzie trzeba wrócić, jak zostanie rozwiązana funkcjonalność powiadomień
+/*
     public function checkIfChatHasGuide($chatId, $clickerId){
 
         if(Chat::find($chatId)->id_guide == null || Chat::find($chatId)->id_guide == $clickerId){
@@ -77,6 +84,7 @@ class RestApiChatController extends Controller
             return response()->json(['message' => 'Czat jest już obsługiwany przez innego wolontariusza'], 404);
         }
     }
+    */
 
     public function deleteClosedChats(){
         $thresholdDate = Carbon::now()->subDays(3);
@@ -105,6 +113,7 @@ class RestApiChatController extends Controller
         $chat->open = true;
         $chat->id_guide = null;
         $chat->closed_at = null;
+        $chat->to_close = false;
 
         $chat->save();
 
@@ -139,7 +148,8 @@ class RestApiChatController extends Controller
             [
                 'status' => 'success',
                 'message' => "Utworzono chat",
-                'data' => $chat
+                'data_chat' => $chat,
+                'data_message' => $message,
             ]
         );
 
@@ -218,7 +228,5 @@ class RestApiChatController extends Controller
     
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
-    
-
     
 }
