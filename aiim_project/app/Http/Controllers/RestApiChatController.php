@@ -12,6 +12,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiChatController extends Controller
@@ -44,16 +45,20 @@ class RestApiChatController extends Controller
             // do ustalenia czy guide też może zamknąć czat
             // $guide = Guide::find($chatToClose->id_guide);
     
-            // if ($guide == null) {
-            //     return response()
-            //         ->json(['message' => 'Wolontariusz nie istnieje!'])
-            //         ->setStatusCode(404);
-            // }
+            if ($guide == null) {
+                return response()
+                    ->json(['message' => 'Wolontariusz nie istnieje!'])
+                    ->setStatusCode(404);
+            }
             
             $questioner->notify(new CloseChatNotification());
-            // $guide->notify(new CloseChatNotification());
+            $guide->notify(new CloseChatNotification());
 
-            return response()->setStatusCode(200);
+            Notification::send($questioner, new CloseChatNotification($questioner->id));
+            Notification::send($guide, new CloseChatNotification($guide->id));
+            return response()
+                ->json(['message'=> 'Powiadomienia zostały wysłane pomyślnie!'])
+                ->setStatusCode(200);
     
         }
     }
@@ -102,6 +107,10 @@ class RestApiChatController extends Controller
     public function createChat(ChatRequest $request){
 
         $validatedData = $request->validated();
+
+        // Wywołanie funkcji z pseudocykliczności
+        $this->setOldChatsToClose();
+        $this->closeAllOldChats();
 
         $chat = new Chat();
 
@@ -228,40 +237,117 @@ class RestApiChatController extends Controller
     
         return response()->json(['message' => 'Wiadomość wysłana pomyślnie'], 200);
     }
+
+    public function showChats(Request $request)
+    {
+        $data = $request;
+
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $userId=$decodedToken->id;
+        $user = User::find($userId);
+
+        if(!$user) {
+            return response()->json(['message' => 'Użytkownik nie istnieje'], 404);
+        }
+
+        $accountType = $user->account_type;
+        switch ($accountType) {
+            case 'G':
+            case 'A':
+                $chats = Chat::where(function ($query) use ($userId) {
+                    $query->where('id_user', $userId)
+                        ->orWhere('id_guide', $userId);
+                })->get();
+                break;
     
+            case 'U':
+                $chats = Chat::where('id_user', $userId)->get();
+                break;
+    
+            default:
+                return response()->json(['message' => 'Użytkownik niepoprawny'], 404);
+        };
 
-    public function deleteChatMessage(Request $request)
-{
-    $data = $request;
-    $chatId = $data['chat_id'];
-    $messageId = $data['message_id'];
+        if($chats->isEmpty()){
+            return response()->json(['message' => 'Nie masz żadnych chatów do wyświetlenia', 204]);
+        }
+        else{
+            $chats = $chats->sortBy('edited_at');
+            return response()->json(['data' => $chats->values()], 200);
+        }
+     }
 
-    $token = $data['token'];
-    try {
-        $decodedToken = JWTAuth::parseToken($token)->authenticate();
-    } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
-        ], 401);
+    private function getDiffInDaysFromNow($date) {
+        $current_date = Carbon::now();
+        $editDate = Carbon::parse(date('Y-m-d', strtotime($date))); 
+        $diffDays = $editDate->diffInDays($current_date);
+        return $diffDays;
     }
 
-    $userId = $decodedToken->id;
+    // Punkt 2 z pseudocykliczności
+    private function closeAllOldChats(){
+        $chats = Chat::all();
+        foreach ($chats as $chat) {
+            $daysSinceLastEdit = $this->getDiffInDaysFromNow($chat->edited_at);
+            if ($daysSinceLastEdit >= 10 && $chat->to_close) {
+                $this->closeChat($chat->id);
+            }
+        }
 
-    $message = Message::where('id', $messageId)
-        ->where('id_user', $userId)
-        ->where('id_chat', $chatId)
-        ->first();
 
-    if (!$message) {
-        return response()->json(['message' => 'Nie możesz usunąć tej wiadomości'], 403);
+  
+    // Punkt 3 z pseudocykliczności
+    private function setOldChatsToClose(){
+        $chats = Chat::all();
+        foreach ($chats as $chat) {
+            $daysSinceLastEdit = $this->getDiffInDaysFromNow($chat->edited_at);
+            if ($daysSinceLastEdit >= 7 && !$chat->to_close) {
+                $chat->to_close = true;
+                $this->askToCloseChat($chat->id);
+            }
+        }
     }
+      
+          public function deleteChatMessage(Request $request)
+          {
+              $data = $request;
+              $chatId = $data['chat_id'];
+              $messageId = $data['message_id'];
 
-    $message->content = 'wiadomość została usunięta';
-    $message->save();
+              $token = $data['token'];
+              try {
+                  $decodedToken = JWTAuth::parseToken($token)->authenticate();
+              } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+                  return response()->json([
+                      'status' => 'error',
+                      'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+                  ], 401);
+              }
 
-    return response()->json(['message' => 'Wiadomość została usunięta'], 200);
-}
+              $userId = $decodedToken->id;
 
+              $message = Message::where('id', $messageId)
+                  ->where('id_user', $userId)
+                  ->where('id_chat', $chatId)
+                  ->first();
+
+              if (!$message) {
+                  return response()->json(['message' => 'Nie możesz usunąć tej wiadomości'], 403);
+              }
+
+              $message->content = 'wiadomość została usunięta';
+              $message->save();
+
+              return response()->json(['message' => 'Wiadomość została usunięta'], 200);
+          }
 
 }

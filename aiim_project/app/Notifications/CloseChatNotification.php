@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,15 +11,16 @@ use Illuminate\Notifications\Notification;
 class CloseChatNotification extends Notification
 {
     use Queueable;
+    private $userID;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($userID)
     {
-        //
+        $this->userID = $userID;
     }
 
     /**
@@ -29,7 +31,7 @@ class CloseChatNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database'];
+        return ['database'];
     }
 
     /**
@@ -57,12 +59,21 @@ class CloseChatNotification extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
+        if(!is_int($this->userID)) {
+          return ['error'=>'UserID musi być liczbą!'];
+        }
+
         return [
-            'message' => 'Czy chcesz zamknąć czat?',
-            'action' => 'close-chat',
+            'type' => 'close_chat',
+            'title' => 'Zamknięcie czatu',
+            'body' => 'Czy chcesz zamknąć czat?',
+            'id_user' => $this->userID,
+            'read' => false,
+            'created_at' => Carbon::now()
         ];
+        
     }
 
     
