@@ -302,7 +302,7 @@ class RestApiChatController extends Controller
                 $this->closeChat($chat->id);
             }
         }
-    }
+
 
   
     // Punkt 3 z pseudocykliczności
