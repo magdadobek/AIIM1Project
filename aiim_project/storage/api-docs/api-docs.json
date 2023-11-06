@@ -1657,8 +1657,8 @@
         },
         "/api/chats/{chatId}/messages": {
             "get": {
-                "description": "Wyswietla komentarze w konkretnym chacie",
-                "summary": "Komentarze w chacie",
+                "description": "Wyswietla wiadomości w konkretnym chacie",
+                "summary": "wiadomości w chacie",
                 "tags": [
                     "Chats"
                 ],
@@ -1680,6 +1680,34 @@
                     },
                     "404": {
                         "description": "Chat nie istnieje!"
+                    }
+                }
+            }
+        },
+        "/api/chats/showChats": {
+            "get": {
+                "description": "Wyświetla wszystkie chaty, które ma widzieć dany użytkownik",
+                "summary": "Wyświetla wszystkie chaty",
+                "tags": [
+                    "Chats"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wyświetlamy wszystkie chaty"
+                    },
+                    "204": {
+                        "description": "Nie ma żadnych chatów"
+                    },
+                    "404": {
+                        "description": "Użytkownik nie istnieje bądź niepoprawny"
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
                     }
                 }
             }
