@@ -12,6 +12,7 @@ use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiChatController extends Controller
@@ -44,16 +45,20 @@ class RestApiChatController extends Controller
             // do ustalenia czy guide też może zamknąć czat
             // $guide = Guide::find($chatToClose->id_guide);
     
-            // if ($guide == null) {
-            //     return response()
-            //         ->json(['message' => 'Wolontariusz nie istnieje!'])
-            //         ->setStatusCode(404);
-            // }
+            if ($guide == null) {
+                return response()
+                    ->json(['message' => 'Wolontariusz nie istnieje!'])
+                    ->setStatusCode(404);
+            }
             
             $questioner->notify(new CloseChatNotification());
-            // $guide->notify(new CloseChatNotification());
+            $guide->notify(new CloseChatNotification());
 
-            return response()->setStatusCode(200);
+            Notification::send($questioner, new CloseChatNotification($questioner->id));
+            Notification::send($guide, new CloseChatNotification($guide->id));
+            return response()
+                ->json(['message'=> 'Powiadomienia zostały wysłane pomyślnie!'])
+                ->setStatusCode(200);
     
         }
     }
@@ -102,6 +107,10 @@ class RestApiChatController extends Controller
     public function createChat(ChatRequest $request){
 
         $validatedData = $request->validated();
+
+        // Wywołanie funkcji z pseudocykliczności
+        $this->setOldChatsToClose();
+        $this->closeAllOldChats();
 
         $chat = new Chat();
 
@@ -275,7 +284,36 @@ class RestApiChatController extends Controller
             $chats = $chats->sortBy('edited_at');
             return response()->json(['data' => $chats->values()], 200);
         }
-        
+     }
+
+    private function getDiffInDaysFromNow($date) {
+        $current_date = Carbon::now();
+        $editDate = Carbon::parse(date('Y-m-d', strtotime($date))); 
+        $diffDays = $editDate->diffInDays($current_date);
+        return $diffDays;
     }
-    
+
+    // Punkt 2 z pseudocykliczności
+    private function closeAllOldChats(){
+        $chats = Chat::all();
+        foreach ($chats as $chat) {
+            $daysSinceLastEdit = $this->getDiffInDaysFromNow($chat->edited_at);
+            if ($daysSinceLastEdit >= 10 && $chat->to_close) {
+                $this->closeChat($chat->id);
+            }
+        }
+
+
+  
+    // Punkt 3 z pseudocykliczności
+    private function setOldChatsToClose(){
+        $chats = Chat::all();
+        foreach ($chats as $chat) {
+            $daysSinceLastEdit = $this->getDiffInDaysFromNow($chat->edited_at);
+            if ($daysSinceLastEdit >= 7 && !$chat->to_close) {
+                $chat->to_close = true;
+                $this->askToCloseChat($chat->id);
+            }
+        }
+    }
 }
