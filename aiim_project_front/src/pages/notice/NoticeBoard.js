@@ -26,7 +26,7 @@ const NoticeBoard = () => {
             }
 
             const responseData = await response.json();
-
+            
             const fetchedNotices = responseData.data.data.map((notice) => {
                 return {
                     id: notice.id,
