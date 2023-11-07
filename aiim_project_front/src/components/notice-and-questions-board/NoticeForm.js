@@ -1,10 +1,13 @@
 const NoticeForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const tags = e.target.tags.value.replace(/,/g, ' ').split(' ').filter(el => el !== '')
+
         const request = {
             title: e.target.title.value,
             content: e.target.content.value,
-            tags: JSON.stringify(e.target.tags.value),
+            tags: tags,
             token: localStorage.getItem('token')
         };
 
