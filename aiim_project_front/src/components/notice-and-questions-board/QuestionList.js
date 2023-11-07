@@ -5,7 +5,7 @@ const QuestionList = (props) => {
     return (
         <div>
             {props.questionList.map((question) => (
-                <Notice data={question} link={`/questions/${question.id}`}/>
+                <Notice key={question.id} data={question} link={`/questions/${question.id}`}/>
             ))}
         </div>
     )

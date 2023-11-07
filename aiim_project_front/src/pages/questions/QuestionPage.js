@@ -2,13 +2,42 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa';
+import { format } from 'date-fns';
+import { pl } from 'date-fns/locale';
+
+import CommentSection from "../../components/comments/CommentSection";
 
 const QuestionPage = (props) => {
     const [question, setQuestion] = useState([]);
+    const [comments, setComments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState();
 
     const params = useParams();
+
+    const fetchComments = async () => {
+        const response = await fetch('http://localhost:8000/api/qna/showComments/' + params.noticeId, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Coś poszło nie tak');
+        }
+
+        const responseData = await response.json();
+
+        /*if (responseData.data === "brak ogloszen") {
+            throw new Error('Nie znaleziono ogłoszenia o podanym id');
+        }*/
+
+        setComments(responseData.data);
+        setIsLoading(false);
+    }
 
     useEffect(() => {
         const fetchQuestion = async () => {
@@ -61,15 +90,9 @@ const QuestionPage = (props) => {
     }
 
     return (
-        <div className="w-[800px] h-[700px]">
-            <div className="flex justify-between">
-                <div className="w-1/4">
-
-                </div>
-                <div className="w-2/4 items-center">
-                    <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">{question.question_title}</p>
-                </div>
-                <div className="w-1/4 mt-4 flex justify-end">
+        <div className="w-[800px] ">
+            <div className="flex">
+                <div className="mt-4 flex justify-start">
                     <button
                         className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg
                       focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg 
@@ -79,19 +102,26 @@ const QuestionPage = (props) => {
                         <FaArrowLeft />
                     </button>
                 </div>
-            </div>
-            <div className="flex flex-col justify-center items-center">
-                <p className="text-base m-5 dark:text-dark_field">Dodano przez {question.id_user} dnia {question.date}</p>
-                <p className="text-base m-5 dark:text-dark_field">{question.question_content}</p>
-                <p className="text-base m-5 dark:text-dark_field">Tagi: Test, test</p>
-                <p className="text-base m-5 dark:text-dark_field">Komentarze:</p>
-                <div className="flex flex-col justify-center items-center">
-                    <p className="text-base m-1 dark:text-dark_field">Komentarz 1</p>
-                    <p className="text-base m-1 dark:text-dark_field">Komentarz 2</p>
-                    <p className="text-base m-1 dark:text-dark_field">Komentarz 3</p>
+                <div className="justify-start">
+                    <p className="text-3xl font-bold m-4 text-left dark:text-dark_yellow_umg">{question.question_title}</p>
                 </div>
+
+            </div>
+            <p className="text-base text-dark_field">Dodano przez <span className="dark:text-light_field">{question.id_user}</span> dnia {format(new Date(question.date), 'dd MMMM yyyy', { locale: pl })}</p>
+            <div className="flex flex-col my-5">
+
+                <p className="text-lg mx-3 my-5">{question.question_content}</p>
+                <h2 className="text-xl my-5 font-bold dark:text-dark_yellow_umg">Tagi:</h2>
+                <div className="flex space-x-4 mx-3 ">{question.tags.map((tag) => (
+                    <div key={tag} className="border rounded-md py-1 px-2 border-light_menu dark:border-dark_field">{tag}</div>
+                ))}
+                </div>
+
+                <CommentSection questionId={params.questionId} comments={comments} fetchComments={fetchComments} />
+
             </div>
         </div>
+
 
     )
 }

@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-import NoticeList from "../../components/notice-and-questions-board/NoticeList";
-
+import ChatList from "../../components/chats/ChatList";
 
 const ChatBoard = () => {
     const [chats, setChats] = useState([]);
@@ -12,8 +10,8 @@ const ChatBoard = () => {
     const [httpError, setHttpError] = useState();
     const myId = useSelector(state => state.user.id); //temp, endpoint powinien brac token a nie id
 
+
     const newChat = async () => {
-        console.log(myId)
         const response = await fetch('http://localhost:8000/api/chats/createChat', {
             method: 'POST',
             headers: {
@@ -35,8 +33,11 @@ const ChatBoard = () => {
 
     useEffect(() => {
         
-        const fetchNotices = async () => {
-            const response = await fetch('http://localhost:8000/api/noticeboard/allOpen', {
+        const fetchChats = async () => {
+            console.log(localStorage.getItem('token')   );
+            const response = await fetch('http://localhost:8000/api/chats/showChats?' + new URLSearchParams({
+                token: localStorage.getItem('token')
+            }), {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -50,25 +51,26 @@ const ChatBoard = () => {
             }
 
             const responseData = await response.json();
-
-            const fetchedNotices = responseData.data.data.map((notice) => {
+            console.log(responseData);
+            const fetchedChats = responseData.data.map((chat) => {
                 return {
-                    id: notice.id,
-                    title: notice.title,
-                    content: notice.content,
-                    date: notice.date,
-                    id_user: notice.id_user,
-                    open: notice.open,
-                    tags: notice.tags
+                    id: chat.id,
+                    id_user: chat.id_user,
+                    id_guide: chat.id_guide,
+                    closed_at: chat.closed_at,
+                    created_at: chat.created_at,
+                    edited_at: chat.edited_at,
+                    open: chat.open,
+                    to_close: chat.to_close
                 }
             });
 
-            const fetchedChats = [];
+            
             setChats(fetchedChats);
             setIsLoading(false);
         }
 
-        fetchNotices().catch((error) => {
+        fetchChats().catch((error) => {
             setIsLoading(false);
             setHttpError(error.message);
         });
@@ -109,7 +111,7 @@ const ChatBoard = () => {
                     </button>
                 </div>
             </div>
-            <NoticeList noticeList={chats} />
+            <ChatList chatList={chats} />
         </div>
     )
 }
