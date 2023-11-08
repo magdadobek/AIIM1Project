@@ -41,4 +41,19 @@ class RestApiQnACommentController extends Controller
             ->json(['message' => 'Komentarz został zaktualizowany'])
             ->setStatusCode(200);
     }
+
+    public function deleteComment(int $id) {
+        $comment = QnAComments::find($id);
+        if(!$comment) {
+            return response()
+                ->json(['message'=> 'Komentarz nie istnieje!'])
+                ->setStatusCode(404);
+        }
+
+        $comment->delete();
+
+        return response()
+            ->json(['message'=> 'Komentarz został usunięty!'])
+            ->setStatusCode(200);
+    }
 }
