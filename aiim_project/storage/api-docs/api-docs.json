@@ -1449,6 +1449,50 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Usunięcie komentarza o podanym ID",
+                "description": "Usunięcie komentarza",
+                "tags": ["QnA Comments"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID komentarza, który chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz został usunięty"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak komentarza",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz nie istnieje!"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/noticeboard/showComments/{id}": {
