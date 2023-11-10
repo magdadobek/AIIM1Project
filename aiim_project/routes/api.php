@@ -47,6 +47,7 @@ Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateN
 Route::get('/noticeboard/showComments/{id}', [RestApiNoticeBoardController::class, 'getAllComments']);
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
 Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
+Route::delete('/comments/delete/{id}', [RestApiCommentController::class, "deleteComment"]);
 
 Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
 Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);

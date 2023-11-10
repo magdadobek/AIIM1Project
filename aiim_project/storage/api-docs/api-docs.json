@@ -1685,7 +1685,7 @@
             }
         },
         "/api/chats/showChats": {
-            "get": {
+            "post": {
                 "description": "Wyświetla wszystkie chaty, które ma widzieć dany użytkownik",
                 "summary": "Wyświetla wszystkie chaty",
                 "tags": [
@@ -1708,6 +1708,77 @@
                     },
                     "401": {
                         "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    }
+                }
+            }
+        },
+        "/api/comments/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Usuwa komentarz o podanym ID",
+                "description": "Usuwa komentarz o podanym ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID komentarza, który chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Komentarz został usunięty"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                    },
+                    "404": {
+                        "description": "Komentarz nie istnieje!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Komentarz nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Nie jesteś twórcą tego komentarza",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie jesteś twórcą tego komentarza"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
