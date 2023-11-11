@@ -57,11 +57,12 @@ Route::delete('/qna/{id}', [RestApiQnAController::class, 'deleteQuestion']);
 Route::get('/qna/showComments/{id}', [RestApiQnACommentController::class, 'getCommentsFromSingleQnAQuestion']);
 Route::patch('/qna/comments/{id}', [RestApiQnACommentController::class, "editActiveComment"]);
 
-Route::get('/chats/askToClose/{id}',[RestApiChatController::class,'askToCloseChat']);
+
 Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat']);
-Route::get('/chats/checkIfChatHasGuide/{chatId}/{clickerId}',[RestApiChatController::class,'checkIfChatHasGuide']);
-Route::delete('/chats/{id}', [RestApiChatController::class, 'deleteChat']);
 Route::post('/chats/createChat',[RestApiChatController::class,'createChat']);
 Route::get('/chats/{chatId}/messages', [RestApiChatController::class, 'getChatMessages']);
 Route::post('/chats/sendMessage', [RestApiChatController::class, 'sendMessageToChat']);
+Route::patch('/chats/deleteMessage', [RestApiChatController::class, 'deleteChatMessage']);
+Route::get('/chats/showChats', [RestApiChatController::class, 'showChats']);
+
 
