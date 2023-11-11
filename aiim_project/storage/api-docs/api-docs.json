@@ -1555,55 +1555,23 @@
                                     {
                                     "type": "object",
                                     "properties": {
-                                        "id_user": {
-                                            "type": "integer",
-                                            "format": "int32"
-                                        },
-                                        "created_at": {
+                                        "token": {
                                             "type": "string",
-                                            "format": "date",
-                                            "example": "2023-07-10"
+                                            "format": "token"
                                         },
-                                        "edited_at": {
+                                        "message": {
                                             "type": "string",
-                                            "format": "date",
-                                            "example": "2023-07-10"
-                                        },
-                                        "open": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "id_guide": {
-                                            "type": "integer",
-                                            "format": "int32"
+                                            "format": "string",
+                                            "example": "Gdzie jest stołówka?"
                                         }
                                     }
                                     },
                                     {
                                     "type": "object",
                                     "properties": {
-                                        "id_chat": {
-                                            "type": "integer",
-                                            "format": "int32"
-                                        },
-                                        "id_user": {
-                                            "type": "integer",
-                                            "format": "int32"
-                                        },
-                                        "sender_type": {
+                                        "token": {
                                             "type": "string",
-                                            "minLength": 1,
-                                            "example": "U"
-                                        },
-                                        "content": {
-                                            "type": "string",
-                                            "minLength": 10,
-                                            "example": "Gdzie jest stołówka?"
-                                        },
-                                        "send_at": {
-                                            "type": "string",
-                                            "format": "date",
-                                            "example": "2023-07-10"
+                                            "format": "token"
                                         }
                                     }
                                     }
@@ -1618,33 +1586,39 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "message": "Dodano pytanie",
-                                    "data": {
-                                        "data": {
-                                            "type": "object",
-                                            "format": "Message",
-                                            "example": {
-                                                "id_chat": "",
-                                                "id_user": "",
-                                                "user_type": "",
-                                                "content": "",
-                                                "date": "YYYY-MM-DD"
-                                            }
-                                        }
+                                    "status": "success",
+                                    "message": "Utworzono chat",
+                                    "data_chat": {
+                                        "id_user": "$id_user",
+                                        "edited_at": "YYYY-MM-DD HH:mm:ss",
+                                        "created_at": "YYYY-MM-DD HH:mm:ss",
+                                        "open": true,
+                                        "id_guide": null,
+                                        "closed_at": null,
+                                        "to_close": null,
+                                        "id": "$id"
+                                    },
+                                    "data_message": {
+                                        "id_user": "$id_user",
+                                        "sender_type": "U",
+                                        "id_chat": "$id_chat",
+                                        "content": "Gdzie jest stołówka?",
+                                        "send_at": "YYYY-MM-DD HH:mm:ss",
+                                        "id": "$id"
                                     }
                                 }
                             }
                         }
                     },
-                    "400": {
-                        "description": "Zła walidacja",
+                    "401": {
+                        "description": "Błąd autoryzacji",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Nieprawidłowe dane"
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
                                         }
                                     },
                                     "type": "object"

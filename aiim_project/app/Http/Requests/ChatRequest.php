@@ -27,7 +27,7 @@ class ChatRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_user' => 'required|integer'
+            'token' => 'required'
         ];
     }
 
@@ -43,8 +43,7 @@ class ChatRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_user.required' => 'Field id_user is required',
-            'id_user.integer' => 'Field id_user must be an integer',
+            'token' => 'required'
         ];
     }
 }
