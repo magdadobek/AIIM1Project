@@ -138,14 +138,16 @@ class RestApiChatController extends Controller
 
         $chatID = $chat->id;
 
-        $message = new Message();
-        $message->id_user = $decodedToken->id;
-        $message->sender_type = 'U';
-        $message->id_chat = $chatID;
-        $message->content = $request->message;
-        $message->send_at = $date;
+        if($request->message!=null){
+            $message = new Message();
+            $message->id_user = $decodedToken->id;
+            $message->sender_type = 'U';
+            $message->id_chat = $chatID;
+            $message->content = $request->message;
+            $message->send_at = $date;
 
-        $message->save();
+            $message->save();
+        }
 
         /*
 
@@ -161,14 +163,22 @@ class RestApiChatController extends Controller
         
         $this->deleteClosedChats();
 
+        if($request->message!=null){
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => "Utworzono chat",
+                    'data_chat' => $chat,
+                    'data_message' => $message,
+                ], 200);
+        }
+
         return response()->json(
             [
                 'status' => 'success',
                 'message' => "Utworzono chat",
-                'data_chat' => $chat,
-                'data_message' => $message,
-            ]
-        );
+                'data_chat' => $chat
+            ], 200);
 
     }
 

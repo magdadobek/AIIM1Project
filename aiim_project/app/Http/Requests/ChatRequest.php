@@ -27,8 +27,7 @@ class ChatRequest extends FormRequest
     public function rules()
     {
         return [
-            'token' => 'required',
-            'message' => 'required|min:3'
+            'token' => 'required'
         ];
     }
 
@@ -44,8 +43,7 @@ class ChatRequest extends FormRequest
     public function messages()
     {
         return [
-            'token' => 'required',
-            'message' => 'Field message is required with question in it.',
+            'token' => 'required'
         ];
     }
 }
