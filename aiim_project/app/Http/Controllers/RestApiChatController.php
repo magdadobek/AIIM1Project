@@ -104,6 +104,15 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Usunięto wszystkie czaty i ich wiadomości zamknięte dłużej niż 3 dni temu.']);
     }
 
+    //Wszyscy aktywni wolontariusze dostają powiadomienie
+    public function notifyGuides(){
+        $guides = Guide::where('active', '=', true)->get();
+        foreach ($guides as $guide) {
+            $guide->notify(new OpenChatNotification);
+            Notification::send($guide, new CloseChatNotification($guide->id));
+        }
+    }
+
     public function createChat(ChatRequest $request){
 
         $validatedData = $request->validated();
@@ -149,17 +158,7 @@ class RestApiChatController extends Controller
             $message->save();
         }
 
-        /*
-
-        //Wszyscy wolontariusze dostają powiadomienie, pole informujące o aktywności?
-        $guides = Guide::all();
-        foreach ($guides as $guide) {
-            $guide->notify(new OpenChatNotification);
-        }
-
-        //Call to undefined method App\Models\Guide::notify()
-        
-        */
+        $this->notifyGuides();
         
         $this->deleteClosedChats();
 
