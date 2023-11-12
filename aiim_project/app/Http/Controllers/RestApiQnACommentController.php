@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QnACommentRequest;
 use App\Models\QnAComments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class RestApiQnACommentController extends Controller
@@ -63,5 +64,31 @@ class RestApiQnACommentController extends Controller
         return response()
             ->json(['message' => 'Komentarz został usunięty'])
             ->setStatusCode(200);
+    }
+
+    public function addNewComment(QnACommentRequest $commentRequest) {
+        $validatedComment = $commentRequest->validated();
+
+        $questionID = $validatedComment['id_question'];
+
+        if(!$questionID) {
+            return response()
+                ->json(['message' => 'Pytanie nie istnieje!'])
+                ->setStatusCode(404);
+        }
+        $newComment = new QnAComments();
+
+        $newComment->question_id = $questionID;
+        $newComment->user_id = auth()->user()->id;
+        $newComment->content = $validatedComment['content'];
+        $newComment->date = Carbon::now()->toDateString();
+        $newComment->edited = false;
+
+        $newComment->save();
+
+        return response()
+            ->json(['message' => 'Komentarz został dodany'])
+            ->setStatusCode(200);
+
     }
 }
