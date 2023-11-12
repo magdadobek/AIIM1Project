@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NoticeBoardRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\NoticeBoard;
 use Illuminate\Support\Facades\DB;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
@@ -18,6 +19,10 @@ class RestApiNoticeBoardController extends Controller
 
         $posts = DB::table('notice_board')->where('open', '=', true)->orderBy('date', 'DESC')->get();
         if ($posts != null) {
+            foreach ($posts as $post) {
+                $user = User::find($post->id_user);
+                $post->author_nickname = $user->nickname; 
+            }
             $data = ["data" => $posts];
         } else {
             $data = "brak ogloszen";
@@ -34,6 +39,10 @@ class RestApiNoticeBoardController extends Controller
 
         $posts = DB::table('notice_board')->where('open', '=', false)->orderBy('date', 'DESC')->get();
         if ($posts != null) {
+            foreach ($posts as $post) {
+                $user = User::find($post->id_user);
+                $post->author_nickname = $user->nickname; 
+            }
             $data = ["data" => $posts];
         } else {
             $data = "brak ogloszen";
@@ -50,6 +59,8 @@ class RestApiNoticeBoardController extends Controller
         $post = NoticeBoard::find($id);
 
         if ($post != null) {
+            $user = User::find($post->id_user);
+            $post->author_nickname = $user->nickname; 
             $data = ["data" => $post];
         } else {
             $data = "brak ogloszen";
@@ -132,6 +143,12 @@ class RestApiNoticeBoardController extends Controller
     public function getAllComments($id)
     {
         $posts = DB::table('comments')->where('id_notice', '=', $id)->orderBy('date', 'DESC')->get();
+        if($posts!=null){
+            foreach ($posts as $post) {
+                $user = User::find($post->id_user);
+                $post->author_nickname = $user->nickname;
+            }
+        }
         return response()->json([
             'data' => $posts,
         ]);
