@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QnACommentRequest;
+use App\Models\QnA;
 use App\Models\QnAComments;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -70,16 +72,26 @@ class RestApiQnACommentController extends Controller
         $validatedComment = $commentRequest->validated();
 
         $questionID = $validatedComment['id_question'];
-
-        if(!$questionID) {
+        $question = QnA::find($questionID);
+        
+        if(!$question) {
             return response()
-                ->json(['message' => 'Pytanie nie istnieje!'])
+            ->json(['message' => 'Pytanie nie istnieje!'])
+            ->setStatusCode(404);
+        }
+        
+        $userID = $validatedComment['id_user'];
+        $user = User::find($questionID);
+
+        if(!$user) {
+            return response()
+                ->json(['message' => 'Użytkownik nie istnieje!'])
                 ->setStatusCode(404);
         }
-        $newComment = new QnAComments();
 
-        $newComment->question_id = $questionID;
-        $newComment->user_id = auth()->user()->id;
+        $newComment = new QnAComments();
+        $newComment->id_question = $questionID;
+        $newComment->id_user = $userID;
         $newComment->content = $validatedComment['content'];
         $newComment->date = Carbon::now()->toDateString();
         $newComment->edited = false;
