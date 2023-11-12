@@ -44,7 +44,7 @@ const LoginForm = (props) => {
           <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg duration-200">
             Zaloguj się
           </button>
-          <Link to="/rejestracja"className="text-light_menu border-light_menu border-2 hover:border-dark_yellow_umg hover:text-dark_yellow_umg dark:border-dark_field dark:text-dark_field dark:hover:border-dark_yellow_umg dark:hover:text-dark_yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md duration-200">
+          <Link to="/registration"className="text-light_menu border-light_menu border-2 hover:border-dark_yellow_umg hover:text-dark_yellow_umg dark:border-dark_field dark:text-dark_field dark:hover:border-dark_yellow_umg dark:hover:text-dark_yellow_umg font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md duration-200">
             Zarejestruj się
           </Link>
         </div>
