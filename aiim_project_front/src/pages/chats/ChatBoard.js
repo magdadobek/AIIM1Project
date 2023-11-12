@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 import ChatList from "../../components/chats/ChatList";
 
@@ -8,8 +8,8 @@ const ChatBoard = () => {
     const [chats, setChats] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState();
-    const myId = useSelector(state => state.user.id); //temp, endpoint powinien brac token a nie id
-
+    
+    const navigate = useNavigate();
 
     const newChat = async () => {
         const response = await fetch('http://localhost:8000/api/chats/createChat', {
@@ -20,7 +20,8 @@ const ChatBoard = () => {
                 "X-Requested-With": "XMLHttpRequest"
             },
             body: JSON.stringify({
-                id_user: myId
+                token: localStorage.getItem('token'),
+                //message: "test " + Math.random()
             })
         });
         console.log(response);
@@ -28,7 +29,8 @@ const ChatBoard = () => {
             throw new Error('Coś poszło nie tak');
         }
         const responseData = await response.json();
-        window.location.href = '/chats/' + responseData.data.id; // temp nie ma jeszcze endpointa chyba
+
+        navigate('/chats/' + responseData.data_chat.id)
     }
 
     useEffect(() => {
@@ -65,7 +67,6 @@ const ChatBoard = () => {
                 }
             });
 
-            
             setChats(fetchedChats);
             setIsLoading(false);
         }
