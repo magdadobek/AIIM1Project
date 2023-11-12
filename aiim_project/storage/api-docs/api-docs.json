@@ -1756,6 +1756,94 @@
                     }
                 }
             }
+        },
+        "/api/chats/sendMessage": {
+            "post": {
+                "description": "wysyła wiadomość do danago czatu",
+                "summary": "wysłanie wiadomości",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"chat_id",
+                        "in": "path",
+                        "description": "ID chatu, do którego wyślemy wiadomość",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+
+                    },
+                    {
+                        "name":"content",
+                        "in": "path",
+                        "description": "treść wiadomości",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minimum": 0
+                        }
+
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wiadomość wysłana pomyślnie"
+                    },
+                    "403":{
+                        "description":"Nie możesz wysłać wiadomości w tym czacie"
+                    },
+                    "404":{
+                        "description":"Użytkownik nie istnieje"
+                    },
+                    "401":{
+                        "description":"Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    }
+                }
+            }
+        },
+        "/api/chats/deleteMessage": {
+            "patch": {
+                "description": "zmienia wiadomość na treść- wiadomość została usunięta",
+                "summary": "usuwanie wiadomości w chacie",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"chat_id",
+                        "in": "path",
+                        "description": "ID chatu, z którego usuniemy wiadomość",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+
+                    },
+                    {
+                        "name":"message_id",
+                        "in": "path",
+                        "description": "id usuwanej wiadomości",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wiadomość usunięta pomyślnie"
+                    },
+                    "403":{
+                        "description":"Nie możesz usunąć tej wiadomości"
+                    }
+                }
+            }
         }
     },
     "components": {
