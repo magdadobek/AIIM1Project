@@ -15,7 +15,11 @@ const Comment = (props) => {
                     <p className="text-dark_field ">{props.comment.date}</p>
                     { props.comment.edited && <p className="text-dark_field ">Edytowano</p>}
                 </div>
-                { props.comment.id_user === getMyId() && <button onClick={props.onEdit} className="flex justify-end text-dark_field">Edytuj</button>}
+                <div className="flex gap-3 items-center">
+                    { props.comment.id_user === getMyId() && <button onClick={props.onEdit} className="flex justify-end text-dark_field">Edytuj</button>}
+                    { props.comment.id_user === getMyId() && <button onClick={props.onDelete} className="flex justify-end text-dark_field">Usuń</button>}
+                </div>
+                
                 
             </div>
             <p className="text-base mt-2">{props.comment.content}</p>

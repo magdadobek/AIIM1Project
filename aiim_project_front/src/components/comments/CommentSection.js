@@ -110,6 +110,36 @@ const CommentSection = (props) => {
         e.target.content.value = "";
     }
 
+    const handleDelete = async (id) => {
+        let requestUrl = 'http://localhost:8000/api/comments/delete/';
+        if (props.questionId) {
+            requestUrl = 'http://localhost:8000/api/qna/comments/delete/';
+        }
+
+        const response = await fetch(requestUrl + id, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": "{{csrf_token()}}"
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem('token')
+            })
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.status !== "success") {
+            setHttpError(responseData.message)
+        }
+
+        props.fetchComments().catch((error) => {
+            setHttpError(error.message);
+        });
+    }
+
     const startEditing = (comment) => {
         setIsEditing(true);
         setEditedCommentId(comment.id);
@@ -123,7 +153,7 @@ const CommentSection = (props) => {
 
             <div className="flex flex-col">
                 {props.comments.map((comment) => (
-                    <Comment onEdit={() => startEditing(comment)} key={comment.id} comment={comment} />
+                    <Comment onDelete={()=>handleDelete(comment.id)} onEdit={() => startEditing(comment)} key={comment.id} comment={comment} />
                 ))}
                 <form method="post" className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
                     <div className="w-full px-3 my-3">
