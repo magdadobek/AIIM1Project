@@ -183,7 +183,7 @@ class RestApiChatController extends Controller
 
     public function getChatMessages(Request $request, $chatId)
     {
-        $data = $request;;
+        $data = $request;
         
         $token = $data['token'];
         try {
