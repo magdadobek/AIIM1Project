@@ -81,7 +81,7 @@ class RestApiQnACommentController extends Controller
         }
         
         $userID = $validatedComment['id_user'];
-        $user = User::find($questionID);
+        $user = User::find($userID);
 
         if(!$user) {
             return response()
