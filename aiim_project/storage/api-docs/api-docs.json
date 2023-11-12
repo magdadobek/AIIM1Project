@@ -1460,7 +1460,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"id",
+                        "name": "id",
                         "in": "path",
                         "description": "ID noticeboarda, którego komentarze wyświetlamy",
                         "required": true,
@@ -1489,7 +1489,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"chatId",
+                        "name": "chatId",
                         "in": "path",
                         "description": "ID chatu, którego chcemy zamknąć",
                         "required": true,
@@ -1518,7 +1518,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"chatId",
+                        "name": "chatId",
                         "in": "path",
                         "description": "ID chatu, który zamykamy",
                         "required": true,
@@ -1553,27 +1553,27 @@
                             "schema": {
                                 "oneOf": [
                                     {
-                                    "type": "object",
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "format": "token"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "format": "string",
-                                            "example": "Gdzie jest stołówka?"
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string",
+                                                "format": "token"
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "format": "string",
+                                                "example": "Gdzie jest stołówka?"
+                                            }
                                         }
-                                    }
                                     },
                                     {
-                                    "type": "object",
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "format": "token"
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string",
+                                                "format": "token"
+                                            }
                                         }
-                                    }
                                     }
                                 ]
                             }
@@ -1638,7 +1638,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"id",
+                        "name": "id",
                         "in": "path",
                         "description": "ID chatu, którego wiadomości wyświetlamy",
                         "required": true,
@@ -1747,6 +1747,87 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Nie jesteś twórcą tego komentarza"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/qna/comments/new": {
+            "post": {
+                "summary": "Dodaje nowy komentarz",
+                "description": "Dodanie nowego komentarza",
+                "tags": [
+                    "QnA Comments"
+                ],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "description": "Treść i metadane nowego komentarza",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_question": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "13"
+                                    },
+                                    "id_user": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "51"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Testowy komentarz"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-11-11"
+                                    },
+                                    "edited": {
+                                        "type": "boolean",
+                                        "default": false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Komentarz został dodany"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Użytkownik lub pytanie nie istnieje",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie nie istnieje | Użytkownik nie istnieje"
                                         }
                                     },
                                     "type": "object"
