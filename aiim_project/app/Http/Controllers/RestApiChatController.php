@@ -183,6 +183,17 @@ class RestApiChatController extends Controller
 
     public function getChatMessages($chatId)
     {
+        
+        $token = $data['token'];
+        try {
+                  $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+                  return response()->json([
+                      'status' => 'error',
+                      'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+                  ], 401);
+        }
+
         $chat = Chat::with(['messages.user'])
             ->find($chatId);
     
@@ -298,6 +309,35 @@ class RestApiChatController extends Controller
             return response()->json(['message' => 'Nie masz żadnych chatów do wyświetlenia', 204]);
         }
         else{
+
+            foreach ($chats as $chat) {
+                $idChat = $chat->id;
+
+                // Pobierz pierwszą i ostatnią wiadomość dla danego id_chat
+                $firstMessage = Message::where('id_chat', $idChat)->orderBy('send_at')->first();
+                $lastMessage = Message::where('id_chat', $idChat)->orderBy('send_at', 'desc')->first();
+
+                if($firstMessage!=null){
+                    $userFirst = User::find($firstMessage->id_user);
+                    $firstMessage->nickname = $userFirst->nickname;  
+                    $userLast = User::find($lastMessage->id_user);
+                    $lastMessage->nickname = $userLast->nickname;  
+                }
+
+                $chat->user_nickname = $user->nickname;
+
+                if($chat->id_guide!=null){
+                    $guide = Guide::find($chat->id_guide);
+                    $userGuide = User::find($guide->id_user);
+                    $chat->guide_nickname = $userGuide->nickname;
+                } 
+                else
+                    $chat->guide_nickname = null;
+
+                $chat->firstMessage = $firstMessage;
+                $chat->lastMessagee = $lastMessage;
+            }
+
             $chats = $chats->sortBy('edited_at');
             return response()->json(['data' => $chats->values()], 200);
         }
