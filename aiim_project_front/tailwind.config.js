@@ -25,6 +25,8 @@ module.exports = {
           dark_page: '#232A37',        // ciemny
           dark_field: '#4B5B6B',       // ciemniejszy
           dark_component: '#111E2B',   // najciemniejszy
+          danger_warring: '#FF474C',   // czerowny jasny
+          danger_hover: '#802426',     // czerwony ciemniejszy
         }
       },
     },
