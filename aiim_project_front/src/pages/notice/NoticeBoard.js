@@ -72,7 +72,7 @@ const NoticeBoard = () => {
                 <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Tablica ogłoszeń</p>
                 <div className="flex flex-1 justify-end">
                     <Link
-                        to="/notices/notice"
+                        to="/notices/new"
                         className="text-light_menu 
                         dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 
                         hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg 
