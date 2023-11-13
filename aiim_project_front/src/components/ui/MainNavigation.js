@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import UserMenu from './UserMenu';
+import SearchBar from './SearchBar';
 
 const MainNavigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [search, setSearch] = useState('');
     const isLoggedIn = useSelector(state => state.user.isLoggedIn);
     const nickname = useSelector(state => state.user.nickname);
 
@@ -16,6 +18,11 @@ const MainNavigation = () => {
     const handleUserMenuToggle = () => {
         setIsUserMenuOpen((prevState) => !prevState);
     };
+
+    const handleSearchInput = (value) => {
+        setSearch(value); 
+    }
+    
 
     return (
         <header className={`z-10 ${isMenuOpen ? '' : ''}`}>
@@ -47,23 +54,26 @@ const MainNavigation = () => {
                                 <NavLink to="/">Strona główna</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/szybkapomoc">Szybka pomoc</NavLink>
+                                <NavLink to="/chats">Szybka pomoc</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/ogloszenia">Ogłoszenia</NavLink>
+                                <NavLink to="/notices">Ogłoszenia</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/mapa">Mapa</NavLink>
+                                <NavLink to="/questions">Zadaj pytanie</NavLink>
+                            </div>
+                            {/* <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
+                                <NavLink to="/map">Mapa</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/kontakt">Kontakt</NavLink>
+                                <NavLink to="/contact">Kontakt</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/dokumenty">Dokumenty</NavLink>
+                                <NavLink to="/documents">Dokumenty</NavLink>
                             </div>
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                                <NavLink to="/kolanaukowe">Koła naukowe</NavLink>
-                            </div>
+                                <NavLink to="/circles">Koła naukowe</NavLink>
+                            </div> */}
                         </div>
                     </div>
 
@@ -76,7 +86,7 @@ const MainNavigation = () => {
                 </div>
                 <div className="flex justify-end">
                     <div>
-                        <input id="search" type="search" name="search" className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field border-2 rounded-3xl shadow-md text-base px-2 py-1 w-auto sm:w-72 m-2" placeholder="Wyszukiwarka..." />
+                       <SearchBar onSearch={handleSearchInput}/>
                     </div>
                     <div className="flex justify-end relative font-bold">
                         <button

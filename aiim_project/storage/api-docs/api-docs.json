@@ -982,6 +982,780 @@
                     }
                 }
             }
+        },
+        "/api/qna": {
+            "get": {
+                "tags": [
+                    "QnA"
+                ],
+                "summary": "Wszystkie pytania",
+                "description": "Pobiera wszystkie pytania",
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": "",
+                                    "id_user": "",
+                                    "date": "YYYY-MM-DD",
+                                    "question_title": "Pytanie1",
+                                    "question_content": "Tresc pytania nr 1",
+                                    "open": true,
+                                    "tags": "\"{}\""
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytań",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak pytań"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/qna/new": {
+            "post": {
+                "tags": [
+                    "QnA"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Nowe zapytanie",
+                "description": "Dodaje nowe zapytanie do qna",
+                "requestBody": {
+                    "required": true,
+                    "description": "Informacje potrzebne do nowego ogłoszenia",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-18"
+                                    },
+                                    "question_title": {
+                                        "type": "string"
+                                    },
+                                    "question_content": {
+                                        "type": "string"
+                                    },
+                                    "open": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "format": "application/json",
+                                        "example": "[\"important\", \"new\"]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "brak zapytań"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/qna/{id}": {
+            "get": {
+                "summary": "Znajdź pytanie o podanym ID",
+                "description": "Pobiera pytanie o podanym ID",
+                "tags": [
+                    "QnA"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pytania które chcemy znaleźć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Oto dane pytania o id: $id"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "",
+                                                "id_user": "",
+                                                "date": "YYYY-MM-DD",
+                                                "question_title": "Pytanie1",
+                                                "question_content": "Tresc pytania nr X",
+                                                "open": true,
+                                                "tags": "\"{}\""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytania o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie znaleziono pytania o podanym ID"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Aktualizacja pytania o podanym ID",
+                "description": "Aktualizuje pytanie o podanym ID",
+                "tags": [
+                    "QnA"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pytania które chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Informacje potrzebne do nowego pytania",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-07-18"
+                                    },
+                                    "question_title": {
+                                        "type": "string"
+                                    },
+                                    "question_content": {
+                                        "type": "string"
+                                    },
+                                    "open": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "format": "application/json",
+                                        "example": "[\"important\", \"new\"]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie zostało usunięte pomyślnie!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytania o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie z podanym ID nie istnieje"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Usunięcie pytanie o podanym ID",
+                "description": "Usuwa pytanie o podanym ID",
+                "tags": [
+                    "QnA"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pytania które chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie zostało usunięte pomyślnie!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak pytania o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pytanie z podanym ID nie istnieje"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/qna/showComments/{id}": {
+            "get": {
+                "summary": "Wyświetlenie komentarzy posta o danym ID",
+                "description": "Wyświetlenie komentarzy posta o danym ID",
+                "tags": [
+                    "QnA Comments"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID posta, z pod którego chcemy komentarze",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": "",
+                                    "id_question": "",
+                                    "id_user": "",
+                                    "date": "YYYY-MM-DD",
+                                    "content": "*Komentarz*",
+                                    "edited": true
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak komentarzy do Q&A o takim ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/qna/comments/{id}": {
+            "patch": {
+                "summary": "Aktualizacja komentarza o podanym ID",
+                "description": "Aktualizacja komentarza o podanym ID",
+                "tags": [
+                    "QnA Comments"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID komentarza, który chcemy zaktualizować",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Dane potrzebne do aktualizacji komentarza",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "comment": {
+                                        "type": "string",
+                                        "minLength": 3,
+                                        "example": "Test comment"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukces",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz został zaktualizowany"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak komentarza",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Komentarz nie istnieje!"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/noticeboard/showComments/{id}": {
+            "get": {
+                "description": "Wyswietla komentarze pod konkretnym noticeboard",
+                "summary": "Komentarze pod konkretnym noticeboard",
+                "tags": [
+                    "Notice Board"
+                ],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in": "path",
+                        "description": "ID noticeboarda, którego komentarze wyświetlamy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wyświetlamy komentarze pod tym postem"
+                    },
+                    "404": {
+                        "description": "Nie ma jeszcze żadnych komentarzy!"
+                    }
+                }
+            }
+        },
+        "/api/chats/askToClose/{id}": {
+            "get": {
+                "description": "Wysłanie powiadomienia z przypomnieniem o zamknięciu chatu",
+                "summary": "Wysłanie powiadomienia z przypomnieniem o zamknięciu chatu",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"chatId",
+                        "in": "path",
+                        "description": "ID chatu, którego chcemy zamknąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Powiadomienia poprawnie wysłane"
+                    },
+                    "404": {
+                        "description": "Wolontariusz lub Użytkownik nie istnieje"
+                    }
+                }
+            }
+        },
+        "/api/chats/closeChat/{id}": {
+            "patch": {
+                "description": "Zamknięcie chatu",
+                "summary": "Zamknięcie chatu",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"chatId",
+                        "in": "path",
+                        "description": "ID chatu, który zamykamy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chat został zamknięty"
+                    },
+                    "404": {
+                        "description": "Chat nie istnieje"
+                    }
+                }
+            }
+        },
+        "/api/chats/createChat": {
+            "post": {
+                "summary": "Nowy chat",
+                "description": "Dodanie nowego zapytania i utworzenie chatu",
+                "tags": [
+                    "Chats"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Chat i Message i metadane",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "format": "token"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Gdzie jest stołówka?"
+                                        }
+                                    }
+                                    },
+                                    {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "format": "token"
+                                        }
+                                    }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": "success",
+                                    "message": "Utworzono chat",
+                                    "data_chat": {
+                                        "id_user": "$id_user",
+                                        "edited_at": "YYYY-MM-DD HH:mm:ss",
+                                        "created_at": "YYYY-MM-DD HH:mm:ss",
+                                        "open": true,
+                                        "id_guide": null,
+                                        "closed_at": null,
+                                        "to_close": null,
+                                        "id": "$id"
+                                    },
+                                    "data_message": {
+                                        "id_user": "$id_user",
+                                        "sender_type": "U",
+                                        "id_chat": "$id_chat",
+                                        "content": "Gdzie jest stołówka?",
+                                        "send_at": "YYYY-MM-DD HH:mm:ss",
+                                        "id": "$id"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/chats/{chatId}/messages": {
+            "get": {
+                "description": "Wyswietla wiadomości w konkretnym chacie",
+                "summary": "wiadomości w chacie",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in": "path",
+                        "description": "ID chatu, którego wiadomości wyświetlamy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wyświetlamy wiadomości w tym chacie"
+                    },
+                    "404": {
+                        "description": "Chat nie istnieje!"
+                    }
+                }
+            }
+        },
+        "/api/chats/showChats": {
+            "get": {
+                "description": "Wyświetla wszystkie chaty, które ma widzieć dany użytkownik",
+                "summary": "Wyświetla wszystkie chaty",
+                "tags": [
+                    "Chats"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wyświetlamy wszystkie chaty"
+                    },
+                    "204": {
+                        "description": "Nie ma żadnych chatów"
+                    },
+                    "404": {
+                        "description": "Użytkownik nie istnieje bądź niepoprawny"
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    }
+                }
+            }
+        },
+        "/api/qna/comments/delete/{id}": {
+            "delete": {
+                "description": "Usunięcie komentarza pod QnA",
+                "tags": [
+                    "QnA Comments"
+                ],
+                "summary": "Usuwa komentarz o podanym ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID komentarza który chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Komentarz został usunięty",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Komentarz został usunięty"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Komentarz nie istnieje!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Komentarz nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Nie jesteś twórcą tego komentarza",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie jesteś twórcą tego komentarza"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1111,12 +1885,84 @@
                     "tags": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "json"
                         }
                     },
                     "life_length": {
                         "type": "integer",
                         "format": "int32"
+                    }
+                }
+            },
+            "QnA": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                        "type": "integer",
+                        "format": "int"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "question_title": {
+                        "type": "string",
+                        "format": "varchar(255)"
+                    },
+                    "question_content": {
+                        "type": "string",
+                        "format": "varchar(255)"
+                    },
+                    "open": {
+                        "type": "boolean",
+                        "format": "true | false"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "json"
+                        }
+                    }
+                }
+            },
+            "QnA Comments": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "ID komentarza",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_question": {
+                        "description": "ID pytania, do jakiego odnosi się komentarz",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "id_user": {
+                        "description": "ID użytkownika - autora komentarza",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "date": {
+                        "description": "Data edycji komentarza",
+                        "type": "string",
+                        "format": "date(YYYY-MM-DD)"
+                    },
+                    "content": {
+                        "description": "Zawartość komentarza",
+                        "type": "string",
+                        "format": "text"
+                    },
+                    "edited": {
+                        "description": "Czy komentarz był edytowany",
+                        "type": "boolean",
+                        "format": "true|false"
                     }
                 }
             }

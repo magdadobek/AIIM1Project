@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QnARequest;
 use App\Models\QnA;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class RestApiQnAController extends Controller
 {
@@ -61,6 +63,39 @@ class RestApiQnAController extends Controller
         }
     }
 
+    public function addNewQuestion(QnARequest $request)
+    {
+        $data = $request->validated();
+
+        // Jak gość?
+
+        $token = $data['token'];
+
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+        $qna = new QnA();
+
+        $qna->id_user = $decodedToken->id;
+        $qna->date = date('Y-m-d');
+        $qna->question_title = $data['question_title'];
+        $qna->question_content = $data['question_content'];
+        $qna->open = true;
+        $qna->tags = $data['tags'];
+        $qna->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Dodano nowe pytanie',
+            'data' => $qna
+        ], 200);
+    }
+
     public function editQuestion(QnARequest $request, $questionID)
     {
         $validatedRequest = $request->validated();
@@ -88,4 +123,5 @@ class RestApiQnAController extends Controller
             ->json(['message' => 'Pytanie zostało zaktualizowane!'])
             ->setStatusCode(200);
     }
+    
 }

@@ -21,6 +21,9 @@ const Register = () => {
         if (responseData.status === "success") {
             setHasRegistered(true);
             setMessage("Zarejestrowano jako " + responseData.user.nickname)
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 3000);
         }
         else if (responseData.message === "Validation errors") {
             setMessage(Object.entries(responseData.data).map((e) => e[1]))

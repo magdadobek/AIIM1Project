@@ -10,7 +10,7 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
     useEffect(() => {
         let theme = localStorage.getItem("preferedTheme");
         if (theme === "dark") {
-            document.documentElement.classList.add("dark"); //
+            document.documentElement.classList.add("dark");
             setModeText("Light Mode")
         } else {
             document.documentElement.classList.remove("dark");
@@ -38,10 +38,10 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
             {!isLoggedIn && (
                 <>
                     <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                        <NavLink to="/rejestracja">Rejestracja</NavLink>
+                        <NavLink to="/registration">Rejestracja</NavLink>
                     </div>
                     <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
-                        <NavLink to="/logowanie">Logowanie</NavLink>
+                        <NavLink to="/login">Logowanie</NavLink>
                     </div>
                 </>
             )}
@@ -51,7 +51,7 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
                         <NavLink to="/profil">Profil ({nickname})</NavLink>
                     </div>
                     <div>
-                        <NavLink to="/wyloguj" onClick={handleLogout}>
+                        <NavLink to="/logout" onClick={handleLogout}>
                             Wyloguj
                         </NavLink>
                     </div>
@@ -59,7 +59,9 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
             )}
 
             <div>
-                <button className="text-white bg-light_menu hover:bg-dark_yellow_umg dark:bg-white hover:dark:bg-yellow_umg dark:text-dark_component shadow-sm shadow-gold_umg p-2 rounded-3xl m-2 text-sm w-24 duration-200" onClick={handleThemeSwitch}>
+                <button className="text-white bg-light_menu hover:bg-dark_yellow_umg 
+                dark:bg-white hover:dark:bg-yellow_umg dark:text-dark_component shadow-sm
+                shadow-gold_umg p-2 rounded-3xl m-2 text-sm w-24 duration-200" onClick={handleThemeSwitch}>
                     {modeText}
                 </button>
             </div>
