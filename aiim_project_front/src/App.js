@@ -13,11 +13,13 @@ import ChatPage from './pages/chats/ChatPage';
 import NewNotice from './pages/notice/NewNotice';
 import MainNavigation from './components/ui/MainNavigation'
 import Content from './components/ui/Content';
+import { HomePage } from './pages/HomePage';
 import QuestionBoard from './pages/questions/QuestionBoard';
 import QuestionPage from './pages/questions/QuestionPage';
 import NewQuestion from './pages/questions/NewQuestion';
 import { UpdateNotice } from './pages/notice/UpdateNotice';
 import { UpdateQuestion } from './pages/questions/UpdateQuestion';
+
 
 
 const App = () => {
@@ -43,16 +45,16 @@ const App = () => {
   useEffect(() => {
     let theme = localStorage.getItem("preferedTheme");
     if (!theme) {
-        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        localStorage.setItem("preferedTheme", theme);
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      localStorage.setItem("preferedTheme", theme);
     }
     if (theme === "dark") {
-        document.documentElement.classList.add("dark"); 
+      document.documentElement.classList.add("dark");
     } else {
-        document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("dark");
     }
-}, []);
-  
+  }, []);
+
   return (
   <div className="flex flex-col min-h-screen bg-light_page dark:text-white dark:bg-dark_page ">
     <Router>
@@ -60,7 +62,7 @@ const App = () => {
       <div className="flex items-center justify-center flex-grow">
         <Content>
           <Routes>
-            <Route path='/' exact element={<Placeholder title="Strona główna" />} />
+            <Route path='/' exact element={<HomePage />} />
             <Route path='/chats' element={<ChatBoard />} />
             <Route path='/chats/:chatId' element={<ChatPage />}/>
             <Route path='/notices' element={<NoticeBoard />}/>
