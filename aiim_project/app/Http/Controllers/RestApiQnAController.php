@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QnARequest;
+use App\Models\User;
 use App\Models\QnA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -17,6 +18,10 @@ class RestApiQnAController extends Controller
             ->orderByDesc('date')
             ->get();
         if ($questions !== null) {
+            foreach ($questions as $question) {
+                $user = User::find($question->id_user);
+                $question->author_nickname = $user->nickname; 
+            }
             return response()
                 ->json(['data' => $questions]);
         } else {
@@ -46,6 +51,8 @@ class RestApiQnAController extends Controller
         $question = QnA::find($questionID);
 
         if($question !== null) {
+            $user = User::find($question->id_user);
+            $question->author_nickname = $user->nickname;
             return response()
                 ->json([
                     "message" => "Oto dane odnośnie pytania o id: $questionID",

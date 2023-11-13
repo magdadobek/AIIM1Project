@@ -24,7 +24,8 @@
                                     "title": "testset settse",
                                     "content": "xdfxd gdgddgffgd",
                                     "open": true,
-                                    "tags": "\"{}\""
+                                    "tags": "\"{}\"",
+                                    "author_nickname": "test"
                                 }
                             }
                         }
@@ -67,7 +68,8 @@
                                     "title": "Test2",
                                     "content": "To jest zamkniete ogloszenie testowe",
                                     "open": false,
-                                    "tags": "{\"test\":\"test2\"}"
+                                    "tags": "{\"test\":\"test2\"}",
+                                    "author_nickname": "test"
                                 }
                             }
                         }
@@ -122,7 +124,8 @@
                                         "title": "",
                                         "content": "",
                                         "open": true,
-                                        "tags": ""
+                                        "tags": "",
+                                        "author_nickname": ""
                                     },
                                     "type": "object"
                                 }
@@ -1002,7 +1005,8 @@
                                     "question_title": "Pytanie1",
                                     "question_content": "Tresc pytania nr 1",
                                     "open": true,
-                                    "tags": "\"{}\""
+                                    "tags": "\"{}\"",
+                                    "author_nickname": ""
                                 }
                             }
                         }
@@ -1151,7 +1155,8 @@
                                                 "question_title": "Pytanie1",
                                                 "question_content": "Tresc pytania nr X",
                                                 "open": true,
-                                                "tags": "\"{}\""
+                                                "tags": "\"{}\"",
+                                                "author_nickname": ""
                                             }
                                         }
                                     },
@@ -1366,7 +1371,8 @@
                                     "id_user": "",
                                     "date": "YYYY-MM-DD",
                                     "content": "*Komentarz*",
-                                    "edited": true
+                                    "edited": true,
+                                    "author_nickname": ""
                                 }
                             }
                         }
@@ -1827,7 +1833,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Pytanie nie istnieje | Użytkownik nie istnieje"
+                                            "example": "Pytanie lub użytkownik nie istnieje"
                                         }
                                     },
                                     "type": "object"

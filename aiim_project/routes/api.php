@@ -44,9 +44,11 @@ Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'find
 Route::delete('/noticeboard/delete/{id}', [RestApiNoticeBoardController::class, 'deleteNoticeBoardPost']);
 Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
 Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateNoticeBoard']);
+
 Route::get('/noticeboard/showComments/{id}', [RestApiNoticeBoardController::class, 'getAllComments']);
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
 Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
+Route::delete('/comments/delete/{id}', [RestApiCommentController::class, "deleteComment"]);
 
 Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
 Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);
