@@ -8,8 +8,7 @@ const MainNavigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [search, setSearch] = useState('');
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn);
-    const nickname = useSelector(state => state.user.nickname);
+    const user = useSelector(state => state.user);
 
     const handleMenuToggle = () => {
         setIsMenuOpen(prevState => !prevState);
@@ -92,11 +91,11 @@ const MainNavigation = () => {
                         <button
                             className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg rounded-full shadow-md text-base px-2 py-1 duration-200"
                             onClick={handleUserMenuToggle}>
-                            {isLoggedIn === true ? nickname : "User"}
+                            {user.isLoggedIn === true ? user.nickname : "User"}
                         </button>
                         {isUserMenuOpen && (
                             <div className="absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white shadow-lg rounded-b-xl mt-14 z-10 p-2">
-                                <UserMenu isLoggedIn={isLoggedIn} nickname={nickname} />
+                                <UserMenu  user={user}/>
                             </div>
                         )}
                     </div>

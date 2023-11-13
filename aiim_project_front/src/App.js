@@ -19,6 +19,7 @@ import QuestionPage from './pages/questions/QuestionPage';
 import NewQuestion from './pages/questions/NewQuestion';
 import { UpdateNotice } from './pages/notice/UpdateNotice';
 import { UpdateQuestion } from './pages/questions/UpdateQuestion';
+import Volunteer from './pages/Volunteer';
 
 
 
@@ -81,6 +82,7 @@ const App = () => {
             <Route path='/registration' element={<Register />} />
             <Route path='/profil' element={<Placeholder title="Profil" />} />
             <Route path='/logout' element={<Logout />} />
+            <Route path='/volunteering' element={<Volunteer/>} />
           </Routes>
         </Content>
       </div>

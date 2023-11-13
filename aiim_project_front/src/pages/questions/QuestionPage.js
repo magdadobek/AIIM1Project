@@ -139,16 +139,15 @@ const QuestionPage = (props) => {
                             <button
                                 className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg
                dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base px-3 py-1 
-                 shadow-md shadow-gold_umg"
+                 shadow-md shadow-gold_umg "
                                 onClick={handleUpdateQuestion}
                             >
                                 Zaktualizuj
                             </button>
-
                             <button
                                 className="text-white dark:text-white border-danger_warring bg-danger_warring border-2 hover:bg-danger_hover hover:border-danger_hover
                 dark:bg-danger_warring dark:border-danger_warring dark:hover:border-danger_hover dark:hover:bg-danger_hover font-bold p-2 rounded-3xl text-base px-3 py-1 
-                shadow-md shadow-gold_umg"
+                shadow-md shadow-gold_umg "
                                 onClick={handleDeleteQuestion}
                             >
                                 Usuń
