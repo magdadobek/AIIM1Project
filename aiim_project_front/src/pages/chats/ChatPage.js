@@ -98,10 +98,6 @@ const ChatPage = (props) => {
             throw new Error('Coś poszło nie tak');
         }
 
-        const responseData = await response.json();
-
-        console.log(responseData);
-
         e.target.content.value = "";
 
         fetchMessages().catch((error) => {
