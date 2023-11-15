@@ -89,6 +89,8 @@ const QuestionPage = (props) => {
         window.location.href = '/questions';
     }
 
+    const questionContent = (text) => text.split('\n').map(str => <p key={Math.random()}>{str}</p>);
+
     return (
         <div className="w-[800px] ">
             <div className="flex">
@@ -110,7 +112,7 @@ const QuestionPage = (props) => {
             <p className="text-base text-dark_field">Dodano przez <span className="dark:text-light_field">{question.author_nickname}</span> dnia {format(new Date(question.date), 'dd MMMM yyyy', { locale: pl })}</p>
             <div className="flex flex-col my-5">
 
-                <p className="text-lg mx-3 my-5">{question.question_content}</p>
+                <p className="text-lg mx-3 my-5">{questionContent(question.question_content)}</p>
                 <h2 className="text-xl my-5 font-bold dark:text-dark_yellow_umg">Tagi:</h2>
                 <div className="flex space-x-4 mx-3 ">{question.tags.map((tag) => (
                     <div key={tag} className="border rounded-md py-1 px-2 border-light_menu dark:border-dark_field">{tag}</div>
