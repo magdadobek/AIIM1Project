@@ -112,7 +112,7 @@ const ChatBoard = () => {
                     </button>
                 </div>
             </form>
-            <ChatList chatList={chats} />
+            {chats && <ChatList chatList={chats} />}
         </div>
     )
 }

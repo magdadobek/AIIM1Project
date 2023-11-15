@@ -14,32 +14,34 @@ const ChatPage = (props) => {
 
     const userId = useSelector(state => state.user.id);
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            const response = await fetch('http://localhost:8000/api/chats/' + params.chatId + '/messages?' + new URLSearchParams({
-                token: localStorage.getItem('token')
-            }), {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Coś poszło nie tak');
+    const fetchMessages = async () => {
+        const response = await fetch('http://localhost:8000/api/chats/' + params.chatId + '/messages?' + new URLSearchParams({
+            token: localStorage.getItem('token')
+        }), {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
             }
+        });
 
-            const responseData = await response.json();
-
-            if (responseData.data === "brak czatu") {
-                throw new Error('Nie znaleziono czatu o podanym id');
-            }
-
-            setMessages(responseData.data);
-            setIsLoading(false);
+        if (!response.ok) {
+            throw new Error('Coś poszło nie tak');
         }
+
+        const responseData = await response.json();
+
+        if (responseData.data === "brak czatu") {
+            throw new Error('Nie znaleziono czatu o podanym id');
+        }
+
+        setMessages(responseData.data);
+        setIsLoading(false);
+    }
+    
+
+    useEffect(() => {
         fetchMessages().catch((error) => {
             setIsLoading(false);
             setHttpError(error.message);
@@ -68,19 +70,44 @@ const ChatPage = (props) => {
 
     const sendMessage = async (e) => {
         e.preventDefault();
-        const newMessage = {
+        const tempMessage = {
             content: e.target.content.value,
-            token: localStorage.getItem('token'),
             id: Math.floor(Math.random() * 1000),
             id_user: userId,
-            send_at: new Date().toTimeString().slice(0, 8),
+            send_at: "wysyłanie...",
             isSending: true
         };
 
-        setMessages(messages.concat(newMessage));
+        setMessages(messages.concat(tempMessage));
 
+        const response = await fetch('http://localhost:8000/api/chats/sendMessage', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem('token'),
+                chat_id: params.chatId,
+                content: e.target.content.value
+            })
+        });
 
-        //window.location.href = '/chats/' + params.chatId;
+        if (!response.ok) {
+            throw new Error('Coś poszło nie tak');
+        }
+
+        const responseData = await response.json();
+
+        console.log(responseData);
+
+        e.target.content.value = "";
+
+        fetchMessages().catch((error) => {
+            setIsLoading(false);
+            setHttpError(error.message);
+        });
     }
 
     return (
@@ -107,7 +134,7 @@ const ChatPage = (props) => {
                 <p className="text-2xl font-bold m-4 text-center dark:text-dark_yellow_umg">Wiadomości</p>
                 <div className=" overflow-auto mx-4 my-2">
                     {messages.map((message) => (
-                        <Message message={message} />
+                        <Message key={message.id} message={message} />
                     ))}
 
                 </div>
@@ -117,7 +144,7 @@ const ChatPage = (props) => {
                 <div className="w-full px-3 my-2 flex items-center">
                     <textarea
                         className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field rounded border-2 leading-normal resize-none w-full h-12 py-2 mx-2 px-3 focus:outline-none"
-                        id="content" name="content" placeholder='Nowy czat' required>
+                        id="content" name="content" placeholder='Nowa wiadomość' required>
                     </textarea>
                     <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base mx-2 px-3 py-1 shadow-md shadow-gold_umg">
                         Wyślij
