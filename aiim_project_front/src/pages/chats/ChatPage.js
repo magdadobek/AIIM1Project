@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FaArrowLeft } from 'react-icons/fa';
+
+import Message from "../../components/chats/Message";
 
 const ChatPage = (props) => {
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState();
-    const chat = {};
     const params = useParams();
+
+    const userId = useSelector(state => state.user.id);
 
     useEffect(() => {
         const fetchMessages = async () => {
-            const response = await fetch('http://localhost:8000/api/chats/' + params.chatId + '/messages', {
+            const response = await fetch('http://localhost:8000/api/chats/' + params.chatId + '/messages?' + new URLSearchParams({
+                token: localStorage.getItem('token')
+            }), {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -27,7 +33,6 @@ const ChatPage = (props) => {
 
             const responseData = await response.json();
 
-            console.log(responseData);
             if (responseData.data === "brak czatu") {
                 throw new Error('Nie znaleziono czatu o podanym id');
             }
@@ -62,14 +67,14 @@ const ChatPage = (props) => {
     }
 
     const sendMessage = async (e) => {
-        //setMessages(messages+nowyMEssage)
         e.preventDefault();
         const newMessage = {
             content: e.target.content.value,
             token: localStorage.getItem('token'),
             id: Math.floor(Math.random() * 1000),
-            id_user: localStorage.getItem('id'),
-            send_at: new Date().toTimeString().slice(0, 8)
+            id_user: userId,
+            send_at: new Date().toTimeString().slice(0, 8),
+            isSending: true
         };
 
         setMessages(messages.concat(newMessage));
@@ -100,30 +105,21 @@ const ChatPage = (props) => {
 
             <div className="flex flex-col justify-between">
                 <p className="text-2xl font-bold m-4 text-center dark:text-dark_yellow_umg">Wiadomości</p>
-                <div className=" overflow-auto s">
+                <div className=" overflow-auto mx-4 my-2">
                     {messages.map((message) => (
-                        <div key={message.id} >
-                            <p className="flex text-base dark:text-white justify-center">{message.send_at}</p>
-                            <div className="flex justify-between">
-                                <p></p>
-                                <div className="flex border-2 rounded-3xl justify-end">
-                                    <p className="text-base m-3 dark:text-white">{message.content}</p>
-                                </div>
-                            </div>
-                        </div>
+                        <Message message={message} />
                     ))}
-                    
+
                 </div>
 
             </div>
             <form method="post" className="flex flex-col justify-center items-center" onSubmit={sendMessage}>
-                <div className="w-full px-3 my-3">
+                <div className="w-full px-3 my-2 flex items-center">
                     <textarea
-                        className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field rounded border-2 leading-normal resize-none w-full h-20 py-2 px-3 focus:outline-none"
-                        id="content" name="content" placeholder='Komentarz' required></textarea>
-                </div>
-                <div className="w-full flex justify-end px-3">
-                    <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base  px-3 py-1 shadow-md shadow-gold_umg">
+                        className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field rounded border-2 leading-normal resize-none w-full h-12 py-2 mx-2 px-3 focus:outline-none"
+                        id="content" name="content" placeholder='Nowy czat' required>
+                    </textarea>
+                    <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base mx-2 px-3 py-1 shadow-md shadow-gold_umg">
                         Wyślij
                     </button>
                 </div>

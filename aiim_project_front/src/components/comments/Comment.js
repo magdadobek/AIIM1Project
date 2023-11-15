@@ -11,7 +11,7 @@ const Comment = (props) => {
         <div key={props.comment.id} className="border rounded-md p-3 mx-3 my-3 border-light_menu dark:border-dark_field">
             <div className="flex justify-between">
                 <div className="flex gap-3 items-center">
-                    <p className="font-bold">Uzytkownik {props.comment.id_user}</p>
+                    <p className="font-bold">{props.comment.author_nickname}</p>
                     <p className="text-dark_field ">{props.comment.date}</p>
                     { props.comment.edited && <p className="text-dark_field ">Edytowano</p>}
                 </div>
