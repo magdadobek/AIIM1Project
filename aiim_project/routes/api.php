@@ -36,6 +36,7 @@ Route::post('/user/refresh',[RestApiUserController::class,'refreshUser']);
 Route::delete('/user/delete/{id}', [RestApiUserController::class, 'DeleteUser']);
 Route::patch('/user/update/all/{id}', [RestApiUserController::class, 'UpdateUserAll']);
 Route::patch('/user/update/password/{id}', [RestApiUserController::class, 'UpdateUserPassword']);
+Route::patch('/user/update/accountType/{id}', [RestApiUserController::class, 'UpdateAccountType']);
 Route::get('/user/find/{id}', [RestApiUserController::class, 'FindUser']);
 
 Route::get('/noticeboard/allOpen', [RestApiNoticeBoardController::class, 'getAllOpenNoticeBoard']);
@@ -44,9 +45,11 @@ Route::get('/noticeboard/find/{id}', [RestApiNoticeBoardController::class, 'find
 Route::delete('/noticeboard/delete/{id}', [RestApiNoticeBoardController::class, 'deleteNoticeBoardPost']);
 Route::post('/noticeboard/new',[RestApiNoticeBoardController::class,'addNewNoticeBoard']);
 Route::patch('/noticeboard/{id}', [RestApiNoticeBoardController::class, 'updateNoticeBoard']);
+
 Route::get('/noticeboard/showComments/{id}', [RestApiNoticeBoardController::class, 'getAllComments']);
 Route::post('comments/new', [RestApiCommentController::class,'addNewComment']);
 Route::patch('/comments/{id}', [RestApiCommentController::class, "editActiveComment"]);
+Route::delete('/comments/delete/{id}', [RestApiCommentController::class, "deleteComment"]);
 
 Route::get('/qna',[RestApiQnAController::class, 'getAllQuestions']);
 Route::get('/qna/{id}',[RestApiQnAController::class, 'getSingleQuestion']);

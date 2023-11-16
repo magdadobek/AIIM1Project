@@ -24,7 +24,8 @@
                                     "title": "testset settse",
                                     "content": "xdfxd gdgddgffgd",
                                     "open": true,
-                                    "tags": "\"{}\""
+                                    "tags": "\"{}\"",
+                                    "author_nickname": "test"
                                 }
                             }
                         }
@@ -67,7 +68,8 @@
                                     "title": "Test2",
                                     "content": "To jest zamkniete ogloszenie testowe",
                                     "open": false,
-                                    "tags": "{\"test\":\"test2\"}"
+                                    "tags": "{\"test\":\"test2\"}",
+                                    "author_nickname": "test"
                                 }
                             }
                         }
@@ -122,7 +124,8 @@
                                         "title": "",
                                         "content": "",
                                         "open": true,
-                                        "tags": ""
+                                        "tags": "",
+                                        "author_nickname": ""
                                     },
                                     "type": "object"
                                 }
@@ -441,6 +444,23 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "User token",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "*token*"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -462,6 +482,26 @@
                                                 "email": "",
                                                 "account_type": ""
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
                                         }
                                     },
                                     "type": "object"
@@ -495,7 +535,7 @@
                 ],
                 "summary": "Dodanie nowego użytkownika",
                 "requestBody": {
-                    "description": "Informacje o użytkowniku",
+                    "description": "Informacje o użytkowniku i token admina lub guida",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -519,6 +559,11 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password"
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "*token*"
                                     }
                                 }
                             }
@@ -557,6 +602,26 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -580,7 +645,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "User information",
+                    "description": "Dane użytkownika i token admina lub guida",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -604,6 +669,11 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password"
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "*token*"
                                     }
                                 }
                             }
@@ -654,6 +724,26 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Brak użytkownika o podanym ID",
                         "content": {
@@ -663,6 +753,130 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/update/accountType/{id}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Aktualizacja account_type użytkownika o podanym ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID użytkownika, dla którego aktualizujemy account_type",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Account_type żądany i token admina lub guida",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "*token*"
+                                    },
+                                    "account_type": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "G"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Zaktualizowano account type uzytkownika o id: $id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Zła walidacja",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Wrong account_type!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Brak użytkownika o tym podanym id"
                                         }
                                     },
                                     "type": "object"
@@ -790,6 +1004,23 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "Admin token",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "*token*"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -811,6 +1042,26 @@
                                                 "email": "",
                                                 "account_type": ""
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, zły token lub token nie admina",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
                                         }
                                     },
                                     "type": "object"
@@ -1002,7 +1253,8 @@
                                     "question_title": "Pytanie1",
                                     "question_content": "Tresc pytania nr 1",
                                     "open": true,
-                                    "tags": "\"{}\""
+                                    "tags": "\"{}\"",
+                                    "author_nickname": ""
                                 }
                             }
                         }
@@ -1151,7 +1403,8 @@
                                                 "question_title": "Pytanie1",
                                                 "question_content": "Tresc pytania nr X",
                                                 "open": true,
-                                                "tags": "\"{}\""
+                                                "tags": "\"{}\"",
+                                                "author_nickname": ""
                                             }
                                         }
                                     },
@@ -1366,7 +1619,8 @@
                                     "id_user": "",
                                     "date": "YYYY-MM-DD",
                                     "content": "*Komentarz*",
-                                    "edited": true
+                                    "edited": true,
+                                    "author_nickname": ""
                                 }
                             }
                         }
@@ -1721,6 +1975,77 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Komentarz nie istnieje!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Komentarz nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Nie jesteś twórcą tego komentarza",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie jesteś twórcą tego komentarza"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/comments/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Usuwa komentarz o podanym ID",
+                "description": "Usuwa komentarz o podanym ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID komentarza, który chcemy usunąć",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Komentarz został usunięty"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
                     },
                     "404": {
                         "description": "Komentarz nie istnieje!",

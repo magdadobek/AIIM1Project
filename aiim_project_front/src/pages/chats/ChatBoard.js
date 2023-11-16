@@ -8,10 +8,11 @@ const ChatBoard = () => {
     const [chats, setChats] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState();
-    
+
     const navigate = useNavigate();
 
-    const newChat = async () => {
+    const newChat = async (e) => {
+        e.preventDefault();
         const response = await fetch('http://localhost:8000/api/chats/createChat', {
             method: 'POST',
             headers: {
@@ -21,7 +22,7 @@ const ChatBoard = () => {
             },
             body: JSON.stringify({
                 token: localStorage.getItem('token'),
-                //message: "test " + Math.random()
+                message: e.target.content.value
             })
         });
         console.log(response);
@@ -34,9 +35,8 @@ const ChatBoard = () => {
     }
 
     useEffect(() => {
-        
+
         const fetchChats = async () => {
-            console.log(localStorage.getItem('token')   );
             const response = await fetch('http://localhost:8000/api/chats/showChats?' + new URLSearchParams({
                 token: localStorage.getItem('token')
             }), {
@@ -53,19 +53,8 @@ const ChatBoard = () => {
             }
 
             const responseData = await response.json();
-            console.log(responseData);
-            const fetchedChats = responseData.data.map((chat) => {
-                return {
-                    id: chat.id,
-                    id_user: chat.id_user,
-                    id_guide: chat.id_guide,
-                    closed_at: chat.closed_at,
-                    created_at: chat.created_at,
-                    edited_at: chat.edited_at,
-                    open: chat.open,
-                    to_close: chat.to_close
-                }
-            });
+
+            const fetchedChats = responseData.data;
 
             setChats(fetchedChats);
             setIsLoading(false);
@@ -100,7 +89,7 @@ const ChatBoard = () => {
                 </div>
                 <p className="text-3xl font-bold m-4 text-center dark:text-dark_yellow_umg">Szybka pomoc</p>
                 <div className="flex flex-1 justify-end">
-                    <button
+                    {/*<button
                         onClick={newChat}
                         className="text-light_menu 
                         dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 
@@ -109,10 +98,21 @@ const ChatBoard = () => {
                         font-bold p-2 rounded-3xl text-base my-5 px-3 py-1 shadow-md shadow-gold_umg"
                     >
                         Nowy czat
-                    </button>
+                    </button>*/}
                 </div>
             </div>
-            <ChatList chatList={chats} />
+            <form method="post" className="flex flex-col justify-center items-center" onSubmit={newChat}>
+                <div className="w-full px-3  flex items-center">
+                    <textarea
+                        className="bg-light_field dark:bg-dark_field border-light_menu dark:border-dark_field rounded border-2 leading-normal resize-none w-full h-12 py-2 mx-2 px-3 focus:outline-none"
+                        id="content" name="content" placeholder='Nowy czat' required>
+                    </textarea>
+                    <button className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg dark:bg-dark_yellow_umg dark:border-dark_yellow_umg dark:hover:border-yellow_umg dark:hover:bg-yellow_umg font-bold p-2 rounded-3xl text-base mx-2 px-3 py-1 shadow-md shadow-gold_umg">
+                        Wyślij
+                    </button>
+                </div>
+            </form>
+            {chats && <ChatList chatList={chats} />}
         </div>
     )
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\QnACommentRequest;
+use App\Models\User;
 use App\Models\QnAComments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,12 @@ class RestApiQnACommentController extends Controller
     public function getCommentsFromSingleQnAQuestion($id)
     {
         $posts = DB::table('qna_comments')->where('id_question', '=', $id)->orderBy('date', 'DESC')->get();
+        if($posts!=null){
+            foreach ($posts as $post) {
+                $user = User::find($post->id_user);
+                $post->author_nickname = $user->nickname;
+            }
+        }
         return response()->json([
             'data' => $posts,
         ]);

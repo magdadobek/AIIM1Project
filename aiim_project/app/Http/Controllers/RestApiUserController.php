@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Guide;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\UserRequest;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 
 class RestApiUserController extends Controller
@@ -25,7 +27,18 @@ class RestApiUserController extends Controller
     }
 
     //Wyszukiwanie użytkownika po id - logowanie / zmiana hasła
-    public function FindUser($id){
+    public function FindUser($id, Request $request){
+
+        $token = $request['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
         $message="Oto dane uzytkownika o id: $id";
         $user=User::find($id);
         $data=["data"=>$user];
@@ -80,12 +93,30 @@ class RestApiUserController extends Controller
         $message="Dodano uzytkownika";
         $data = $request->validated();
 
+        $token = $request['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $accType=$decodedToken->account_type;
+
+        if($accType!="A" || $accType!="G"){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, nie jesteś adminem lub guidem.',
+            ], 400);
+        }
+
         $user = User::create([
             'nickname' => $request->nickname,
             'email' => $request->email,
             'index' => $request->index,
             'password' => Hash::make($request->password),
-            //'password' => $request->password,
             'account_type' => 'U',
         ]);
 
@@ -113,6 +144,26 @@ class RestApiUserController extends Controller
 
     //Zmiana danych użytkownika przez (docelowo) admina, można dodać jeżeli puste - nie zmieniaj (do dogadania)
     public function UpdateUserAll($id, UserRequest $request){
+
+        $token = $request['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $accType=$decodedToken->account_type;
+
+        if($accType!="A" || $accType!="G"){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, nie jesteś adminem lub guidem.',
+            ], 400);
+        }
+
         $data = $request->validated();
         $user = User::find($id);
         if($user != null){
@@ -141,8 +192,70 @@ class RestApiUserController extends Controller
             response()->json(['data' => []]);
     }
 
+    //Zmiana account type
+    public function UpdateAccountType($id, Request $request){
+        $data = $request;
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $accType=$decodedToken->account_type;
+
+        if($accType!="A" || $accType!="G"){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, nie jesteś adminem.',
+            ], 400);
+        }
+
+        $message="Zaktualizowano account type uzytkownika o id: $id";
+        $user = User::find($id);
+
+        if($user==null){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Brak użytkownika o tym podanym id',
+            ], 404);
+        }
+
+
+        if(strlen($data['account_type']) === 1 && preg_match('/^[a-zA-Z]$/', $data['account_type'])){
+            $user->account_type = $data['account_type'];
+            $user->save();
+
+            return response()->json(['data' => $user, 'message'=>$message], 200);
+        } else
+            return response()->json(['status' => 'error', 'message'=>'Wrong account_type!'], 400);
+    }
+
     //usuwanie użytkownika po id
-    public function DeleteUser($id){
+    public function DeleteUser($id, Request $request){
+
+        $token = $request['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $accType=$decodedToken->account_type;
+
+        if($accType!="A"){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, nie jesteś adminem.',
+            ], 400);
+        }
+
         $message="Usunięto uzytkownika o id: $id";
         $user=User::find($id);
         if($user!=null){
