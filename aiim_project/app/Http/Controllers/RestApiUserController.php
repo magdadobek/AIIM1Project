@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Notification;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use App\Notifications\SendFormNotification;
+
+
 
 
 class RestApiUserController extends Controller
@@ -150,5 +155,34 @@ class RestApiUserController extends Controller
             return response()->json(['data'=>$user, 'message'=>$message]);
         }
         else return response()->json(['data'=>[]]);
+    }
+
+    public function submitForm(Request $request)
+    {
+        $data = $request->validate([
+            'kierunek' => 'required',
+            'wydzial' => 'required',
+            'semestr' => 'required',
+        ]);
+
+        try {
+            $decodedToken = JWTAuth::parseToken()->authenticate();
+            $userId = $decodedToken->id;
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $data['id_user'] = $userId;
+
+        $admins = User::where('account_type', 'A')->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new SendFormNotification($data));
+        }
+
+        return response()->json(['message' => 'Powiadomienia zostały wysłane pomyślnie.']);
     }
 }

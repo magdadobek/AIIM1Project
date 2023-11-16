@@ -1833,6 +1833,56 @@
                     }
                 }
             }
+        },
+        "/api/users/sendForm": {
+            
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Wysyła formularz o bycie wolontariuszem",
+                "description": "Wysyła formularz do adminów w formie powiadomienia z danymi z formularza, id użytkownik pobierane z tokenu",            
+                "parameters": [
+                    {
+                        "name": "kierunek",
+                        "in": "path",
+                        "description": "kierunek studenta",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Informatyka"
+                    },
+                    {
+                        "name": "wydzial",
+                        "in": "path",
+                        "description": "wydzial studenta",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Elektryczny"
+                    },
+                    {
+                        "name": "semestr",
+                        "in": "path",
+                        "description": "semestr studenta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    }
+                }
+            }
         }
     },
     "components": {

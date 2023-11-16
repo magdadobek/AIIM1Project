@@ -68,4 +68,7 @@ Route::post('/chats/sendMessage', [RestApiChatController::class, 'sendMessageToC
 Route::patch('/chats/deleteMessage', [RestApiChatController::class, 'deleteChatMessage']);
 Route::get('/chats/showChats', [RestApiChatController::class, 'showChats']);
 
+Route::post('/users/submitForm', [RestApiUserController::class, 'submitForm']);
+
+
 
