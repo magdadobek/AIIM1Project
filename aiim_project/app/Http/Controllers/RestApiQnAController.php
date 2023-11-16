@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\QnARequest;
 use App\Models\QnA;
+use App\Models\QnAComments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,9 @@ class RestApiQnAController extends Controller
     }
 
     public function deleteQuestion(int $questionId){
+        
+        QnAComments::where('id_question', $questionId)->delete();
+
         $questionToDelete = QnA::find($questionId);
 
         if ($questionToDelete === null) {
