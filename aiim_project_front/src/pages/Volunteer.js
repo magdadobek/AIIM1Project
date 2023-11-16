@@ -7,7 +7,7 @@ const Volunteer = () => {
 
     const handleSetVolunteer = () => {
         const request = {
-            account_type: "W",
+            account_type: "G",
             email: user.email,
             id: user.id,
             index: user.index,

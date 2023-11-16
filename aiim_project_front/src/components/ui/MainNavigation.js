@@ -91,7 +91,7 @@ const MainNavigation = () => {
                         <button
                             className="border-2 border-light_menu hover:border-yellow_umg hover:text-yellow_umg focus:border-yellow_umg focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg rounded-full shadow-md text-base px-2 py-1 duration-200"
                             onClick={handleUserMenuToggle}>
-                            {user.isLoggedIn === true ? user.nickname : "User"}
+                            {user.isLoggedIn === true ? user.nickname.slice(1).toUpperCase() : "G"}
                         </button>
                         {isUserMenuOpen && (
                             <div className="absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white shadow-lg rounded-b-xl mt-14 z-10 p-2">
