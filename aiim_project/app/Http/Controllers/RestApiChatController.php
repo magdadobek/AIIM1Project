@@ -77,6 +77,44 @@ class RestApiChatController extends Controller
         return response()->json(['message' => 'Czat został zamknięty'], 200);
     }
 
+    public function closeChatOnClick($chatId, Request $request){
+
+        $data = $request;
+
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $chat = Chat::find($chatId);
+
+        if (!$chat) {
+            return response()->json(['message' => 'Czat nie istnieje'], 404);
+        }
+
+        $userId=$decodedToken->id;
+        $user = User::find($userId);
+        $accountType = $user->account_type;
+        
+        if($chat->id_user==$userId||$accountType=='A'||$chat->id_guide==$userId){
+            $chat->open = false;
+            $chat->closed_at = Carbon::now();
+            $chat->save();
+
+            return response()->json(['status' => 'success', 'message' => 'Czat został zamknięty'], 200);
+        }
+        else
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nie masz permisji do zamknięcia tego chatu!',
+            ], 402);
+    }
+
 
 // do tej funkcji będzie trzeba wrócić, jak zostanie rozwiązana funkcjonalność powiadomień
 /*

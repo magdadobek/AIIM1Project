@@ -1765,7 +1765,7 @@
         },
         "/api/chats/closeChat/{id}": {
             "patch": {
-                "description": "Zamknięcie chatu",
+                "description": "Zamknięcie chatu. Chat może zamknąć członek chatu (user przypisany do chatu/guide przypisany do chatu), lub admin.",
                 "summary": "Zamknięcie chatu",
                 "tags": [
                     "Chats"
@@ -1782,9 +1782,33 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Dane potrzebne do zamknięcia chatu",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token",
+                                        "example": "*token*"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Chat został zamknięty"
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    },
+                    "402": {
+                        "description": "Nie masz permisji do zamknięcia tego chatu!"
                     },
                     "404": {
                         "description": "Chat nie istnieje"
