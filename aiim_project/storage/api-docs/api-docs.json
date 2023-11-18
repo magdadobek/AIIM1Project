@@ -528,6 +528,117 @@
                 }
             }
         },
+        "/api/user/findAll": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Znajdź wszystkich użytkowników",
+                "description": "Znajdź wszystkich użytkowników, endpoint może wykonać tylko Admin",
+                "requestBody": {
+                    "description": "User token",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "*token*"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie masz wystarczających permisji!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/new": {
             "post": {
                 "tags": [
@@ -1802,7 +1913,15 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Chat został zamknięty"
+                        "description": "Chat został zamknięty",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": "success",
+                                    "message": "Czat został zamknięty"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
