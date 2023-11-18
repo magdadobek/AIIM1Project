@@ -1,11 +1,16 @@
 const QuestionForm = (props) => {
+
+    const formatDate = (date) => {
+        return new Date(date).toISOString().split('T')[0];
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
         const tags = e.target.tags.value.replace(/,/g, ' ').split(' ').filter(el => el !== '')
         
         const request = {
-            // dodać token i data
+            date: formatDate(new Date()),
             question_title: e.target.question_title.value,
             question_content: e.target.question_content.value,
             tags: tags,

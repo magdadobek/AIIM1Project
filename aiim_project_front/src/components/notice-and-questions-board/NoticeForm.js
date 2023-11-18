@@ -1,11 +1,16 @@
 const NoticeForm = (props) => {
+
+    const formatDate = (date) => {
+        return new Date(date).toISOString().split('T')[0];
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const tags = e.target.tags.value.replace(/,/g, ' ').split(' ').filter(el => el !== '')
 
         const request = {
-            // dodać token i data
+            date: formatDate(new Date()),
             title: e.target.title.value,
             content: e.target.content.value,
             tags: tags,
