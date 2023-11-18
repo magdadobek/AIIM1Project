@@ -58,7 +58,7 @@ class OpenChatNotification extends Notification
     {
         return [
             'message' => 'Czy chcesz otworzyć czat?',
-            'action' => 'open-chat',
+            'action' => 'open-chat'
         ];
     }
 

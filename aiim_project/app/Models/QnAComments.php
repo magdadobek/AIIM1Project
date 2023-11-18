@@ -16,6 +16,7 @@ class QnAComments extends Model
         'id_question',
         'id_user',
         'content',
+        'date',
         'edited',
     ];
 

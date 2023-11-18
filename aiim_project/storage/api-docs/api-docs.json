@@ -528,6 +528,117 @@
                 }
             }
         },
+        "/api/user/findAll": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Znajdź wszystkich użytkowników",
+                "description": "Znajdź wszystkich użytkowników, endpoint może wykonać tylko Admin",
+                "requestBody": {
+                    "description": "User token",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "*token*"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "format": "User",
+                                            "example": {
+                                                "id": "$id",
+                                                "nickname": "",
+                                                "index": "",
+                                                "email": "",
+                                                "account_type": ""
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Błąd autoryzacji",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nie masz wystarczających permisji!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brak użytkownika o podanym ID",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Użytkownik nie istnieje!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/new": {
             "post": {
                 "tags": [
@@ -1714,7 +1825,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"id",
+                        "name": "id",
                         "in": "path",
                         "description": "ID noticeboarda, którego komentarze wyświetlamy",
                         "required": true,
@@ -1743,7 +1854,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"chatId",
+                        "name": "chatId",
                         "in": "path",
                         "description": "ID chatu, którego chcemy zamknąć",
                         "required": true,
@@ -1765,14 +1876,14 @@
         },
         "/api/chats/closeChat/{id}": {
             "patch": {
-                "description": "Zamknięcie chatu",
+                "description": "Zamknięcie chatu. Chat może zamknąć członek chatu (user przypisany do chatu/guide przypisany do chatu), lub admin.",
                 "summary": "Zamknięcie chatu",
                 "tags": [
                     "Chats"
                 ],
                 "parameters": [
                     {
-                        "name":"chatId",
+                        "name": "chatId",
                         "in": "path",
                         "description": "ID chatu, który zamykamy",
                         "required": true,
@@ -1782,9 +1893,41 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Dane potrzebne do zamknięcia chatu",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "format": "token",
+                                        "example": "*token*"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Chat został zamknięty"
+                        "description": "Chat został zamknięty",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": "success",
+                                    "message": "Czat został zamknięty"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    },
+                    "402": {
+                        "description": "Nie masz permisji do zamknięcia tego chatu!"
                     },
                     "404": {
                         "description": "Chat nie istnieje"
@@ -1807,27 +1950,27 @@
                             "schema": {
                                 "oneOf": [
                                     {
-                                    "type": "object",
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "format": "token"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "format": "string",
-                                            "example": "Gdzie jest stołówka?"
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string",
+                                                "format": "token"
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "format": "string",
+                                                "example": "Gdzie jest stołówka?"
+                                            }
                                         }
-                                    }
                                     },
                                     {
-                                    "type": "object",
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "format": "token"
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string",
+                                                "format": "token"
+                                            }
                                         }
-                                    }
                                     }
                                 ]
                             }
@@ -1892,7 +2035,7 @@
                 ],
                 "parameters": [
                     {
-                        "name":"id",
+                        "name": "id",
                         "in": "path",
                         "description": "ID chatu, którego wiadomości wyświetlamy",
                         "required": true,
@@ -2011,51 +2154,61 @@
                 }
             }
         },
-        "/api/comments/delete/{id}": {
-            "delete": {
+        "/api/qna/comments/new": {
+            "post": {
+                "summary": "Dodaje nowy komentarz",
+                "description": "Dodanie nowego komentarza",
                 "tags": [
-                    "Comments"
+                    "QnA Comments"
                 ],
-                "summary": "Usuwa komentarz o podanym ID",
-                "description": "Usuwa komentarz o podanym ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID komentarza, który chcemy usunąć",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": 1
-                    }
-                ],
-                "responses": {
-                    "200": {
-                    "description": "OK",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "description": "Treść i metadane nowego komentarza",
                     "content": {
                         "application/json": {
                             "schema": {
+                                "type": "object",
                                 "properties": {
-                                    "message": {
+                                    "id_question": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "13"
+                                    },
+                                    "id_user": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "example": "51"
+                                    },
+                                    "content": {
                                         "type": "string",
-                                        "example": "Komentarz został usunięty"
+                                        "format": "string",
+                                        "example": "Testowy komentarz"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-11-11"
+                                    },
+                                    "edited": {
+                                        "type": "boolean",
+                                        "default": false
                                     }
-                                },
-                                "type": "object"
+                                }
                             }
                         }
                     }
-                    },
-                    "404": {
-                        "description": "Komentarz nie istnieje!",
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Komentarz nie istnieje!"
+                                            "example": "Komentarz został dodany"
                                         }
                                     },
                                     "type": "object"
@@ -2063,15 +2216,15 @@
                             }
                         }
                     },
-                    "403": {
-                        "description": "Nie jesteś twórcą tego komentarza",
+                    "404": {
+                        "description": "Użytkownik lub pytanie nie istnieje",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Nie jesteś twórcą tego komentarza"
+                                            "example": "Pytanie lub użytkownik nie istnieje"
                                         }
                                     },
                                     "type": "object"
