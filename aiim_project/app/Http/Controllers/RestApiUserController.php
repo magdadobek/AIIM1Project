@@ -45,6 +45,41 @@ class RestApiUserController extends Controller
         return response()->json(['data'=>$user, 'message'=>$message]);
     }
 
+    public function FindAll(Request $request){
+
+        $token = $request['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+
+        $userId = $decodedToken->id; 
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['message' => 'Użytkownik nie istnieje'], 404);
+        }
+
+        $accountType = $user->account_type;
+
+        if($accountType=='A'){
+
+            // Wyszukanie użytkowników i posortowanie ich
+            $users = User::orderBy('account_type')->get();
+            return response()->json(['data'=>$users, 'status' => 'success'], 200);
+
+        }
+        else
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nie masz wystarczających permisji!',
+            ], 402);
+    }
+
     //Logowanie użytkownika
     public function LoginUser(UserRequest $request){
         $message="Zle dane logowania";
@@ -207,10 +242,10 @@ class RestApiUserController extends Controller
 
         $accType=$decodedToken->account_type;
 
-        if($accType!="A" || $accType!="G"){
+        if($accType!="A" && $accType!="G"){
             return response()->json([
                 'status' => 'error',
-                'message' => 'Błąd autoryzacji, nie jesteś adminem.',
+                'message' => 'Błąd autoryzacji, nie posiadasz wystarczającej permisji.',
             ], 400);
         }
 

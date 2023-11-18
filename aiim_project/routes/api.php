@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/welcome', [RestApiController::class, 'showWelcome']);
 
+Route::get('/user/findAll', [RestApiUserController::class, 'FindAll']);
+
 Route::get('/user/login', [RestApiUserController::class, 'LoginUser']);
 Route::get('/user/logout', [RestApiUserController::class, 'LogoutUser']);
 Route::post('/user/new',[RestApiUserController::class,'NewUser']);
@@ -63,7 +65,7 @@ Route::delete('/qna/comments/delete/{id}', [RestApiQnACommentController::class, 
 Route::post("/qna/comments/new", [RestApiQnACommentController::class,"addNewComment"]);
 
 
-Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChat']);
+Route::patch('/chats/closeChat/{id}', [RestApiChatController::class, 'closeChatOnClick']);
 Route::post('/chats/createChat',[RestApiChatController::class,'createChat']);
 Route::get('/chats/{chatId}/messages', [RestApiChatController::class, 'getChatMessages']);
 Route::post('/chats/sendMessage', [RestApiChatController::class, 'sendMessageToChat']);
