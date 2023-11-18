@@ -5,6 +5,7 @@ const QuestionForm = (props) => {
         const tags = e.target.tags.value.replace(/,/g, ' ').split(' ').filter(el => el !== '')
         
         const request = {
+            // dodać token i data
             question_title: e.target.question_title.value,
             question_content: e.target.question_content.value,
             tags: tags,

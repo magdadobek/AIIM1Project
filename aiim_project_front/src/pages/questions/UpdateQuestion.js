@@ -53,7 +53,7 @@ export const UpdateQuestion = (props) =>{
     setHasSubmitted(true);
     if (responseData.status === "success") {
       setMessage("Zaktualizowano pytanie");
-      navigate("/qyestions");
+      navigate("/questions");
     }
     else setMessage(responseData.message)
   }

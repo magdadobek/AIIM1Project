@@ -5,6 +5,7 @@ const NoticeForm = (props) => {
         const tags = e.target.tags.value.replace(/,/g, ' ').split(' ').filter(el => el !== '')
 
         const request = {
+            // dodać token i data
             title: e.target.title.value,
             content: e.target.content.value,
             tags: tags,

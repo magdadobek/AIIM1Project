@@ -10,6 +10,15 @@ const CommentSection = (props) => {
     const [httpError, setHttpError] = useState();
     const params = useParams();
 
+// success	false
+// message	"Validation errors"
+// errors	Object { id_notice: […], id_user: […], date: […], … }
+// id_notice	[ "Field id_notice is required" ]
+// id_user	[ "Field id_user is required" ]
+// date	[ "Field date is required" ]
+// content	[ "Field content is required" ]
+// edited	[ "The edited field is required." ]
+
     const getMyId = () => { //rozwiazanie tymczasowe
         const localUser = localStorage.getItem("user");
         if (localUser) {

@@ -5,6 +5,8 @@ const Volunteer = () => {
     const user = useSelector((state) => state.user);
     const [status, setStatus] = useState(null);
 
+    // dodać do updateu użytkownika przy przypisaniu do wolontariatu: kierunek, wydział, semestr, zrobić inputy 
+
     const handleSetVolunteer = () => {
         const request = {
             account_type: "G",
