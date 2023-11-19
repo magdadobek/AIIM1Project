@@ -129,6 +129,56 @@ class RestApiChatController extends Controller
     }
     */
 
+    public function assignGuideToChat(Request $request){
+        $data = $request;
+        
+        $token = $data['token'];
+        try {
+                  $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+                  return response()->json([
+                      'status' => 'error',
+                      'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+                  ], 401);
+        }
+
+        $userId=$decodedToken->id;
+        $user = User::find($userId);
+        $accountType = $user->account_type;
+
+        if($accountType != 'G'){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nie masz permisji do przypisania się do chatu!',
+            ], 402);
+        }
+
+        $chatId = $data['chat_id'];
+        $chat = Chat::find($chatId);
+
+        if (!$chat) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Czat nie istnieje'], 404);
+        }
+
+        if($chat->id_guide != null)
+        {
+            return response()->json([
+                'status' => 'conflict',
+                'message' => 'Podany chat ma już przypisanego wolontariusza',
+            ], 409);
+        }
+
+        $chat->guide_id = $userId;
+        $chat->save();
+
+        return response()->json([
+                'status' => 'success',
+                'message' => "Przypisano urzytkownika do chatu",
+            ], 200);
+    }
+
     public function deleteClosedChats(){
         $thresholdDate = Carbon::now()->subDays(3);
 
