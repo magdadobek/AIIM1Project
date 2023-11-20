@@ -6,7 +6,6 @@ use App\Http\Requests\QnACommentRequest;
 use App\Models\QnA;
 use App\Models\User;
 use App\Models\QnAComments;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
