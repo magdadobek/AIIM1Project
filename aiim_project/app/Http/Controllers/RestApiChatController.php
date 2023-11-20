@@ -170,7 +170,8 @@ class RestApiChatController extends Controller
             ], 409);
         }
 
-        $chat->guide_id = $userId;
+        $guide = Guide::where('id_user', '=', $userId)->get();
+        $chat->id_guide = $guide->first()->id;
         $chat->save();
 
         return response()->json([
