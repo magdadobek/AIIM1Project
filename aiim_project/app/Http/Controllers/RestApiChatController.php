@@ -328,14 +328,18 @@ class RestApiChatController extends Controller
 
         $accountType = $user->account_type;
         switch ($accountType) {
-            case 'G':
             case 'A':
+                $chats = Chat::all();
+                break;
+
+            case 'G':
                 $chats = Chat::where(function ($query) use ($userId) {
                     $query->where('id_user', $userId)
-                        ->orWhere('id_guide', $userId);
+                        ->orWhere('id_guide', $userId)
+                        ->orWhere('id_guide', null);
                 })->get();
                 break;
-    
+
             case 'U':
                 $chats = Chat::where('id_user', $userId)->get();
                 break;
