@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use App\Models\QnAComments;
+
 
 class RestApiQnAController extends Controller
 {
@@ -32,6 +34,8 @@ class RestApiQnAController extends Controller
     }
 
     public function deleteQuestion(int $questionId){
+
+        QnAComments::where('id_question', $questionId)->delete();
         $questionToDelete = QnA::find($questionId);
 
         if ($questionToDelete === null) {
