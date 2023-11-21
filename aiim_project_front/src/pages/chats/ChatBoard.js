@@ -56,7 +56,8 @@ const ChatBoard = () => {
 
             const fetchedChats = responseData.data;
 
-            setChats(fetchedChats);
+            setChats(fetchedChats.filter(chat => chat.open !== false))
+
             setIsLoading(false);
         }
 
@@ -112,7 +113,7 @@ const ChatBoard = () => {
                     </button>
                 </div>
             </form>
-            {chats && <ChatList chatList={chats} />}
+            {chats && <ChatList setChats={setChats} chatList={chats} />}
         </div>
     )
 }
