@@ -128,25 +128,6 @@ class RestApiUserController extends Controller
         $message="Dodano uzytkownika";
         $data = $request->validated();
 
-        $token = $request['token'];
-        try {
-            $decodedToken = JWTAuth::parseToken($token)->authenticate();
-        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
-            ], 401);
-        }
-
-        $accType=$decodedToken->account_type;
-
-        if($accType!="A" || $accType!="G"){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Błąd autoryzacji, nie jesteś adminem lub guidem.',
-            ], 400);
-        }
-
         $user = User::create([
             'nickname' => $request->nickname,
             'email' => $request->email,
