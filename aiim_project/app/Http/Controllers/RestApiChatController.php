@@ -129,6 +129,57 @@ class RestApiChatController extends Controller
     }
     */
 
+    public function assignGuideToChat(Request $request){
+        $data = $request;
+        
+        $token = $data['token'];
+        try {
+                  $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+                  return response()->json([
+                      'status' => 'error',
+                      'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+                  ], 401);
+        }
+
+        $userId=$decodedToken->id;
+        $user = User::find($userId);
+        $accountType = $user->account_type;
+
+        if($accountType != 'G'){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nie masz permisji do przypisania się do chatu!',
+            ], 402);
+        }
+
+        $chatId = $data['chat_id'];
+        $chat = Chat::find($chatId);
+
+        if (!$chat) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Czat nie istnieje'], 404);
+        }
+
+        if($chat->id_guide != null)
+        {
+            return response()->json([
+                'status' => 'conflict',
+                'message' => 'Podany chat ma już przypisanego wolontariusza',
+            ], 409);
+        }
+
+        $guide = Guide::where('id_user', '=', $userId)->get();
+        $chat->id_guide = $guide->first()->id;
+        $chat->save();
+
+        return response()->json([
+                'status' => 'success',
+                'message' => "Przypisano urzytkownika do chatu",
+            ], 200);
+    }
+
     public function deleteClosedChats(){
         $thresholdDate = Carbon::now()->subDays(3);
 
@@ -328,14 +379,18 @@ class RestApiChatController extends Controller
 
         $accountType = $user->account_type;
         switch ($accountType) {
-            case 'G':
             case 'A':
+                $chats = Chat::all();
+                break;
+
+            case 'G':
                 $chats = Chat::where(function ($query) use ($userId) {
                     $query->where('id_user', $userId)
-                        ->orWhere('id_guide', $userId);
+                        ->orWhere('id_guide', $userId)
+                        ->orWhere('id_guide', null);
                 })->get();
                 break;
-    
+
             case 'U':
                 $chats = Chat::where('id_user', $userId)->get();
                 break;

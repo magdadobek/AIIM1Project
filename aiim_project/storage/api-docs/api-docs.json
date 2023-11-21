@@ -2234,6 +2234,43 @@
                     }
                 }
             }
+        },
+        "/api/chats/assignToChat": {
+            "patch": {
+                "description": "Przypisanie użytkownika jako wolontariusza",
+                "summary": "Przypisanie użytkownika jako wolontariusza",
+                "tags": [
+                    "Chats"
+                ],
+                "parameters": [
+                    {
+                        "name": "chat_id",
+                        "in": "path",
+                        "description": "ID chatu do którego przypisujemy użytkownika",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wolontariusz poprawnie przypisany"
+                    },
+                    "409": {
+                        "description": "Chat już ma przypisanego wolontariusza"
+                    },
+                    "404": {
+                        "description": "Chat nie istnieje!"
+                    },
+                    "401": {
+                        "description": "Błąd autoryzacji, token nieprawidłowy lub unieważniony"
+                    },
+                    "402": {
+                        "description": "Nie masz uprawnień do bycia wolontariuszem!"
+                    }
+                }
+            }
         }
     },
     "components": {
