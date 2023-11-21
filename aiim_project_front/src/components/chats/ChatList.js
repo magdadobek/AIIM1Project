@@ -2,11 +2,14 @@ import React from 'react'
 import Chat from './Chat';
 
 const ChatList = (props) => {
+    const refreshChats = (id) => {
+        props.setChats(props.chatList.filter(chat => chat.id !== id))
+    }
+
     return (
         <div>
             {props.chatList.map((chat) => (
-                //<Notice key={notice.id} id={notice.id} title={notice.title} content={notice.content} date={notice.date} />
-                <Chat key={chat.id} data={chat} link={`/chats/${chat.id}`}/>
+                <Chat refreshChats={() => refreshChats(chat.id)} key={chat.id} data={chat} link={`/chats/${chat.id}`}/>
             ))}
         </div>
     )
