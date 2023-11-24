@@ -20,6 +20,7 @@ import NewQuestion from './pages/questions/NewQuestion';
 import { UpdateNotice } from './pages/notice/UpdateNotice';
 import { UpdateQuestion } from './pages/questions/UpdateQuestion';
 import Volunteer from './pages/Volunteer';
+import { AdminPanel } from './pages/admin/AdminPanel';
 
 
 
@@ -83,6 +84,7 @@ const App = () => {
             <Route path='/profil' element={<Placeholder title="Profil" />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/volunteering' element={<Volunteer/>} />
+            <Route path='/admin' element={<AdminPanel/>} />
           </Routes>
         </Content>
       </div>

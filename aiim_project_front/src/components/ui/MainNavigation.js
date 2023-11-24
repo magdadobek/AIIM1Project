@@ -19,9 +19,9 @@ const MainNavigation = () => {
     };
 
     const handleSearchInput = (value) => {
-        setSearch(value); 
+        setSearch(value);
     }
-    
+
 
     return (
         <header className={`z-10 ${isMenuOpen ? '' : ''}`}>
@@ -61,6 +61,12 @@ const MainNavigation = () => {
                             <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/questions">Zadaj pytanie</NavLink>
                             </div>
+                            {user.account_type === 'A' && (
+                                <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
+                                    <NavLink to="/admin">Panel Admin</NavLink>
+                                </div>
+                            )}
+
                             {/* <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                                 <NavLink to="/map">Mapa</NavLink>
                             </div>
@@ -85,7 +91,7 @@ const MainNavigation = () => {
                 </div>
                 <div className="flex justify-end">
                     <div>
-                       <SearchBar onSearch={handleSearchInput}/>
+                        <SearchBar onSearch={handleSearchInput} />
                     </div>
                     <div className="flex justify-end relative font-bold">
                         <button
@@ -93,11 +99,11 @@ const MainNavigation = () => {
                              focus:text-yellow_umg ring-light_menu dark:border-white dark:hover:border-yellow_umg dark:focus:border-dark_yellow_umg 
                              rounded-full shadow-md text-base px-4 py-1 duration-200"
                             onClick={handleUserMenuToggle}>
-                            {user.isLoggedIn === true ? user.nickname.slice(0,1).toUpperCase() : "G"}
+                            {user.isLoggedIn === true ? user.nickname.slice(0, 1).toUpperCase() : "G"}
                         </button>
                         {isUserMenuOpen && (
                             <div className="absolute bg-light_component dark:bg-dark_component text-light_menu dark:text-white shadow-lg rounded-b-xl mt-14 z-10 p-2">
-                                <UserMenu  user={user}/>
+                                <UserMenu user={user} />
                             </div>
                         )}
                     </div>

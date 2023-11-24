@@ -137,7 +137,7 @@ const NoticePage = (props) => {
                     <p className="text-3xl font-bold m-4 text-left dark:text-dark_yellow_umg">{notice.title}</p>
                 </div>
                 <div className="m-4 ml-auto">
-                    {user.id === notice.id_user || user.account_type === 'admin' ? (
+                    {user.id === notice.id_user || user.account_type === 'A' ? (
                         <>
                             <button
                                 className="text-light_menu dark:text-dark_component border-yellow_umg bg-yellow_umg border-2 hover:bg-dark_yellow_umg hover:border-dark_yellow_umg

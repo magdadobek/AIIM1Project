@@ -5,6 +5,8 @@ const Message = (props) => {
     const userId = useSelector(state => state.user.id);
     const isCurrentUser = props.message.id_user === userId;
 
+    // poprawić błąd z charAt 
+
     return (
         <div>
             <p className="flex text-base dark:text-white justify-center">{props.message.send_at}</p>
