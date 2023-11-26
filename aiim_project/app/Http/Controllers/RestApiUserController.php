@@ -226,10 +226,11 @@ class RestApiUserController extends Controller
 
         $accType=$decodedToken->account_type;
 
-        if($accType!="A" && $accType!="G"){
+        //if($accType!="A" && $accType!="G"){
+        if($accType=="A"){
             return response()->json([
                 'status' => 'error',
-                'message' => 'Błąd autoryzacji, nie posiadasz wystarczającej permisji.',
+                'message' => 'Błąd autoryzacji, admin nie może zmienić typu konta',
             ], 400);
         }
 

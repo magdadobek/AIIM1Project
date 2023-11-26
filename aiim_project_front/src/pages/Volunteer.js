@@ -12,7 +12,7 @@ const Volunteer = () => {
             token: localStorage.getItem('token')
         };
 
-        fetch(`http://localhost:8000/api/user/accountType/${user.id}`, {
+        fetch(`http://localhost:8000/api/user/update/accountType/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -27,7 +27,7 @@ const Volunteer = () => {
                     setStatus("success");
                     setTimeout(() => {
                         window.location.href = '/';
-                    }, 2000);
+                    }, 3000);
                 } else {
                     setStatus("error");
                 }
@@ -76,7 +76,7 @@ const Volunteer = () => {
                     </div>
                     {status === "success" && (
                             <p className="text-green-500 dark:text-green-400 ml-4">
-                                Zostałeś Wolontariuszem! Zostaniesz przekierowany na stronę główną za 2 sekundy.
+                                Zostałeś Wolontariuszem! Zostaniesz przekierowany na stronę główną za 3 sekundy.
                             </p>
                         )}
                         {status === "error" && (
