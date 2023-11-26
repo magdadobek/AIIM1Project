@@ -51,8 +51,8 @@ class RestApiQnACommentController extends Controller
             ->setStatusCode(200);
     }
     
-    public function deleteComment(QnACommentRequest $commentRequest, int $id) {
-        $validatedComment = $commentRequest->validated();
+    public function deleteComment(int $id) {
+        //$validatedComment = $commentRequest->validated();
 
         $comment = QnAComments::find($id);
 
