@@ -35,7 +35,6 @@ const ChatBoard = () => {
     }
 
     useEffect(() => {
-
         const fetchChats = async () => {
             const response = await fetch('http://localhost:8000/api/chats/showChats?' + new URLSearchParams({
                 token: localStorage.getItem('token')
@@ -59,10 +58,14 @@ const ChatBoard = () => {
 
             const responseData = await response.json();
 
+            if(responseData.message==='Nie masz żadnych chatów do wyświetlenia'){
+                setChats([]);
+                setIsLoading(false);
+                return;
+            }
+
             const fetchedChats = responseData.data;
-
             setChats(fetchedChats.filter(chat => chat.open !== false))
-
             setIsLoading(false);
         }
 

@@ -1615,7 +1615,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Pytanie zostało usunięte pomyślnie!"
+                                            "example": "Pytanie zostało zaktualizowane!"
                                         }
                                     },
                                     "type": "object"

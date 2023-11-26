@@ -119,11 +119,25 @@ class RestApiQnAController extends Controller
                 ->setStatusCode(404);
         }
 
-        if ($questionToEdit->id_user != auth()->user()->id) {
+        $data = $request;
+
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+        $userId=$decodedToken->id;
+
+        if ($questionToEdit->id_user != $userId) {
             return response()
                 ->json(['message' => 'Nie jesteś autorem tego pytania!'])
                 ->setStatusCode(403);
         }
+
 
         $questionToEdit->question_title = $validatedRequest['question_title'];
         $questionToEdit->question_content = $validatedRequest['question_content'];
