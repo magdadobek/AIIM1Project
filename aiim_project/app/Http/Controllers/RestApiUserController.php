@@ -173,8 +173,6 @@ class RestApiUserController extends Controller
 
         $accType=$decodedToken->account_type;
 
-        //dd($accType);
-
         //if($accType!="A" || $accType!="G"){
         if($accType === "U"){
             return response()->json([
