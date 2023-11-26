@@ -108,12 +108,10 @@ const SearchBar = ({ onSearch }) => {
 
     const handleNoticeClick = (notice) => {
         window.location.href = `/notices/${notice.id}`;
-        console.log('Przekierowanie do ogłoszenia:', notice.id);
     };
 
     const handleQuestionClick = (question) => {
         window.location.href = `/questions/${question.id}`;
-        console.log('Przekierowanie do pytania:', question.id);
     };
 
     return (

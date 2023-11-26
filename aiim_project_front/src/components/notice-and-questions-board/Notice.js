@@ -10,7 +10,7 @@ const Notice = (props) => {
 
 
     useEffect(() => {
-        console.log('key', props.data)
+        //console.log('key', props.data)
         if (props.link === `/questions/${props.data.id}`) {
             setDeleteUrl('http://localhost:8000/api/qna/delete/')
         } else {

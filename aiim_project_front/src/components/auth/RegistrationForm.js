@@ -34,7 +34,7 @@ const RegistrationForm = (props) => {
         });
 
         const responseData = await response.json();
-        console.log(responseData);
+        //console.log(responseData);
         props.onRegistration(responseData);
 
     }

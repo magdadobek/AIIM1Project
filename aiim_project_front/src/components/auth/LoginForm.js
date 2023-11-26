@@ -20,7 +20,7 @@ const LoginForm = (props) => {
     });
 
     const responseData = await response.json();
-    console.log(responseData);
+    //console.log(responseData);
     props.onLogin(responseData);
 
   }

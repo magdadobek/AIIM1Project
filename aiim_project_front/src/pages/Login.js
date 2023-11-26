@@ -10,7 +10,6 @@ const Login = () => {
 
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const nickname = useSelector(state => state.user.nickname);
-  console.log(nickname)
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [message, setMessage] = useState("");
 

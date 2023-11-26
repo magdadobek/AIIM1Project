@@ -10,7 +10,6 @@ import wznj_dark from "../assets/wznj-white.png";
 
 export const HomePage = () => {
     let storedTheme = localStorage.getItem("preferedTheme");
-    console.log(storedTheme);
     return (
         <>
             <div className="p-5 m-2">

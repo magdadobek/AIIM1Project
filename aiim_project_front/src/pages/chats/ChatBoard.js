@@ -25,7 +25,7 @@ const ChatBoard = () => {
                 message: e.target.content.value
             })
         });
-        console.log(response);
+        //console.log(response);
         if (!response.ok) {
             throw new Error('Coś poszło nie tak');
         }

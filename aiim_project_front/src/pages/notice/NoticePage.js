@@ -38,6 +38,10 @@ const NoticePage = (props) => {
     }
 
     useEffect(() => {
+        fetchComments()
+    }, [])
+
+    useEffect(() => {
         const fetchNotice = async () => {
             const response = await fetch('http://localhost:8000/api/noticeboard/find/' + params.noticeId, {
                 method: 'GET',
@@ -116,9 +120,9 @@ const NoticePage = (props) => {
     }
 
     const handleUpdateNotice = () => {
-        window.location.href =  `/notices/update/${params.noticeId}`;
+        window.location.href = `/notices/update/${params.noticeId}`;
     }
-    const noticeContent = (text) => text.split('\n').map(str => <p key={Math.random()}>{str}</p>);
+    const noticeContent = (text) => text?.split('\n').map(str => <p key={Math.random()}>{str}</p>);
 
     return (
         <div className="w-[800px] ">
@@ -163,14 +167,15 @@ const NoticePage = (props) => {
 
                 </div>
             </div>
-            <p className="text-base text-dark_field">Dodano przez <span className="dark:text-light_field">{notice.author_nickname}</span> dnia {format(new Date(notice.date), 'dd MMMM yyyy', { locale: pl })}</p>
+            <p className="text-base text-dark_field">Dodano przez <span className="dark:text-light_field">{notice.author_nickname}</span> dnia {notice.date ? format(new Date(notice.date), 'dd MMMM yyyy', { locale: pl }) : ""}</p>
             <div className="flex flex-col my-5">
 
                 <div className="text-lg mx-3 my-5">{noticeContent(notice.content)}</div>
                 <h2 className="text-xl my-5 font-bold dark:text-dark_yellow_umg">Tagi:</h2>
-                <div className="flex space-x-4 mx-3 ">{notice.tags.map((tag) => (
-                    <div key={tag} className="border rounded-md py-1 px-2 border-light_menu dark:border-dark_field">{tag}</div>
-                ))}
+                <div className="flex space-x-4 mx-3 ">
+                    {notice.tag && notice.tags.map((tag) => (
+                        <div key={tag} className="border rounded-md py-1 px-2 border-light_menu dark:border-dark_field">{tag}</div>
+                    ))}
                 </div>
 
                 <CommentSection noticeId={params.noticeId} comments={comments} fetchComments={fetchComments} />
