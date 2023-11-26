@@ -5,7 +5,7 @@ const Message = (props) => {
     const userId = useSelector(state => state.user.id);
     const isCurrentUser = props.message.id_user === userId;
 
-    // poprawić błąd z charAt 
+    console.log(props) 
 
     return (
         <div>
@@ -21,8 +21,8 @@ const Message = (props) => {
                         <p className="text-base m-3 dark:text-white">{props.message.content}</p>
                     </div>
                     {isCurrentUser && (
-                        <div title={props.message.nickname} className="w-12 h-12 rounded-full border-2 border-light_menu dark:border-white flex items-center justify-center flex-shrink-0 ml-2">
-                            {props.message.nickname.charAt(0).toUpperCase()}
+                        <div title={props.message.content} className="w-12 h-12 rounded-full border-2 border-light_menu dark:border-white flex items-center justify-center flex-shrink-0 ml-2">
+                            {props.message.nickname?.charAt(0).toUpperCase()}
                         </div>
                     )}
                 </div>

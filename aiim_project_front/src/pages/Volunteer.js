@@ -5,22 +5,14 @@ const Volunteer = () => {
     const user = useSelector((state) => state.user);
     const [status, setStatus] = useState(null);
 
-    // dodać do updateu użytkownika przy przypisaniu do wolontariatu: kierunek, wydział, semestr, zrobić inputy 
 
     const handleSetVolunteer = () => {
         const request = {
             account_type: "G",
-            email: user.email,
-            id: user.id,
-            index: user.index,
-            isLoggedIn: user.isLoggedIn,
-            nickname: user.nickname,
-            password: user.password,
-            token: user.token,
-            tokenExpiration: user.tokenExpiration,
+            token: localStorage.getItem('token')
         };
 
-        fetch(`http://localhost:8000/api/user/all/${user.id}`, {
+        fetch(`http://localhost:8000/api/user/accountType/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -35,7 +27,7 @@ const Volunteer = () => {
                     setStatus("success");
                     setTimeout(() => {
                         window.location.href = '/';
-                    }, 3000);
+                    }, 2000);
                 } else {
                     setStatus("error");
                 }
@@ -84,7 +76,7 @@ const Volunteer = () => {
                     </div>
                     {status === "success" && (
                             <p className="text-green-500 dark:text-green-400 ml-4">
-                                Zostałeś Wolontariuszem! Zostaniesz przekierowany na stronę główną za 3 sekundy.
+                                Zostałeś Wolontariuszem! Zostaniesz przekierowany na stronę główną za 2 sekundy.
                             </p>
                         )}
                         {status === "error" && (
