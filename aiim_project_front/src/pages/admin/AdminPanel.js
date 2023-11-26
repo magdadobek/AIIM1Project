@@ -30,9 +30,9 @@ export const AdminPanel = () => {
 
       const responseData = await response.json();
 
-      const fetchedChats = responseData.data;
+      const fetchedUsers = responseData.data;
 
-      setUsers(fetchedChats.filter(chat => chat.open !== false))
+      setUsers(fetchedUsers)
 
       setIsLoading(false);
     }
@@ -42,10 +42,6 @@ export const AdminPanel = () => {
       setHttpError(error.message);
     });
   }, []);
-
-  useEffect(() => {
-    console.log("users", users)
-  }, [users])
 
   if (isLoading) {
     return (
@@ -64,12 +60,14 @@ export const AdminPanel = () => {
   }
 
   const handleUpdate = (id) => {
-    window.location.href = `/user/update/${id}`;
+    window.location.href = `/profil/update/${id}`;
   }
 
   const handleDelete = (id) => {
     const deleteUser = async () => {
-      const response = await fetch('http://localhost:8000/api/user/delete/' + id, {
+      const response = await fetch('http://localhost:8000/api/user/delete/' + id + '?' + new URLSearchParams({
+        token: localStorage.getItem('token')
+      }), {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +77,13 @@ export const AdminPanel = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Coś poszło nie tak');
+        if(response.status === 500){
+          throw new Error('Użytkowni ma pytania, czaty lub, ogłoszenia w aplikacji');
+        }else{
+          throw new Error('Coś poszło nie tak');
+        }
+      }else{
+        setUsers((prevUsers) => prevUsers.filter(user => user.id !== id));
       }
     }
 

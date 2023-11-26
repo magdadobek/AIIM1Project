@@ -173,7 +173,10 @@ class RestApiUserController extends Controller
 
         $accType=$decodedToken->account_type;
 
-        if($accType!="A" || $accType!="G"){
+        //dd($accType);
+
+        //if($accType!="A" || $accType!="G"){
+        if($accType === "U"){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Błąd autoryzacji, nie jesteś adminem lub guidem.',
@@ -183,11 +186,13 @@ class RestApiUserController extends Controller
         $data = $request->validated();
         $user = User::find($id);
         if($user != null){
-            $message="Zaktualizowano dane uzytkownika o id: $id";
+            $message="Zaktualizowano dane uzytkownika";
             $user->nickname = $data['nickname'];
             $user->index = $data['index'];
             $user->email = $data['email'];
-            $user->password = Hash::make($data['password']);
+            if (isset($data['password'])) {
+                $user->password = Hash::make($data['password']);
+            }
             $user->account_type = $data['account_type'];
             $user->save();
             return response()->json(['data' => $user, 'message'=>$message]);

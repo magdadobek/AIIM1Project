@@ -21,6 +21,8 @@ import { UpdateNotice } from './pages/notice/UpdateNotice';
 import { UpdateQuestion } from './pages/questions/UpdateQuestion';
 import Volunteer from './pages/Volunteer';
 import { AdminPanel } from './pages/admin/AdminPanel';
+import { UserUpdate } from './pages/user/UserUpdate';
+import { UserProfil } from './pages/user/UserProfil';
 
 
 
@@ -81,10 +83,11 @@ const App = () => {
             <Route path='/circles' element={<Placeholder title="Koła naukowe" />} />
             <Route path='/login' element={<Login />} />
             <Route path='/registration' element={<Register />} />
-            <Route path='/profil' element={<Placeholder title="Profil" />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/volunteering' element={<Volunteer/>} />
             <Route path='/admin' element={<AdminPanel/>} />
+            <Route path='/profil' element={<UserProfil/>} />
+            <Route path='/profil/update/:userId' element={<UserUpdate/>} />
           </Routes>
         </Content>
       </div>
