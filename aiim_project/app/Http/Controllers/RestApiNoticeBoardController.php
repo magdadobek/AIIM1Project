@@ -130,8 +130,23 @@ class RestApiNoticeBoardController extends Controller
             return response()->json(['message' => 'Post nie istnieje'], 404);
         }
 
-        if ($noticeBoard->id_user != auth()->user()->id) {
-           return response()->json(['message' => 'Nie jesteś twórcą tego posta'], 403);
+        $data = $request;
+
+        $token = $data['token'];
+        try {
+            $decodedToken = JWTAuth::parseToken($token)->authenticate();
+        } catch (\PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd autoryzacji, token nieprawidłowy lub unieważniony',
+            ], 401);
+        }
+        $userId=$decodedToken->id;
+
+        if ($noticeBoard->id_user != $userId) {
+            return response()
+                ->json(['message' => 'Nie jesteś twórcą tego posta!'])
+                ->setStatusCode(403);
         }
 
         $noticeBoard->title = $validatedData['title'];
