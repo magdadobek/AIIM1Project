@@ -25,7 +25,7 @@ const ChatBoard = () => {
                 message: e.target.content.value
             })
         });
-        console.log(response);
+        //console.log(response);
         if (!response.ok) {
             throw new Error('Coś poszło nie tak');
         }
@@ -47,8 +47,13 @@ const ChatBoard = () => {
                 }
             });
 
-            if (!response.ok) {
-                throw new Error('Coś poszło nie tak');
+            if(!response.ok){
+                if(response.status === 401){
+                    throw new Error('Aby zobaczyć chaty musisz być zalogowany');
+                   
+                }else{
+                    throw new Error('Coś poszło nie tak');
+                }
             }
 
             const responseData = await response.json();

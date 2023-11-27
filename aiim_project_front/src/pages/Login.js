@@ -10,7 +10,6 @@ const Login = () => {
 
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const nickname = useSelector(state => state.user.nickname);
-  console.log(nickname)
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -36,6 +35,9 @@ const Login = () => {
       }
       dispatch({ type: "user/login", payload: payload });
 
+      setTimeout(() => {
+        window.location.href = '/';
+    }, 3000);
       //dodac czas wygasniecia tokena
     }
     else if (responseData.message === "Unauthorized" || responseData.message === "Validation errors") {

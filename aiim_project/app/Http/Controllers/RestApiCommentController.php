@@ -44,10 +44,10 @@ class RestApiCommentController extends Controller
         return response()->json(['message' => 'Komentarz został zaktualizowany'],200);
     }
 
-    public function deleteComment(CommentRequest $commentRequest, int $id) {
-        $validatedComment = $commentRequest->validated();
+    public function deleteComment(int $id) {
+        //$validatedComment = $commentRequest->validated();
 
-        $comment = QnAComments::find($id);
+        $comment = Comments::find($id);
 
         if(!$comment) {
             return response()

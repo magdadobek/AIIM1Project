@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-const UserMenu = ({ isLoggedIn, nickname }) => {
+const UserMenu = ({ user }) => {
     const [theme, setTheme] = useState("");
     const [modeText, setModeText] = useState("");
     const dispatch = useDispatch();
@@ -31,11 +31,12 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
         let theme = localStorage.getItem("preferedTheme");
         setTheme(theme === "dark" ? "light" : "dark");
         localStorage.setItem("preferedTheme", theme === "dark" ? "light" : "dark");
+        window.location.reload();
     }
 
     return (
         <>
-            {!isLoggedIn && (
+            {!user.isLoggedIn && (
                 <>
                     <div className="hover:bg-light_menu hover:text-white dark:hover:bg-dark_yellow_umg dark:hover:text-dark_component px-2 py-1 rounded-lg duration-200">
                         <NavLink to="/registration">Rejestracja</NavLink>
@@ -45,14 +46,20 @@ const UserMenu = ({ isLoggedIn, nickname }) => {
                     </div>
                 </>
             )}
-            {isLoggedIn && (
+            {user.isLoggedIn && (
                 <>
                     <div>
-                        <NavLink to="/profil">Profil ({nickname})</NavLink>
+                        <NavLink to="/profil">Profil ({user.nickname})</NavLink>
                     </div>
                     <div>
                         <NavLink to="/logout" onClick={handleLogout}>
                             Wyloguj
+                        </NavLink>
+                    </div>
+
+                    <div>
+                        <NavLink to="/volunteering">
+                            Wolontariat
                         </NavLink>
                     </div>
                 </>

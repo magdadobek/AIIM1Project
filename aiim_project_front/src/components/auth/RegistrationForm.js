@@ -1,14 +1,26 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const RegistrationForm = (props) => {
+
+    const [validError, setValidError] = useState()
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const request = {
             nickname: e.target.nickname.value,
             index: e.target.index.value,
             email: e.target.email.value,
-            password: e.target.password.value
+            password: e.target.password.value,
+            token: localStorage.getItem('token'),
         };
+
+        const emailRegex = /@student\.umg\.edu\.pl$/;
+        if (!emailRegex.test(request.email)) {
+            setValidError("Nieprawidłowy email")
+        }else(
+            setValidError(null)
+        )
 
         const response = await fetch('http://localhost:8000/api/user/new/', {
             method: 'POST',
@@ -22,7 +34,7 @@ const RegistrationForm = (props) => {
         });
 
         const responseData = await response.json();
-        console.log(responseData);
+        //console.log(responseData);
         props.onRegistration(responseData);
 
     }
@@ -63,6 +75,7 @@ const RegistrationForm = (props) => {
                     </Link>
                 </div>
             </form>
+            {validError}
         </div>
     );
 }

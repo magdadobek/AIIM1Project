@@ -17,6 +17,12 @@ import { HomePage } from './pages/HomePage';
 import QuestionBoard from './pages/questions/QuestionBoard';
 import QuestionPage from './pages/questions/QuestionPage';
 import NewQuestion from './pages/questions/NewQuestion';
+import { UpdateNotice } from './pages/notice/UpdateNotice';
+import { UpdateQuestion } from './pages/questions/UpdateQuestion';
+import Volunteer from './pages/Volunteer';
+import { AdminPanel } from './pages/admin/AdminPanel';
+import { UserUpdate } from './pages/user/UserUpdate';
+import { UserProfil } from './pages/user/UserProfil';
 
 
 
@@ -66,17 +72,22 @@ const App = () => {
             <Route path='/notices' element={<NoticeBoard />}/>
             <Route path='/notices/:noticeId' element={<NoticePage />}/>
             <Route path='/notices/new' element={<NewNotice />}/>
+            <Route path='/notices/update/:noticeId' element={<UpdateNotice />}/>
             <Route path='/questions' element={<QuestionBoard />}/>
             <Route path='/questions/:questionId' element={<QuestionPage />}/>
             <Route path='/questions/new' element={<NewQuestion />}/>
+            <Route path='/questions/update/:questionId' element={<UpdateQuestion />}/>
             <Route path='/map' element={<Placeholder title="Mapa" />} />
             <Route path='/contact' element={<Placeholder title="Kontakt" />} />
             <Route path='/documents' element={<Placeholder title="Dokumenty" />} />
             <Route path='/circles' element={<Placeholder title="Koła naukowe" />} />
             <Route path='/login' element={<Login />} />
             <Route path='/registration' element={<Register />} />
-            <Route path='/profil' element={<Placeholder title="Profil" />} />
             <Route path='/logout' element={<Logout />} />
+            <Route path='/volunteering' element={<Volunteer/>} />
+            <Route path='/admin' element={<AdminPanel/>} />
+            <Route path='/profil' element={<UserProfil/>} />
+            <Route path='/profil/update/:userId' element={<UserUpdate/>} />
           </Routes>
         </Content>
       </div>
