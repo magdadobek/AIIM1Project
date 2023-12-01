@@ -173,7 +173,7 @@ const NoticePage = (props) => {
                 <div className="text-lg mx-3 my-5">{noticeContent(notice.content)}</div>
                 <h2 className="text-xl my-5 font-bold dark:text-dark_yellow_umg">Tagi:</h2>
                 <div className="flex space-x-4 mx-3 ">
-                    {notice.tag && notice.tags.map((tag) => (
+                    {notice.tags && notice.tags.map((tag) => (
                         <div key={tag} className="border rounded-md py-1 px-2 border-light_menu dark:border-dark_field">{tag}</div>
                     ))}
                 </div>
