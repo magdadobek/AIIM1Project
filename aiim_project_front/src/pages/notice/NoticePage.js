@@ -18,7 +18,7 @@ const NoticePage = (props) => {
     const params = useParams();
 
     const fetchComments = async () => {
-        const response = await fetch('http://localhost:8000/api/noticeboard/showComments/' + params.noticeId, {
+        const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/showComments/' + params.noticeId, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const NoticePage = (props) => {
 
     useEffect(() => {
         const fetchNotice = async () => {
-            const response = await fetch('http://localhost:8000/api/noticeboard/find/' + params.noticeId, {
+            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/find/' + params.noticeId, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const NoticePage = (props) => {
     const handleDeleteNotice = () => {
 
         const deleteNotice = async () => {
-            const response = await fetch('http://localhost:8000/api/noticeboard/delete/' + params.noticeId, {
+            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/delete/' + params.noticeId, {
                 method: 'DELETE',
                 headers: {
                     "Content-Type": "application/json",

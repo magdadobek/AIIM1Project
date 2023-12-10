@@ -27,9 +27,9 @@ const CommentSection = (props) => {
             return;
         }
 
-        let requestUrl = 'http://localhost:8000/api/comments/new/';
+        let requestUrl = 'https://foka.umg.edu.pl/api/comments/new/';
         if (props.questionId) {
-            requestUrl = 'http://localhost:8000/api/qna/comments/new/';
+            requestUrl = 'https://foka.umg.edu.pl/api/qna/comments/new/';
         }
 
         const request = {
@@ -70,9 +70,9 @@ const CommentSection = (props) => {
     const handleEdit = async (e) => {
         e.preventDefault();
 
-        let requestUrl = 'http://localhost:8000/api/comments/';
+        let requestUrl = 'https://foka.umg.edu.pl/api/comments/';
         if (props.questionId) {
-            requestUrl = 'http://localhost:8000/api/qna/comments/';
+            requestUrl = 'https://foka.umg.edu.pl/api/qna/comments/';
         }
 
         const request = {
@@ -111,9 +111,9 @@ const CommentSection = (props) => {
     }
 
     const handleDelete = async (id) => {
-        let requestUrl = 'http://localhost:8000/api/comments/delete/';
+        let requestUrl = 'https://foka.umg.edu.pl/api/comments/delete/';
         if (props.questionId) {
-            requestUrl = 'http://localhost:8000/api/qna/comments/delete/';
+            requestUrl = 'https://foka.umg.edu.pl/api/qna/comments/delete/';
         }
 
         const response = await fetch(requestUrl + id, {

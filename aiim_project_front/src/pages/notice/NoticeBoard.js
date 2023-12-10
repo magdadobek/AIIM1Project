@@ -12,7 +12,7 @@ const NoticeBoard = () => {
 
     useEffect(() => {
         const fetchNotices = async () => {
-            const response = await fetch('http://localhost:8000/api/noticeboard/allOpen', {
+            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/allOpen', {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",

@@ -19,7 +19,7 @@ export const UpdateQuestion = (props) =>{
 
   useEffect(() => {
     const fetchNotice = async () => {
-        const response = await fetch('http://localhost:8000/api/qna/' + params.questionId, {
+        const response = await fetch('https://foka.umg.edu.pl/api/qna/' + params.questionId, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
