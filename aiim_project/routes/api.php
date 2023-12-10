@@ -9,6 +9,7 @@ use App\Http\Controllers\RestApiCommentController;
 use App\Http\Controllers\RestApiQnACommentController;
 use App\Http\Controllers\RestApiQnAController;
 use App\Http\Controllers\RestApiChatController;
+use App\Http\Controllers\RestApiPotencialGuideController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,4 +74,6 @@ Route::patch('/chats/deleteMessage', [RestApiChatController::class, 'deleteChatM
 Route::get('/chats/showChats', [RestApiChatController::class, 'showChats']);
 Route::patch('/chats/assignToChat', [RestApiChatController::class, 'assignGuideToChat']);
 
+Route::post('/potencialGuides/form', [RestApiPotencialGuideController::class, 'sendForm']);
+Route::get('/potencialGuides/showAll', [RestApiPotencialGuideController::class, 'getAll']);
 
