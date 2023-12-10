@@ -5,7 +5,7 @@ const LoginForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = new URL('http://localhost:8000/api/user/login/');
+    const url = new URL('https://foka.umg.edu.pl/api/user/login/');
     url.searchParams.append('email', e.target.email.value);
     url.searchParams.append('password', e.target.password.value);
 

@@ -22,7 +22,7 @@ const RegistrationForm = (props) => {
             setValidError(null)
         )
 
-        const response = await fetch('http://localhost:8000/api/user/new/', {
+        const response = await fetch('https://foka.umg.edu.pl/api/user/new/', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

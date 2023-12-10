@@ -44,7 +44,7 @@ const Chat = (props) => {
     }
 
     const assignToChat = async () => {
-        const response = await fetch("http://localhost:8000/api/chats/assignToChat", {
+        const response = await fetch("https://foka.umg.edu.pl/api/chats/assignToChat", {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const Chat = (props) => {
     }
 
     const closeChat = async () => {
-        const response = await fetch("http://localhost:8000/api/chats/closeChat/" + props.data.id, {
+        const response = await fetch("https://foka.umg.edu.pl/api/chats/closeChat/" + props.data.id, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json",

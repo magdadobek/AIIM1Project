@@ -12,7 +12,7 @@ const Volunteer = () => {
             token: localStorage.getItem('token')
         };
 
-        fetch(`http://localhost:8000/api/user/update/accountType/${user.id}`, {
+        fetch(`https://foka.umg.edu.pl/api/user/update/accountType/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

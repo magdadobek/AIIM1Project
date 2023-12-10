@@ -12,7 +12,7 @@ export const UserUpdate = () => {
     const params = useParams();
     useEffect(() => {
         const fetchUser = async () => {
-            const response = await fetch('http://localhost:8000/api/user/find/' + params.userId + '?' + new URLSearchParams({
+            const response = await fetch('https://foka.umg.edu.pl/api/user/find/' + params.userId + '?' + new URLSearchParams({
                 token: localStorage.getItem('token')
             }),
                 {
@@ -55,7 +55,7 @@ export const UserUpdate = () => {
         };
 
 
-        const response = await fetch("http://localhost:8000/api/user/update/all/" + params.userId, {
+        const response = await fetch("https://foka.umg.edu.pl/api/user/update/all/" + params.userId, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json",

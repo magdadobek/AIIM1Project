@@ -12,7 +12,7 @@ const QuestionBoard = () => {
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            const response = await fetch('http://localhost:8000/api/qna', {
+            const response = await fetch('https://foka.umg.edu.pl/api/qna', {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",

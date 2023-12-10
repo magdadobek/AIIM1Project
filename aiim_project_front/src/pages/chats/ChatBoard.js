@@ -13,7 +13,7 @@ const ChatBoard = () => {
 
     const newChat = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:8000/api/chats/createChat', {
+        const response = await fetch('https://foka.umg.edu.pl/api/chats/createChat', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const ChatBoard = () => {
 
     useEffect(() => {
         const fetchChats = async () => {
-            const response = await fetch('http://localhost:8000/api/chats/showChats?' + new URLSearchParams({
+            const response = await fetch('https://foka.umg.edu.pl/api/chats/showChats?' + new URLSearchParams({
                 token: localStorage.getItem('token')
             }), {
                 method: 'GET',
