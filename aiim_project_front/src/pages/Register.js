@@ -22,7 +22,7 @@ const Register = () => {
             setHasRegistered(true);
             setMessage("Zarejestrowano jako " + responseData.user.nickname)
             setTimeout(() => {
-                window.location.href = 'https://foka.umg.edu.pl/login';
+                window.location.href = 'https://foka.umg.edu.pl/~projgr2324md/login';
             }, 3000);
         }
         else if (responseData.message === "Validation errors") {
