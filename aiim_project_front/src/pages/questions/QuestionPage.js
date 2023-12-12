@@ -18,7 +18,7 @@ const QuestionPage = (props) => {
     const params = useParams();
 
     const fetchComments = async () => {
-        const response = await fetch('https://foka.umg.edu.pl/api/qna/showComments/' + params.questionId, {
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/showComments/' + params.questionId, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const QuestionPage = (props) => {
 
     useEffect(() => {
         const fetchQuestion = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/qna/' + params.questionId, {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/' + params.questionId, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -88,13 +88,13 @@ const QuestionPage = (props) => {
     }
 
     const handleBackToListPage = () => {
-        window.location.href = '/questions';
+        window.location.href = 'https://foka.umg.edu.pl/questions';
     }
 
     const handleDeleteQuestion = () => {
 
         const deleteQuestion = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/qna/delete/' + params.questionId, {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/delete/' + params.questionId, {
                 method: 'DELETE',
                 headers: {
                     "Content-Type": "application/json",
@@ -106,7 +106,7 @@ const QuestionPage = (props) => {
             if (!response.ok) {
                 throw new Error('Coś poszło nie tak');
             } else {
-                window.location.href = '/questions';
+                window.location.href = 'https://foka.umg.edu.pl/questions';
             }
         }
 
@@ -118,7 +118,7 @@ const QuestionPage = (props) => {
     }
 
     const handleUpdateQuestion = () => {
-        window.location.href = `/questions/update/${params.questionId}`;
+        window.location.href = `https://foka.umg.edu.pl/questions/update/${params.questionId}`;
     }
     const questionContent = (text) => text?.split('\n').map(str => <p key={Math.random()}>{str}</p>);
 

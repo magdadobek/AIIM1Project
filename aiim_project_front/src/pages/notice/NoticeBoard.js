@@ -12,7 +12,7 @@ const NoticeBoard = () => {
 
     useEffect(() => {
         const fetchNotices = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/allOpen', {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/allOpen', {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",

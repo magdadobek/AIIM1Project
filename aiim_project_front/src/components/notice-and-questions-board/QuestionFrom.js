@@ -18,7 +18,7 @@ const QuestionForm = (props) => {
         };
 
         if(!props.question){
-            const response = await fetch('https://foka.umg.edu.pl/api/qna/new', {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/new', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -32,7 +32,7 @@ const QuestionForm = (props) => {
             const responseData = await response.json();
             props.onSubmit(responseData);
         }else{
-            const response = await fetch(`https://foka.umg.edu.pl/api/qna/${props.question.id}`, {
+            const response = await fetch(`https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/${props.question.id}`, {
                 method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",

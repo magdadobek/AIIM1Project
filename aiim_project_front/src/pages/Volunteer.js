@@ -12,7 +12,7 @@ const Volunteer = () => {
             token: localStorage.getItem('token')
         };
 
-        fetch(`https://foka.umg.edu.pl/api/user/update/accountType/${user.id}`, {
+        fetch(`https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/user/update/accountType/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const Volunteer = () => {
                 if (res.ok) {
                     setStatus("success");
                     setTimeout(() => {
-                        window.location.href = '/';
+                        window.location.href = 'https://foka.umg.edu.pl';
                     }, 3000);
                 } else {
                     setStatus("error");

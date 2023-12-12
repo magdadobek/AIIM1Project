@@ -18,7 +18,7 @@ const NoticePage = (props) => {
     const params = useParams();
 
     const fetchComments = async () => {
-        const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/showComments/' + params.noticeId, {
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/showComments/' + params.noticeId, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const NoticePage = (props) => {
 
     useEffect(() => {
         const fetchNotice = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/find/' + params.noticeId, {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/find/' + params.noticeId, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -90,13 +90,13 @@ const NoticePage = (props) => {
     }
 
     const handleBackToListPage = () => {
-        window.location.href = '/notices';
+        window.location.href = 'https://foka.umg.edu.pl/notices';
     }
 
     const handleDeleteNotice = () => {
 
         const deleteNotice = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/delete/' + params.noticeId, {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/delete/' + params.noticeId, {
                 method: 'DELETE',
                 headers: {
                     "Content-Type": "application/json",
@@ -108,7 +108,7 @@ const NoticePage = (props) => {
             if (!response.ok) {
                 throw new Error('Coś poszło nie tak');
             } else {
-                window.location.href = '/notices';
+                window.location.href = 'https://foka.umg.edu.pl/notices';
             }
         }
 
@@ -120,7 +120,7 @@ const NoticePage = (props) => {
     }
 
     const handleUpdateNotice = () => {
-        window.location.href = `/notices/update/${params.noticeId}`;
+        window.location.href = `https://foka.umg.edu.pl/notices/update/${params.noticeId}`;
     }
     const noticeContent = (text) => text?.split('\n').map(str => <p key={Math.random()}>{str}</p>);
 

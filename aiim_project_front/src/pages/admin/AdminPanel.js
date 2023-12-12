@@ -8,7 +8,7 @@ export const AdminPanel = () => {
   useEffect(() => {
 
     const fetchChats = async () => {
-      const response = await fetch('https://foka.umg.edu.pl/api/user/findAll?' + new URLSearchParams({
+      const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/user/findAll?' + new URLSearchParams({
         token: localStorage.getItem('token')
       }), {
         method: 'GET',
@@ -60,12 +60,12 @@ export const AdminPanel = () => {
   }
 
   const handleUpdate = (id) => {
-    window.location.href = `/profil/update/${id}`;
+    window.location.href = `https://foka.umg.edu.pl/profil/update/${id}`;
   }
 
   const handleDelete = (id) => {
     const deleteUser = async () => {
-      const response = await fetch('https://foka.umg.edu.pl/api/user/delete/' + id + '?' + new URLSearchParams({
+      const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/user/delete/' + id + '?' + new URLSearchParams({
         token: localStorage.getItem('token')
       }), {
         method: 'DELETE',

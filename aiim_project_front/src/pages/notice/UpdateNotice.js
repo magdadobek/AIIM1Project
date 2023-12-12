@@ -18,7 +18,7 @@ export const UpdateNotice = (props) =>{
 
   useEffect(() => {
     const fetchNotice = async () => {
-        const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/find/' + params.noticeId, {
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/find/' + params.noticeId, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",

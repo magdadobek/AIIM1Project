@@ -36,7 +36,7 @@ const Login = () => {
       dispatch({ type: "user/login", payload: payload });
 
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.href = 'https://foka.umg.edu.pl';
     }, 3000);
       //dodac czas wygasniecia tokena
     }
