@@ -118,7 +118,7 @@ const QuestionPage = (props) => {
     }
 
     const handleUpdateQuestion = () => {
-        window.location.href = `https://foka.umg.edu.pl/questions/update/${params.questionId}`;
+        window.location.href = `https://foka.umg.edu.pl/~projgr2324md/questions/update/${params.questionId}`;
     }
     const questionContent = (text) => text?.split('\n').map(str => <p key={Math.random()}>{str}</p>);
 

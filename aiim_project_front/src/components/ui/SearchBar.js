@@ -107,11 +107,11 @@ const SearchBar = ({ onSearch }) => {
     };
 
     const handleNoticeClick = (notice) => {
-        window.location.href = `https://foka.umg.edu.pl/notices/${notice.id}`;
+        window.location.href = `https://foka.umg.edu.pl/~projgr2324md/notices/${notice.id}`;
     };
 
     const handleQuestionClick = (question) => {
-        window.location.href = `https://foka.umg.edu.pl/questions/${question.id}`;
+        window.location.href = `https://foka.umg.edu.pl/~projgr2324md/questions/${question.id}`;
     };
 
     return (
