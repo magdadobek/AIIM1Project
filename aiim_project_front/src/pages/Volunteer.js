@@ -12,7 +12,7 @@ const Volunteer = () => {
             token: localStorage.getItem('token')
         };
 
-        fetch(`https://foka.umg.edu.pl/api/user/update/accountType/${user.id}`, {
+        fetch(`https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/user/update/accountType/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

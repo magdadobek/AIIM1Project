@@ -18,7 +18,7 @@ const QuestionPage = (props) => {
     const params = useParams();
 
     const fetchComments = async () => {
-        const response = await fetch('https://foka.umg.edu.pl/api/qna/showComments/' + params.questionId, {
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/showComments/' + params.questionId, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const QuestionPage = (props) => {
 
     useEffect(() => {
         const fetchQuestion = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/qna/' + params.questionId, {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/' + params.questionId, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const QuestionPage = (props) => {
     const handleDeleteQuestion = () => {
 
         const deleteQuestion = async () => {
-            const response = await fetch('https://foka.umg.edu.pl/api/qna/delete/' + params.questionId, {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/delete/' + params.questionId, {
                 method: 'DELETE',
                 headers: {
                     "Content-Type": "application/json",

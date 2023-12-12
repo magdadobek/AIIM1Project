@@ -12,9 +12,9 @@ const Notice = (props) => {
     useEffect(() => {
         //console.log('key', props.data)
         if (props.link === `/questions/${props.data.id}`) {
-            setDeleteUrl('https://foka.umg.edu.pl/api/qna/delete/')
+            setDeleteUrl('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna/delete/')
         } else {
-            setDeleteUrl('https://foka.umg.edu.pl/api/noticeboard/delete/')
+            setDeleteUrl('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/delete/')
         }
     }, [props.link])
 

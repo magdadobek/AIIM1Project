@@ -11,7 +11,7 @@ const SearchBar = ({ onSearch }) => {
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/allOpen', {
+                const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/allOpen', {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const SearchBar = ({ onSearch }) => {
 
         const fetchQuestions = async () => {
             try {
-                const response = await fetch('https://foka.umg.edu.pl/api/qna', {
+                const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/qna', {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",

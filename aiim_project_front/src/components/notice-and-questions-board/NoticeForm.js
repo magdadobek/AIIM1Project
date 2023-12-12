@@ -18,7 +18,7 @@ const NoticeForm = (props) => {
         };
 
         if(!props.notice){
-            const response = await fetch('https://foka.umg.edu.pl/api/noticeboard/new/', {
+            const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/new/', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -31,7 +31,7 @@ const NoticeForm = (props) => {
         const responseData = await response.json();
         props.onSubmit(responseData);
         }else{
-            const response = await fetch(`https://foka.umg.edu.pl/api/noticeboard/${props.notice.id}`, {
+            const response = await fetch(`https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/noticeboard/${props.notice.id}`, {
                 method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json",

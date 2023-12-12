@@ -15,7 +15,7 @@ const ChatPage = (props) => {
     const userId = useSelector(state => state.user.id);
 
     const fetchMessages = async () => {
-        const response = await fetch('https://foka.umg.edu.pl/api/chats/' + params.chatId + '/messages?' + new URLSearchParams({
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/chats/' + params.chatId + '/messages?' + new URLSearchParams({
             token: localStorage.getItem('token')
         }), {
             method: 'GET',
@@ -84,7 +84,7 @@ const ChatPage = (props) => {
 
         setMessages(messages.concat(tempMessage));
 
-        const response = await fetch('https://foka.umg.edu.pl/api/chats/sendMessage', {
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/chats/sendMessage', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

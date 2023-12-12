@@ -22,7 +22,7 @@ const RegistrationForm = (props) => {
             setValidError(null)
         )
 
-        const response = await fetch('https://foka.umg.edu.pl/api/user/new/', {
+        const response = await fetch('https://foka.umg.edu.pl/~projgr2324md/AIIM1Project/aiim_project/public/api/user/new/', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
