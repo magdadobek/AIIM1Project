@@ -88,7 +88,7 @@ const QuestionPage = (props) => {
     }
 
     const handleBackToListPage = () => {
-        window.location.href = '/questions';
+        window.location.href = 'https://foka.umg.edu.pl/questions';
     }
 
     const handleDeleteQuestion = () => {
@@ -106,7 +106,7 @@ const QuestionPage = (props) => {
             if (!response.ok) {
                 throw new Error('Coś poszło nie tak');
             } else {
-                window.location.href = '/questions';
+                window.location.href = 'https://foka.umg.edu.pl/questions';
             }
         }
 
@@ -118,7 +118,7 @@ const QuestionPage = (props) => {
     }
 
     const handleUpdateQuestion = () => {
-        window.location.href = `/questions/update/${params.questionId}`;
+        window.location.href = `https://foka.umg.edu.pl/questions/update/${params.questionId}`;
     }
     const questionContent = (text) => text?.split('\n').map(str => <p key={Math.random()}>{str}</p>);
 

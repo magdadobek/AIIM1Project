@@ -4,7 +4,7 @@ export const UserProfil = () => {
     const user = useSelector(state => state.user);
 
     const handleUpdate = (id) => {
-        window.location.href = `/profil/update/${id}`;
+        window.location.href = `https://foka.umg.edu.pl/profil/update/${id}`;
       }
       
     return (

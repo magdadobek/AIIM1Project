@@ -26,7 +26,7 @@ const Volunteer = () => {
                 if (res.ok) {
                     setStatus("success");
                     setTimeout(() => {
-                        window.location.href = '/';
+                        window.location.href = 'https://foka.umg.edu.pl';
                     }, 3000);
                 } else {
                     setStatus("error");

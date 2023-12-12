@@ -60,7 +60,7 @@ export const AdminPanel = () => {
   }
 
   const handleUpdate = (id) => {
-    window.location.href = `/profil/update/${id}`;
+    window.location.href = `https://foka.umg.edu.pl/profil/update/${id}`;
   }
 
   const handleDelete = (id) => {

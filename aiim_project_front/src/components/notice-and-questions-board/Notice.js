@@ -33,7 +33,7 @@ const Notice = (props) => {
             if (!response.ok) {
                 throw new Error('Coś poszło nie tak');
             } else {
-                window.location.href = '/questions';
+                window.location.href = 'https://foka.umg.edu.pl/questions';
             }
         }
 

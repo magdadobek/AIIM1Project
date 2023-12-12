@@ -69,7 +69,7 @@ const ChatPage = (props) => {
     }
 
     const handleBackToListPage = () => {
-        window.location.href = '/chats';
+        window.location.href = 'https://foka.umg.edu.pl/chats';
     }
 
     const sendMessage = async (e) => {

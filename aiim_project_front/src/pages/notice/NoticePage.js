@@ -90,7 +90,7 @@ const NoticePage = (props) => {
     }
 
     const handleBackToListPage = () => {
-        window.location.href = '/notices';
+        window.location.href = 'https://foka.umg.edu.pl/notices';
     }
 
     const handleDeleteNotice = () => {
@@ -108,7 +108,7 @@ const NoticePage = (props) => {
             if (!response.ok) {
                 throw new Error('Coś poszło nie tak');
             } else {
-                window.location.href = '/notices';
+                window.location.href = 'https://foka.umg.edu.pl/notices';
             }
         }
 
@@ -120,7 +120,7 @@ const NoticePage = (props) => {
     }
 
     const handleUpdateNotice = () => {
-        window.location.href = `/notices/update/${params.noticeId}`;
+        window.location.href = `https://foka.umg.edu.pl/notices/update/${params.noticeId}`;
     }
     const noticeContent = (text) => text?.split('\n').map(str => <p key={Math.random()}>{str}</p>);
 
